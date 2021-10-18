@@ -22,6 +22,46 @@ If you already have a preferred text editor, skip this step.
 ### GCP Credentials File
 * Download the `mega-pipeline.json` from Ed and save it inside a folder called `secrets` inside `transcribe_audio`
 
+### Create Pipfile & Pipfile.lock files
+* Add `Pipfile` with a the following contents:
+```
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+
+[requires]
+python_version = "3.8"
+```
+
+* Add `Pipfile.lock` with a the following contents:
+```
+{
+    "_meta": {
+        "hash": {
+            "sha256": "7f7606f08e0544d8d012ef4d097dabdd6df6843a28793eb6551245d4b2db4242"
+        },
+        "pipfile-spec": 6,
+        "requires": {
+            "python_version": "3.8"
+        },
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {},
+    "develop": {}
+}
+```
+
 ### Create Dockerfile
 * Create a `Dockerfile` and base it from `python:3.8-slim-buster` the official Debian-hosted Python 3.8 image
 * Set the following environment variables:
@@ -75,6 +115,27 @@ optional arguments:
   -t, --transcribe  Transcribe audio files to text
   -u, --upload      Upload transcribed text to GCS bucket
 ```
+
+* Requirements for `cli.py`
+Use the following values:
+```
+gcp_project = "ac215-project"
+bucket_name = "mega-pipeline-bucket"
+input_audios = "input_audios"
+text_prompts = "text_prompts"
+```
+
+* `input_audios` - Bucket where we store the input audio files
+* `text_prompts` - Bucket where we store the text prompts that was synthesized by audio to text
+
+* -d, --download    Download audio files from GCS bucket
+Write a function to download all audio files from the bucket `input_audios` and store them locally in a folder `input_audios`
+
+* -t, --transcribe  Transcribe audio files to text
+Write a function to transcribe the audio files to text and store them locally in a folder `text_prompts`
+
+* -u, --upload      Upload transcribed text to GCS bucket
+Write a function to upload the files in `text_prompts` to the bucket `text_prompts` in GCS
 
 ### Push Container to Docker Hub
 * Sign up in Docker Hub and create an [Access Token](https://hub.docker.com/settings/security)
