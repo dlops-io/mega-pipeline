@@ -7,8 +7,20 @@ In this container you will implement the following:
 * Use the Google Cloud Speech to Text API
 * Save the transcribed text as text file in bucket `mega-pipeline-bucket` and folder `text_prompts` (use the same file name and change extension to .txt)
 
+### Prerequisites for Development
+* Have Docker Desktop installed
+* Check that your Docker is running with the following command
+`docker run hello-world`
+### Install VSCode  
+Follow the [instructions](https://code.visualstudio.com/download) for your operating system.  
+If you already have a preferred text editor, skip this step.  
+
+### Project Setup
+
+* Create a folder `transcribe_audio`
+
 ### GCP Credentials File
-* Download the `mega-pipeline.json` from Ed and save it inside the `secrets` folder
+* Download the `mega-pipeline.json` from Ed and save it inside a folder called `secrets` inside `transcribe_audio`
 
 ### Create Dockerfile
 * Create a `Dockerfile` and base it from `python:3.8-slim-buster` the official Debian-hosted Python 3.8 image
