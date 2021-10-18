@@ -1,5 +1,5 @@
 # Transcribe Audio
----
+
 🎙️ &rightarrow; 📝 
 
 In this container you will implement the following:
@@ -44,10 +44,29 @@ docker build -t transcribe_audio -f Dockerfile .
 ```
 * You should be able to run your docker image by using:
 ```
-docker run --rm -ti --mount type=bind,source=$BASE_DIR,target=/app transcribe_audio
+docker run --rm -ti --mount type=bind,source=$(pwd),target=/app transcribe_audio
 ```
+* The `--mount type=bind,source=$(pwd)` option is to mount your current working directory into the `/app` directory inside the container. This helps us during development of the app so when you change a source code file using VSCode from your host machine the files are automatically changed inside the container.
 
 ### CLI to interact with your code
 * Add a python file `cli.py`
+* The CLI should have the following command line argument options
+```
+python cli.py --help
+usage: cli.py [-h] [-d] [-t] [-u]
+
+Transcribe audio file to text
+
+optional arguments:
+  -h, --help        show this help message and exit
+  -d, --download    Download audio files from GCS bucket
+  -t, --transcribe  Transcribe audio files to text
+  -u, --upload      Upload transcribed text to GCS bucket
+```
 
 ### Push Container to Docker Hub
+* Sign up in Docker Hub and create an [Access Token](https://hub.docker.com/settings/security)
+* Login to the Hub: `docker login -u <USER NAME> -p <ACCESS TOKEN>`
+* Tag the Docker Image: `docker tag transcribe_audio <USER NAME>/transcribe_audio`
+* Push to Docker Hub: `docker push <USER NAME>/transcribe_audio`
+
