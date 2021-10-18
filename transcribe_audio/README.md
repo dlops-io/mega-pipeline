@@ -100,6 +100,11 @@ docker run --rm -ti --mount type=bind,source=$(pwd),target=/app transcribe_audio
 ```
 * The `--mount type=bind,source=$(pwd)` option is to mount your current working directory into the `/app` directory inside the container. This helps us during development of the app so when you change a source code file using VSCode from your host machine the files are automatically changed inside the container.
 
+### Python packages required
+* `pipenv install` the following:
+  - `google-cloud-storage`
+  - `google-cloud-speech`
+  - `ffmpeg-python`
 ### CLI to interact with your code
 * Add a python file `cli.py`
 * The CLI should have the following command line argument options
