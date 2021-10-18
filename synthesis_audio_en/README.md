@@ -1,10 +1,10 @@
 # Synthesis Audio
 
-🇫🗒️  &rightarrow; 🔊
+🗒️  &rightarrow; 🔊
 
 In this container you will implement the following:
 * Read the paragraphs of text from the GCS bucket `mega-pipeline-bucket` and folder `text_paragraphs`
-* Use Cloud Text-to-Speech API to generate an audio file
+* Use Cloud Text-to-Speech API to generate an audio file in English
 * Save the audio mp3 file in bucket `mega-pipeline-bucket` and folder `text_audios` (use the same file name and change extension to .mp3)
 
 
