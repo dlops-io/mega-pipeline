@@ -1,1 +1,3 @@
-# The Mega Pipeline App: 🎙️ ➡️ 📝 ➡️ 🗒️ ➡️ 🇫🇷 ➡️ 🔊
+# Mega Pipeline App
+---
+🎙️ &rightarrow; 📝 &rightarrow; 🗒️ &rightarrow; 🇫🇷 &rightarrow; 🔊
