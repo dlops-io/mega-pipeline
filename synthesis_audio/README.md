@@ -75,7 +75,7 @@ ENV GOOGLE_APPLICATION_CREDENTIALS=secrets/mega-pipeline.json
 ```
 apt-get update
 apt-get upgrade -y
-apt-get install -y --no-install-recommends build-essential git ffmpeg
+apt-get install -y --no-install-recommends build-essential
 ```
 
 * Install pipenv
