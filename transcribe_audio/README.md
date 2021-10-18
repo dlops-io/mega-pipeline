@@ -134,7 +134,7 @@ Write a function to download all audio files from the bucket `input_audios` and 
 * -t, --transcribe  Transcribe audio files to text
 Write a function to transcribe the audio files to text and store them locally in a folder `text_prompts`
 
-* Example code to transcribe:
+* Example code to transcribe an audio.mp3 file to text:
 ```
 from tempfile import TemporaryDirectory
 # Imports the Google Cloud client library
