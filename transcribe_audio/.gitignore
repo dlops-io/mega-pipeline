@@ -1,4 +1,5 @@
 # misc
 .DS_Store
 /secrets/mega-pipeline.json
-
+/backup
+solution_containers.zip
