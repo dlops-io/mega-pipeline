@@ -123,6 +123,54 @@ optional arguments:
 
 ```
 
+* Use this as a starter template for your `cli.py`
+```
+"""
+Module that contains the command line app.
+"""
+import argparse
+
+def download():
+    print("download")
+    
+def synthesis():
+    print("synthesis")
+
+def upload():
+    print("upload")
+
+def main(args=None):
+
+    print("Args:", args)
+
+    if args.download:
+        download()
+    if args.synthesis:
+        synthesis()
+    if args.upload:
+        upload()
+
+
+if __name__ == "__main__":
+    # Generate the inputs arguments parser
+    # if you type into the terminal 'python cli.py --help', it will provide the description
+    parser = argparse.ArgumentParser(
+        description='Synthesis audio from text')
+
+    parser.add_argument("-d", "--download", action='store_true',
+                        help="Download paragraph of text from GCS bucket")
+
+    parser.add_argument("-s", "--synthesis", action='store_true',
+                        help="Synthesis audio")
+
+    parser.add_argument("-u", "--upload", action='store_true',
+                        help="Upload audio file to GCS bucket")
+
+    args = parser.parse_args()
+
+    main(args)
+```
+
 * Requirements for `cli.py`
 Use the following values:
 ```

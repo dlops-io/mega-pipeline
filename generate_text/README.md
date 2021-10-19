@@ -122,6 +122,54 @@ optional arguments:
   -u, --upload    Upload paragraph text to GCS bucket
 ```
 
+* Use this as a starter template for your `cli.py`
+```
+"""
+Module that contains the command line app.
+"""
+import argparse
+
+def download():
+    print("download")
+
+def generate():
+    print("generate")
+
+def upload():
+    print("upload")
+
+def main(args=None):
+
+    print("Args:", args)
+
+    if args.download:
+        download()
+    if args.generate:
+        generate()
+    if args.upload:
+        upload()
+
+
+if __name__ == "__main__":
+    # Generate the inputs arguments parser
+    # if you type into the terminal 'python cli.py --help', it will provide the description
+    parser = argparse.ArgumentParser(
+        description='Generate text from prompt')
+
+    parser.add_argument("-d", "--download", action='store_true',
+                        help="Download text prompts from GCS bucket")
+
+    parser.add_argument("-g", "--generate", action='store_true',
+                        help="Generate a text paragraph")
+
+    parser.add_argument("-u", "--upload", action='store_true',
+                        help="Upload paragraph text to GCS bucket")
+
+    args = parser.parse_args()
+
+    main(args)
+```
+
 * Requirements for `cli.py`
 Use the following values:
 ```

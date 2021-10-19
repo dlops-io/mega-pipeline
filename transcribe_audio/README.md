@@ -121,6 +121,55 @@ optional arguments:
   -u, --upload      Upload transcribed text to GCS bucket
 ```
 
+* Use this as a starter template for your `cli.py`
+```
+"""
+Module that contains the command line app.
+"""
+import argparse
+
+def download():
+    print("download")
+
+def transcribe():
+    print("transcribe")
+
+def upload():
+    print("upload")
+
+def main(args=None):
+
+    print("Args:", args)
+
+    if args.download:
+        download()
+    if args.transcribe:
+        transcribe()
+    if args.upload:
+        upload()
+
+if __name__ == "__main__":
+    # Generate the inputs arguments parser
+    # if you type into the terminal 'python cli.py --help', it will provide the description
+    parser = argparse.ArgumentParser(
+        description='Transcribe audio file to text')
+
+    parser.add_argument("-d", "--download", action='store_true',
+                        help="Download audio files from GCS bucket")
+
+    parser.add_argument("-t", "--transcribe", action='store_true',
+                        help="Transcribe audio files to text")
+
+    parser.add_argument("-u", "--upload", action='store_true',
+                        help="Upload transcribed text to GCS bucket")
+
+    args = parser.parse_args()
+
+    main(args)
+
+```
+
+
 * Requirements for `cli.py`
 Use the following values:
 ```
