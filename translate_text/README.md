@@ -130,7 +130,7 @@ import argparse
 
 def download():
     print("download")
-    
+
 def translate():
     print("translate")
 
@@ -201,6 +201,13 @@ print(results.text)
 
 * -u, --upload      Upload paragraph text to GCS bucket
 Write a function to upload the files in `text_translated` to the bucket `text_translated` in GCS
+
+### Testing your code locally
+* Inside your docker shell make sure you run the following commands:
+* `python clip.py -d` - Should download all the required data from GCS bucket
+* `python clip.py -t` - Should translate text from english to french and save it locally
+* `python clip.py -u` - Should upload the french text to the remote GCS bucket
+* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/)
 
 ### Push Container to Docker Hub
 * Sign up in Docker Hub and create an [Access Token](https://hub.docker.com/settings/security)

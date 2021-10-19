@@ -228,6 +228,13 @@ with open(audio_file, "wb") as out:
 * -u, --upload      Upload paragraph text to GCS bucket
 Write a function to upload the files in `output_audios` to the bucket `output_audios` in GCS
 
+### Testing your code locally
+* Inside your docker shell make sure you run the following commands:
+* `python clip.py -d` - Should download all the required data from GCS bucket
+* `python clip.py -s` - Should synthesis audio from text and save it locally
+* `python clip.py -u` - Should upload the audio files to the remote GCS bucket
+* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/)
+
 ### Push Container to Docker Hub
 * Sign up in Docker Hub and create an [Access Token](https://hub.docker.com/settings/security)
 * Login to the Hub: `docker login -u <USER NAME> -p <ACCESS TOKEN>`
