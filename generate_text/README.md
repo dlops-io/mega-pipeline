@@ -90,10 +90,8 @@ apt-get install -y --no-install-recommends build-essential
 
 
 ### Docker Build & Run
-* You should be able to build your docker image by using:
-```
-docker build -t generate_text -f Dockerfile .
-```
+* Build your docker image and give your image the name `generate_text`
+
 * You should be able to run your docker image by using:
 ```
 docker run --rm -ti --mount type=bind,source=$(pwd),target=/app generate_text

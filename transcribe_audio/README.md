@@ -90,10 +90,8 @@ apt-get install -y --no-install-recommends build-essential ffmpeg
 
 
 ### Docker Build & Run
-* You should be able to build your docker image by using:
-```
-docker build -t transcribe_audio -f Dockerfile .
-```
+* Build your docker image and give your image the name `transcribe_audio`
+
 * You should be able to run your docker image by using:
 ```
 docker run --rm -ti --mount type=bind,source=$(pwd),target=/app transcribe_audio

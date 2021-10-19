@@ -91,13 +91,11 @@ apt-get install -y --no-install-recommends build-essential
 
 
 ### Docker Build & Run
-* You should be able to build your docker image by using:
-```
-docker build -t text_translated -f Dockerfile .
-```
+* Build your docker image and give your image the name `synthesis_audio`
+
 * You should be able to run your docker image by using:
 ```
-docker run --rm -ti --mount type=bind,source=$(pwd),target=/app text_translated
+docker run --rm -ti --mount type=bind,source=$(pwd),target=/app synthesis_audio
 ```
 * The `--mount type=bind,source=$(pwd)` option is to mount your current working directory into the `/app` directory inside the container. This helps us during development of the app so when you change a source code file using VSCode from your host machine the files are automatically changed inside the container.
 
@@ -238,5 +236,5 @@ Write a function to upload the files in `output_audios` to the bucket `output_au
 ### Push Container to Docker Hub
 * Sign up in Docker Hub and create an [Access Token](https://hub.docker.com/settings/security)
 * Login to the Hub: `docker login -u <USER NAME> -p <ACCESS TOKEN>`
-* Tag the Docker Image: `docker tag text_translated <USER NAME>/text_translated`
-* Push to Docker Hub: `docker push <USER NAME>/text_translated`
+* Tag the Docker Image: `docker tag synthesis_audio <USER NAME>/synthesis_audio`
+* Push to Docker Hub: `docker push <USER NAME>/synthesis_audio`

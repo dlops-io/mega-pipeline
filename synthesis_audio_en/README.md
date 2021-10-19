@@ -91,10 +91,8 @@ apt-get install -y --no-install-recommends build-essential
 
 
 ### Docker Build & Run
-* You should be able to build your docker image by using:
-```
-docker build -t synthesis_audio_en -f Dockerfile .
-```
+* Build your docker image and give your image the name `synthesis_audio_en`
+
 * You should be able to run your docker image by using:
 ```
 docker run --rm -ti --mount type=bind,source=$(pwd),target=/app synthesis_audio_en
