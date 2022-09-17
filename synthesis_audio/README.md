@@ -1,6 +1,6 @@
 # Synthesis Audio
 
-🇫🇷 &rightarrow; 🔊
+🇮🇳 &rightarrow; 🔊
 
 In this container you will implement the following:
 * Read the translated text from the GCS bucket `mega-pipeline-bucket` and folder `text_translated`
@@ -95,7 +95,7 @@ apt-get install -y --no-install-recommends build-essential
 
 * You should be able to run your docker image by using:
 ```
-docker run --rm -ti --mount type=bind,source=$(pwd),target=/app synthesis_audio
+docker run --rm -ti --mount type=bind,source="$(pwd)",target=/app synthesis_audio
 ```
 * The `--mount type=bind,source=$(pwd)` option is to mount your current working directory into the `/app` directory inside the container. This helps us during development of the app so when you change a source code file using VSCode from your host machine the files are automatically changed inside the container.
 
@@ -172,8 +172,8 @@ if __name__ == "__main__":
 * Requirements for `cli.py`
 Use the following values:
 ```
-gcp_project = "ac215-project"
-bucket_name = "mega-pipeline-bucket"
+gcp_project = "ai5-project"
+bucket_name = "ai5-mega-pipeline-bucket"
 output_audios = "output_audios"
 text_translated = "text_translated"
 ```
@@ -194,7 +194,7 @@ from google.cloud import texttospeech
 # Instantiates a client
 client = texttospeech.TextToSpeechClient()
 
-input_text = "Hello, welcome to AC215"
+input_text = "Hello, welcome to AI5"
 
 # Set the text input to be synthesized
 synthesis_input = texttospeech.SynthesisInput(text=input_text)
@@ -228,10 +228,10 @@ Write a function to upload the files in `output_audios` to the bucket `output_au
 
 ### Testing your code locally
 * Inside your docker shell make sure you run the following commands:
-* `python clip.py -d` - Should download all the required data from GCS bucket
-* `python clip.py -s` - Should synthesis audio from text and save it locally
-* `python clip.py -u` - Should upload the audio files to the remote GCS bucket
-* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/)
+* `python cli.py -d` - Should download all the required data from GCS bucket
+* `python cli.py -s` - Should synthesis audio from text and save it locally
+* `python cli.py -u` - Should upload the audio files to the remote GCS bucket
+* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ai5-mega-pipeline.dlops.io/)
 
 ### Push Container to Docker Hub
 * Sign up in Docker Hub and create an [Access Token](https://hub.docker.com/settings/security)
