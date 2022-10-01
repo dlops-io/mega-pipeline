@@ -94,6 +94,43 @@ blob.upload_from_filename("Path to test.mp3 on local computer")
 
 ```
 
+* Sample Dockerfile
+```
+# Use the official Debian-hosted Python image
+FROM python:3.8-slim-buster
+
+# Tell pipenv where the shell is. 
+# This allows us to use "pipenv shell" as a container entry point.
+ENV PYENV_SHELL=/bin/bash
+
+ENV GOOGLE_APPLICATION_CREDENTIALS=secrets/mega-pipeline.json
+
+# Ensure we have an up to date baseline, install dependencies 
+RUN set -ex; \
+    apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends build-essential git ffmpeg && \
+    pip install --no-cache-dir --upgrade pip && \
+    pip install pipenv && \
+    mkdir -p /app
+
+WORKDIR /app
+
+# Add Pipfile, Pipfile.lock
+ADD Pipfile Pipfile.lock /app/
+
+RUN pipenv sync
+
+# Source code
+ADD . /app
+
+# Entry point
+ENTRYPOINT ["/bin/bash"]
+
+# Get into the pipenv shell
+CMD ["-c", "pipenv shell"]
+```
+
 ### Some notes for running on Windows
 * Docker Win10 installation - needs WSL2 or Hyper-V enabled: https://docs.docker.com/desktop/windows/install/
 * Use `Git` BASH to run (which is like a smaller `Cygwin`)
