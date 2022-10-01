@@ -1,6 +1,6 @@
 # Mega Pipeline App
 
-🎙️ &rightarrow; 📝 &rightarrow; 🗒️ &rightarrow; 🇫🇷 &rightarrow; 🔊
+🎙️ &rightarrow; 📝 &rightarrow; 🗒️ &rightarrow; 🇮🇳 &rightarrow; 🔊
 
 In this tutorial app is to build a Mega  Pipeline App which does the following:
 

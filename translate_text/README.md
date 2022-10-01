@@ -1,6 +1,6 @@
 # Translate Text
 
-🗒️ &rightarrow; 🇫🇷
+🗒️ &rightarrow; 🇮🇳
 
 In this container you will implement the following:
 * Read the paragraph of text from the GCS bucket `mega-pipeline-bucket` and folder `text_paragraphs`
