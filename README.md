@@ -12,9 +12,48 @@ In this tutorial app is to build a Mega  Pipeline App which does the following:
 
 * The generated text is synthesized to audio using Google Cloud Text-to-Speech API
 
-* The generated text is also translated to French using googletrans
+* The generated text is also translated to Hindi using googletrans
 
 * The translated text is then synthesized to audio using Google Cloud Text-to-Speech API
+
+
+### Resulting CLI options for each container
+
+**Transcribe Audio**
+```
+python cli.py -d
+python cli.py -t
+python cli.py -u
+```
+
+**Generate Text**
+```
+python cli.py -d
+python cli.py -g
+python cli.py -u
+```
+
+**Synthesis Audio English**
+```
+python cli.py -d
+python cli.py -s
+python cli.py -u
+```
+
+**Translate Text**
+```
+python cli.py -d
+python cli.py -t
+python cli.py -u
+```
+
+**Synthesis Audio**
+```
+python cli.py -d
+python cli.py -s
+python cli.py -u
+```
+
 
 ### Sample Code to Read/Write to GCS Bucket
 
