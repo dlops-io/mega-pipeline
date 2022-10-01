@@ -4,7 +4,7 @@
 
 In this container you will implement the following:
 * Read the paragraph of text from the GCS bucket `mega-pipeline-bucket` and folder `text_paragraphs`
-* Use `googletrans` to translate the text from English to French
+* Use `googletrans` to translate the text from English to Hindi
 * Save the translated text as a text file in bucket `mega-pipeline-bucket` and folder `text_translated` (use the same file name)
 
 ### Prerequisites for Development
@@ -110,7 +110,7 @@ docker run --rm -ti --mount type=bind,source=$(pwd),target=/app translate_text
 python cli.py --help
 usage: cli.py [-h] [-d] [-t] [-u]
 
-Translate English to French
+Translate English to Hindi
 
 optional arguments:
   -h, --help       show this help message and exit
@@ -150,7 +150,7 @@ if __name__ == "__main__":
     # Generate the inputs arguments parser
     # if you type into the terminal 'python cli.py --help', it will provide the description
     parser = argparse.ArgumentParser(
-        description='Translate English to French')
+        description='Translate English to Hindi')
 
     parser.add_argument("-d", "--download", action='store_true',
                         help="Download text paragraphs from GCS bucket")
@@ -182,7 +182,7 @@ text_translated = "text_translated"
 Write a function to download all text paragraphs from the bucket `text_paragraphs` and store them locally in a folder `text_paragraphs`
 
 * -t, --translate  Translate text
-Write a function to translate text from english to french and store in a local folder `text_translated`
+Write a function to translate text from english to hindi and store in a local folder `text_translated`
 
 * Example code to translation:
 ```
@@ -203,8 +203,8 @@ Write a function to upload the files in `text_translated` to the bucket `text_tr
 ### Testing your code locally
 * Inside your docker shell make sure you run the following commands:
 * `python cli.py -d` - Should download all the required data from GCS bucket
-* `python cli.py -t` - Should translate text from english to french and save it locally
-* `python cli.py -u` - Should upload the french text to the remote GCS bucket
+* `python cli.py -t` - Should translate text from english to hindi and save it locally
+* `python cli.py -u` - Should upload the hindi text to the remote GCS bucket
 * Verify that your uploaded data shows up in the [Mega Pipeline App](https://ai5-mega-pipeline.dlops.io/)
 
 ### OPTIONAL: Push Container to Docker Hub
