@@ -97,7 +97,7 @@ apt-get install -y --no-install-recommends build-essential
 ```
 docker run --rm -ti --mount type=bind,source="$(pwd)",target=/app synthesis_audio
 ```
-* The `--mount type=bind,source=$(pwd)` option is to mount your current working directory into the `/app` directory inside the container. This helps us during development of the app so when you change a source code file using VSCode from your host machine the files are automatically changed inside the container.
+* The `--mount type=bind,source="$(pwd)"` option is to mount your current working directory into the `/app` directory inside the container. This helps us during development of the app so when you change a source code file using VSCode from your host machine the files are automatically changed inside the container.
 
 ### Python packages required
 * `pipenv install` the following:
