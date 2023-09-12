@@ -1,20 +1,42 @@
 # Mega Pipeline App
 
-🎙️ &rightarrow; 📝 &rightarrow; 🗒️ &rightarrow; 🇫🇷 &rightarrow; 🔊
+🎙️ &rightarrow; 📝 &rightarrow; 🗒️ &rightarrow;  [🔊🇫🇷] &rightarrow; 🔊
 
 In this tutorial app is to build a Mega  Pipeline App which does the following:
 
 * Allows a user to Record audio using a mic
-
 * The audio file is then transcribed using Google Cloud Speech to Text API
-
 * The text is used as a prompt to a pre-trained GPT2 model to Generate Text (100 words)
-
 * The generated text is synthesized to audio using Google Cloud Text-to-Speech API
-
 * The generated text is also translated to Hindi using googletrans
-
 * The translated text is then synthesized to audio using Google Cloud Text-to-Speech API
+
+## The class will work in teams:
+* 📝Team A [transcribe_audio]():
+* 🗒️Team B [generate_text]():
+* 🔊Team C [synthesis_audio_en]():
+* 🇫🇷Team D [translate_text]():
+* 🔊Team E [synthesis_audio]():
+
+Each team will create a Docker container to build the required functionality. The details on what to build in each container are linked above for each team.
+The overall progress of this mega pipeline can be viewed here
+
+## GCP Credentials File:
+(Download and place inside <app_folder>/secrets):
+[mega-pipeline.json](https://static.us.edusercontent.com/files/Xdc8fhBM7b703yPPV1B5xtBN)
+
+
+
+
+## GCS Bucket Details:
+* **input_audios** - Bucket where we store the input audio files
+* **text_prompts** - Bucket where we store the text prompts that was synthesized by audio to text
+* **text_paragraphs** - Bucket where we store the generated text from GPT2
+* **text_translated** - Bucket where we store the translated text
+* **text_audios** - Bucket where we store the audio of the paragraph of text
+* **output_audios** - Bucket where we store the final French audio files
+
+![Mega pipeline bucket](mega-pipeline-bucket.png)
 
 
 ### Resulting CLI options for each container
