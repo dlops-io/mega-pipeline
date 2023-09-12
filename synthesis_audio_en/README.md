@@ -172,8 +172,8 @@ if __name__ == "__main__":
 * Requirements for `cli.py`
 Use the following values:
 ```
-gcp_project = "ai5-project"
-bucket_name = "ai5-mega-pipeline-bucket"
+gcp_project = "ac215-project"
+bucket_name = "mega-pipeline-bucket"
 text_paragraphs = "text_paragraphs"
 text_audios = "text_audios"
 ```
@@ -194,7 +194,7 @@ from google.cloud import texttospeech
 # Instantiates a client
 client = texttospeech.TextToSpeechClient()
 
-input_text = "Hello, welcome to AI5"
+input_text = "Hello, welcome to AC215"
 
 # Set the text input to be synthesized
 synthesis_input = texttospeech.SynthesisInput(text=input_text)
@@ -231,7 +231,7 @@ Write a function to upload the files in `text_audios` to the bucket `text_audios
 * `python cli.py -d` - Should download all the required data from GCS bucket
 * `python cli.py -s` - Should synthesis audio from text and save it locally
 * `python cli.py -u` - Should upload the audio files to the remote GCS bucket
-* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ai5-mega-pipeline.dlops.io/)
+* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/)
 
 ### Push Container to Docker Hub
 * Sign up in Docker Hub and create an [Access Token](https://hub.docker.com/settings/security)
