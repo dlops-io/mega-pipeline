@@ -11,6 +11,9 @@ In this tutorial app is to build a [Mega Pipeline App](https://ac215-mega-pipeli
 * The generated text is also translated to Hindi using googletrans
 * The translated text is then synthesized to audio using Google Cloud Text-to-Speech API
 
+The pipeline flow is as shown:
+<img src="mega-pipeline-flow.png"  width="800">
+
 ## The class will work in teams:
 * 📝Team A [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/main/transcribe_audio):
 * 🗒️Team B [generate_text](https://github.com/dlops-io/mega-pipeline/tree/main/generate_text):
