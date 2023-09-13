@@ -20,7 +20,8 @@ If you already have a preferred text editor, skip this step.
 * Create a folder `translate_text`
 
 ### GCP Credentials File
-* Download the `mega-pipeline.json` from Ed and save it inside a folder called `secrets` inside `translate_text`
+* Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `translate_text`
+[mega-pipeline.json](https://static.us.edusercontent.com/files/Xdc8fhBM7b703yPPV1B5xtBN)
 
 ### Create Pipfile & Pipfile.lock files
 * Add `Pipfile` with a the following contents:

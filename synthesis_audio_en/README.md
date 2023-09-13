@@ -21,7 +21,8 @@ If you already have a preferred text editor, skip this step.
 * Create a folder `synthesis_audio_en`
 
 ### GCP Credentials File
-* Download the `mega-pipeline.json` from Ed and save it inside a folder called `secrets` inside `synthesis_audio_en`
+* Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `synthesis_audio_en`
+[mega-pipeline.json](https://static.us.edusercontent.com/files/Xdc8fhBM7b703yPPV1B5xtBN)
 
 ### Create Pipfile & Pipfile.lock files
 * Add `Pipfile` with a the following contents:
