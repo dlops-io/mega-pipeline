@@ -20,7 +20,8 @@ If you already have a preferred text editor, skip this step.
 * Create a folder `generate_text`
 
 ### GCP Credentials File
-* Download the `mega-pipeline.json` from Ed and save it inside a folder called `secrets` inside `generate_text`
+* Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `generate_text`
+[mega-pipeline.json](https://static.us.edusercontent.com/files/Xdc8fhBM7b703yPPV1B5xtBN)
 
 ### Create Pipfile & Pipfile.lock files
 * Add `Pipfile` with a the following contents:
@@ -171,8 +172,8 @@ if __name__ == "__main__":
 * Requirements for `cli.py`
 Use the following values:
 ```
-gcp_project = "ai5-project"
-bucket_name = "ai5-mega-pipeline-bucket"
+gcp_project = "ac215-project"
+bucket_name = "mega-pipeline-bucket"
 text_prompts = "text_prompts"
 text_paragraphs = "text_paragraphs"
 ```
@@ -195,7 +196,7 @@ Write a function to upload the files in `text_paragraphs` to the bucket `text_pa
 * `python cli.py -d` - Should download all the required data from GCS bucket
 * `python cli.py -g` - Should generate text using GPT2 and save it locally
 * `python cli.py -u` - Should upload the generated text to the remote GCS bucket
-* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ai5-mega-pipeline.dlops.io/)
+* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/)
 
 ### Push Container to Docker Hub
 * Sign up in Docker Hub and create an [Access Token](https://hub.docker.com/settings/security)
