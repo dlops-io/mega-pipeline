@@ -24,6 +24,7 @@ If you already have a preferred text editor, skip this step.
 [mega-pipeline.json](https://static.us.edusercontent.com/files/Xdc8fhBM7b703yPPV1B5xtBN)
 
 ### Create Pipfile & Pipfile.lock files
+* Inside the `transcribe_audio` folder create:
 * Add `Pipfile` with a the following contents:
 ```
 [[source]]
@@ -64,6 +65,7 @@ python_version = "3.8"
 ```
 
 ### Create Dockerfile
+* Inside the `transcribe_audio` folder
 * Create a `Dockerfile` and base it from `python:3.8-slim-buster` the official Debian-hosted Python 3.8 image
 * Set the following environment variables:
 ```
@@ -97,7 +99,7 @@ apt-get install -y --no-install-recommends build-essential ffmpeg
 ```
 docker run --rm -ti --mount type=bind,source="$(pwd)",target=/app transcribe_audio
 ```
-* The `--mount type=bind,source="$(pwd)"` option is to mount your current working directory into the `/app` directory inside the container. This helps us during development of the app so when you change a source code file using VSCode from your host machine the files are automatically changed inside the container.
+* The `--mount type=bind,source="$(pwd)",target=/app` option is to mount your current working directory into the `/app` directory inside the container. This helps us during development of the app so when you change a source code file using VSCode from your host machine the files are automatically changed inside the container.
 
 ### Python packages required
 * `pipenv install` the following:
