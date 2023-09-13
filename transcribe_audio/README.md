@@ -21,7 +21,7 @@ If you already have a preferred text editor, skip this step.
 
 ### GCP Credentials File
 * Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `transcribe_audio`
-[mega-pipeline.json](https://static.us.edusercontent.com/files/Xdc8fhBM7b703yPPV1B5xtBN)
+<a href="https://static.us.edusercontent.com/files/Xdc8fhBM7b703yPPV1B5xtBN" download>mega-pipeline.json</a>
 
 ### Create Pipfile & Pipfile.lock files
 * Inside the `transcribe_audio` folder create:
