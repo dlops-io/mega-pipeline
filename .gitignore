@@ -5,3 +5,8 @@ geckodriver.log
 scratch.txt
 _test
 outputs
+.vscode
+/api-service
+/deployment
+/frontend
+/persistent-folder

@@ -1,5 +1,8 @@
 # misc
 .DS_Store
-/secrets/mega-pipeline.json
-/backup
-solution_containers.zip
+/secrets
+cli.py
+docker-shell.sh
+Dockerfile
+Pipfile
+Pipfile.lock
