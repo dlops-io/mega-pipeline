@@ -93,6 +93,8 @@ apt-get install -y --no-install-recommends build-essential
 ### Docker Build & Run
 * Build your docker image and give your image the name `translate_text`
 
+* Example dockerfile can be found [here](https://github.com/dlops-io/mega-pipeline#sample-dockerfile)
+
 * You should be able to run your docker image by using:
 ```
 docker run --rm -ti --mount type=bind,source="$(pwd)",target=/app translate_text
@@ -185,7 +187,7 @@ Write a function to download all text paragraphs from the bucket `text_paragraph
 * -t, --translate  Translate text
 Write a function to translate text from english to hindi and store in a local folder `text_translated`
 
-* Sample code to read/write to a GCS Bucket can be found [hear](https://github.com/dlops-io/mega-pipeline#sample-code-to-readwrite-to-gcs-bucket)
+* Sample code to read/write to a GCS Bucket can be found [here](https://github.com/dlops-io/mega-pipeline#sample-code-to-readwrite-to-gcs-bucket)
 
 * Example code to translation:
 ```
