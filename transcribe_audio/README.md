@@ -91,6 +91,7 @@ apt-get install -y --no-install-recommends build-essential ffmpeg
 * Add Entry point to `/bin/bash`
 * Add a command to get into the `pipenv shell`
 
+* Example dockerfile can be found [here](https://github.com/dlops-io/mega-pipeline#sample-dockerfile)
 
 ### Docker Build & Run
 * Build your docker image and give your image the name `transcribe_audio`
@@ -189,7 +190,7 @@ Write a function to download all audio files from the bucket `input_audios` and 
 * -t, --transcribe  Transcribe audio files to text
 Write a function to transcribe the audio files to text and store them locally in a folder `text_prompts`
 
-* Sample code to read/write to a GCS Bucket can be found [hear](https://github.com/dlops-io/mega-pipeline#sample-code-to-readwrite-to-gcs-bucket)
+* Sample code to read/write to a GCS Bucket can be found [here](https://github.com/dlops-io/mega-pipeline#sample-code-to-readwrite-to-gcs-bucket)
 
 * Example code to transcribe an audio.mp3 file to text:
 ```

@@ -90,6 +90,7 @@ apt-get install -y --no-install-recommends build-essential
 * Add Entry point to `/bin/bash`
 * Add a command to get into the `pipenv shell`
 
+* Example dockerfile can be found [here](https://github.com/dlops-io/mega-pipeline#sample-dockerfile)
 
 ### Docker Build & Run
 * Build your docker image and give your image the name `synthesis_audio`
@@ -188,7 +189,7 @@ Write a function to download all text paragraphs from the bucket `text_translate
 * -s, --synthesis  Synthesis audio
 Write a function to synthesis audio from text and store in a local folder `output_audios`
 
-* Sample code to read/write to a GCS Bucket can be found [hear](https://github.com/dlops-io/mega-pipeline#sample-code-to-readwrite-to-gcs-bucket)
+* Sample code to read/write to a GCS Bucket can be found [here](https://github.com/dlops-io/mega-pipeline#sample-code-to-readwrite-to-gcs-bucket)
 
 * Example code to synthesis an audio.mp3 file from text:
 ```

@@ -89,11 +89,10 @@ apt-get install -y --no-install-recommends build-essential
 * Add Entry point to `/bin/bash`
 * Add a command to get into the `pipenv shell`
 
+* Example dockerfile can be found [here](https://github.com/dlops-io/mega-pipeline#sample-dockerfile)
 
 ### Docker Build & Run
 * Build your docker image and give your image the name `translate_text`
-
-* Example dockerfile can be found [here](https://github.com/dlops-io/mega-pipeline#sample-dockerfile)
 
 * You should be able to run your docker image by using:
 ```
