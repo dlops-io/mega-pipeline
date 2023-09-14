@@ -4,7 +4,7 @@
 
 In this container you will implement the following:
 * Read the text prompt from the GCS bucket `mega-pipeline-bucket` and folder `text_prompts`
-* Use GPT2 to generate text (About 100 words)
+* Use GPT2 or OpenAI API to generate text (About 100 words)
 * Save the paragraph of text as a text file in bucket `mega-pipeline-bucket` and folder `text_paragraphs` (use the same file name)
 
 ### Prerequisites for Development
@@ -179,7 +179,7 @@ text_paragraphs = "text_paragraphs"
 ```
 
 * `text_prompts` - Bucket where we store the text prompts that was synthesized by audio to text
-* `text_paragraphs` - Bucket where we store the generated text from GPT2
+* `text_paragraphs` - Bucket where we store the generated text from GPT2 or OpenAI API
 
 * -d, --download    Download text prompts from GCS bucket
 Write a function to download all text prompts from the bucket `text_prompts` and store them locally in a folder `text_prompts`
@@ -194,7 +194,7 @@ Write a function to upload the files in `text_paragraphs` to the bucket `text_pa
 ### Testing your code locally
 * Inside your docker shell make sure you run the following commands:
 * `python cli.py -d` - Should download all the required data from GCS bucket
-* `python cli.py -g` - Should generate text using GPT2 and save it locally
+* `python cli.py -g` - Should generate text using GPT2 or OpenAI API and save it locally
 * `python cli.py -u` - Should upload the generated text to the remote GCS bucket
 * Verify that your uploaded data shows up in the [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/)
 
