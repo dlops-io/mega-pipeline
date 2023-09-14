@@ -193,7 +193,7 @@ translator = Translator()
 
 input_text = "Welcome to AC215"
 
-results = translator.translate(input_text, src="en", dest="hi")
+results = translator.translate(input_text, src="en", dest="fr")
 
 print(results.text)
 ```
