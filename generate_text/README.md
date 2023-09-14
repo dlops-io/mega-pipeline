@@ -191,6 +191,8 @@ Feel free to the `transformers` package to generate text like we did in th Langu
 * -u, --upload      Upload paragraph text to GCS bucket
 Write a function to upload the files in `text_paragraphs` to the bucket `text_paragraphs` in GCS
 
+* Sample code to read/write to a GCS Bucket can be found [hear](https://github.com/dlops-io/mega-pipeline#sample-code-to-readwrite-to-gcs-bucket)
+
 ### Testing your code locally
 * Inside your docker shell make sure you run the following commands:
 * `python cli.py -d` - Should download all the required data from GCS bucket

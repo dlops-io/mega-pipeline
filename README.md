@@ -118,7 +118,7 @@ blob.upload_from_filename("Path to test.mp3 on local computer")
 
 ```
 
-* Sample Dockerfile
+### Sample Dockerfile
 ```
 # Use the official Debian-hosted Python image
 FROM python:3.8-slim-buster

@@ -189,6 +189,8 @@ Write a function to download all audio files from the bucket `input_audios` and 
 * -t, --transcribe  Transcribe audio files to text
 Write a function to transcribe the audio files to text and store them locally in a folder `text_prompts`
 
+* Sample code to read/write to a GCS Bucket can be found [hear](https://github.com/dlops-io/mega-pipeline#sample-code-to-readwrite-to-gcs-bucket)
+
 * Example code to transcribe an audio.mp3 file to text:
 ```
 from tempfile import TemporaryDirectory
