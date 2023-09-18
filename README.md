@@ -26,7 +26,7 @@ The overall progress of this mega pipeline can be viewed [here](https://ac215-me
 
 ## GCP Credentials File:
 Download the json file and place inside <app_folder>/secrets:
-<a href="https://static.us.edusercontent.com/files/Xdc8fhBM7b703yPPV1B5xtBN" download>mega-pipeline.json</a>
+<a href="https://static.us.edusercontent.com/files/fo4cDM3adnwMlJVUXZXtzcH2" download>mega-pipeline.json</a>
 
 
 
