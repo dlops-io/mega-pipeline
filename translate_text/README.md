@@ -105,6 +105,9 @@ docker run --rm -ti --mount type=bind,source="$(pwd)",target=/app translate_text
   - `google-cloud-storage`
   - `googletrans==4.0.0rc1`
 
+
+* If you exit your container at this point, in order to get the latest environment from the pipenv file. Make sure to re-build your docker image again
+
 ### CLI to interact with your code
 * Add a python file `cli.py`
 * The CLI should have the following command line argument options
