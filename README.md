@@ -161,3 +161,6 @@ CMD ["-c", "pipenv shell"]
 * Needed to add pwd in quotes in order to escape the spaces that common in windows directory structures
 * Need to prefix docker run with `winpty` otherwise I get a "the input device is not a TTY." error
 * `winpty docker run --rm -ti --mount type=bind,source="$(pwd)",target=/app generate_text`
+
+## Solutions
+Solutions to this tutorial can be found [here](https://static.us.edusercontent.com/files/Me1xYaSxygJwKlljktLLYJDz)
