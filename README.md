@@ -2,7 +2,7 @@
 
 🎙️ &rightarrow; 📝 &rightarrow; 🗒️ &rightarrow;  [🔊🇫🇷] &rightarrow; 🔊
 
-In this tutorial app is to build a [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/) which does the following:
+In this tutorial app is to build a [Mega Pipeline App](https://ai5-mega-pipeline.dlops.io/) which does the following:
 
 * Allows a user to Record audio using a mic
 * The audio file is then transcribed using Google Cloud Speech to Text API
