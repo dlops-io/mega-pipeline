@@ -18,7 +18,7 @@ The pipeline flow is as shown:
 * 📝Team A [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/main/transcribe_audio):
 * 🗒️Team B [generate_text](https://github.com/dlops-io/mega-pipeline/tree/main/generate_text):
 * 🔊Team C [synthesis_audio_en](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio_en):
-* 🇫🇷Team D [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text):
+* 🇮🇳Team D [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text):
 * 🔊Team E [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio):
 
 Each team will create a Docker container to build the required functionality. The details on what to build in each container are linked above for each team.
@@ -36,7 +36,7 @@ Download the json file and place inside <app_folder>/secrets:
 * **text_paragraphs** - Bucket where we store the generated text from GPT2
 * **text_translated** - Bucket where we store the translated text
 * **text_audios** - Bucket where we store the audio of the paragraph of text
-* **output_audios** - Bucket where we store the final French audio files
+* **output_audios** - Bucket where we store the final Hindi audio files
 
 ![Mega pipeline bucket](mega-pipeline-bucket.png)
 
