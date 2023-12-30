@@ -81,10 +81,15 @@ apt-get install -y --no-install-recommends build-essential ffmpeg
 ```
 
 * Install pipenv
+```
+pip install --no-cache-dir --upgrade pip
+pip install pipenv
+```
+
 * Create a `app` folder by running `mkdir -p /app`
 
 * Set the working directory as `/app`
-* Add `Pipfile`, `Pipfile.lock` to the `/app` folder
+* Add `Pipfile`, `Pipfile.lock` to the `/app/` folder
 * Run `pipenv sync`
 
 * Add the rest of your files to the `/app` folder
@@ -98,9 +103,10 @@ apt-get install -y --no-install-recommends build-essential ffmpeg
 
 * You should be able to run your docker image by using:
 ```
-docker run --rm -ti --mount type=bind,source="$(pwd)",target=/app transcribe_audio
+docker run --rm -ti -v "$(pwd)":/app transcribe_audio
 ```
-* The `--mount type=bind,source="$(pwd)",target=/app` option is to mount your current working directory into the `/app` directory inside the container. This helps us during development of the app so when you change a source code file using VSCode from your host machine the files are automatically changed inside the container.
+
+* The `-v "(pwd)":/app` option is to mount your current working directory into the `/app` directory inside the container as a volume. This helps us during development of the app so when you change a source code file using VSCode from your host machine the files are automatically changed inside the container.
 
 ### Python packages required
 * `pipenv install` the following:
