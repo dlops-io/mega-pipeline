@@ -213,6 +213,14 @@ client = speech.SpeechClient()
 
 audio_path = "path to audio.mp3"
 
+uuid = audio_path.replace(".mp3", "")
+audio_path = os.path.join(input_audios, audio_path)
+text_file = os.path.join(text_prompts, uuid + ".txt")
+
+if os.path.exists(text_file):
+    continue
+
+print("Transcribing:", audio_path)
 with TemporaryDirectory() as audio_dir:
     flac_path = os.path.join(audio_dir, "audio.flac")
     stream = ffmpeg.input(audio_path)
@@ -224,16 +232,18 @@ with TemporaryDirectory() as audio_dir:
 
     # Transcribe
     audio = speech.RecognitionAudio(content=content)
-    config = speech.RecognitionConfig(
-        language_code="en-US"
-    )
-    operation = client.long_running_recognize(
-        config=config, audio=audio)
+    config = speech.RecognitionConfig(language_code="en-US")
+    operation = client.long_running_recognize(config=config, audio=audio)
     response = operation.result(timeout=90)
-    print(response)
+    print("response:", response)
+    text = "None"
+    if len(response.results) > 0:
+        text = response.results[0].alternatives[0].transcript
+        print(text)
 
-    for result in response.results:
-        print("Transcript: {}".format(result.alternatives[0].transcript))
+    # Save the transcription
+    with open(text_file, "w") as f:
+        f.write(text)
 ```
 
 * -u, --upload      Upload transcribed text to GCS bucket
