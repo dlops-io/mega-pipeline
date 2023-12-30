@@ -22,12 +22,12 @@ The pipeline flow is as shown:
 * 🔊Team E [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio):
 
 Each team will create a Docker container to build the required functionality. The details on what to build in each container are linked above for each team.
-The overall progress of this mega pipeline can be viewed [here](https://ac215-mega-pipeline.dlops.io/)
+The overall progress of this mega pipeline can be viewed [here](https://ai5-mega-pipeline.dlops.io/)
 
 ## GCP Credentials File:
 Download the json file and place inside <app_folder>/secrets:
-<a href="https://static.us.edusercontent.com/files/fo4cDM3adnwMlJVUXZXtzcH2" download>mega-pipeline.json</a>
-
+<!-- <a href="https://static.us.edusercontent.com/files/fo4cDM3adnwMlJVUXZXtzcH2" download>mega-pipeline.json</a> -->
+- Download the file from discord
 
 
 ## GCS Bucket Details:

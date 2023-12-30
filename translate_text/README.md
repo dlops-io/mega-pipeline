@@ -203,7 +203,7 @@ from googletrans import Translator
 
 translator = Translator()
 
-input_text = "Welcome to AC215"
+input_text = "Welcome to AI5"
 
 results = translator.translate(input_text, src="en", dest="fr")
 
@@ -218,7 +218,7 @@ Write a function to upload the files in `text_translated` to the bucket `text_tr
 * `python cli.py -d` - Should download all the required data from GCS bucket
 * `python cli.py -t` - Should translate text from english to hindi and save it locally
 * `python cli.py -u` - Should upload the hindi text to the remote GCS bucket
-* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/)
+* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ai5-mega-pipeline.dlops.io/)
 
 ### OPTIONAL: Push Container to Docker Hub
 * Sign up in Docker Hub and create an [Access Token](https://hub.docker.com/settings/security)
