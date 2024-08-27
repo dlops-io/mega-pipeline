@@ -163,4 +163,4 @@ CMD ["-c", "pipenv shell"]
 * `winpty docker run --rm -ti --mount type=bind,source="$(pwd)",target=/app generate_text`
 
 ## Solutions
-Solutions to this tutorial can be found [here](https://static.us.edusercontent.com/files/Me1xYaSxygJwKlljktLLYJDz)
+Solutions to this tutorial can be found [here]()

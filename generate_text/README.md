@@ -7,13 +7,6 @@ In this container you will implement the following:
 * Use GPT2 or OpenAI API to generate text (About 100 words)
 * Save the paragraph of text as a text file in bucket `mega-pipeline-bucket` and folder `text_paragraphs` (use the same file name)
 
-### Prerequisites for Development
-* Have Docker Desktop installed
-* Check that your Docker is running with the following command
-`docker run hello-world`
-### Install VSCode  
-Follow the [instructions](https://code.visualstudio.com/download) for your operating system.  
-If you already have a preferred text editor, skip this step.  
 
 ### Project Setup
 
