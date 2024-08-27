@@ -1,7 +1,6 @@
 # misc
 .DS_Store
 /secrets
-cli.py
 docker-shell.sh
 Dockerfile
 Pipfile
