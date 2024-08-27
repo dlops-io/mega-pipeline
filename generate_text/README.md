@@ -10,7 +10,7 @@ In this container you will implement the following:
 
 ### Project Setup
 
-* Create a folder `generate_text`
+* Create a folder `generate_text` or clone this repo
 
 ### GCP Credentials File
 * Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `generate_text`
@@ -106,7 +106,7 @@ docker run --rm -ti -v "$(pwd)":/app generate_text
 * If you exit your container at this point, in order to get the latest environment from the pipenv file. Make sure to re-build your docker image again
 
 ### CLI to interact with your code
-* Add a python file `cli.py`
+* Use the given python file [`cli.py`](https://github.com/dlops-io/mega-pipeline/blob/main/generate_text/cli.py)
 * The CLI should have the following command line argument options
 ```
 python cli.py --help
@@ -120,78 +120,6 @@ optional arguments:
   -g, --generate  Generate a text paragraph
   -u, --upload    Upload paragraph text to GCS bucket
 ```
-
-* Use this as a starter template for your `cli.py`
-```
-"""
-Module that contains the command line app.
-"""
-import argparse
-
-def download():
-    print("download")
-
-def generate():
-    print("generate")
-
-def upload():
-    print("upload")
-
-def main(args=None):
-
-    print("Args:", args)
-
-    if args.download:
-        download()
-    if args.generate:
-        generate()
-    if args.upload:
-        upload()
-
-
-if __name__ == "__main__":
-    # Generate the inputs arguments parser
-    # if you type into the terminal 'python cli.py --help', it will provide the description
-    parser = argparse.ArgumentParser(
-        description='Generate text from prompt')
-
-    parser.add_argument("-d", "--download", action='store_true',
-                        help="Download text prompts from GCS bucket")
-
-    parser.add_argument("-g", "--generate", action='store_true',
-                        help="Generate a text paragraph")
-
-    parser.add_argument("-u", "--upload", action='store_true',
-                        help="Upload paragraph text to GCS bucket")
-
-    args = parser.parse_args()
-
-    main(args)
-```
-
-* Requirements for `cli.py`
-Use the following values:
-```
-gcp_project = "ac215-project"
-bucket_name = "mega-pipeline-bucket"
-text_prompts = "text_prompts"
-text_paragraphs = "text_paragraphs"
-```
-
-* `text_prompts` - Bucket where we store the text prompts that was synthesized by audio to text
-* `text_paragraphs` - Bucket where we store the generated text from GPT2 or OpenAI API
-
-* -d, --download    Download text prompts from GCS bucket
-Write a function to download all text prompts from the bucket `text_prompts` and store them locally in a folder `text_prompts`
-
-* -g, --generate  Generate a text paragraph
-Write a function to generate text using the prompt and save the generated text in a local folder `text_paragraphs`
-Feel free to the `transformers` package to generate text like we did in th Language Model tutorial
-
-* -u, --upload      Upload paragraph text to GCS bucket
-Write a function to upload the files in `text_paragraphs` to the bucket `text_paragraphs` in GCS
-
-* Sample code to read/write to a GCS Bucket can be found [here](https://github.com/dlops-io/mega-pipeline#sample-code-to-readwrite-to-gcs-bucket)
 
 ### Testing your code locally
 * Inside your docker shell make sure you run the following commands:
