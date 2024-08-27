@@ -10,7 +10,7 @@ In this container you will implement the following:
 
 ### Project Setup
 
-* Create a folder `translate_text`
+* Create a folder `translate_text` or clone this repo
 
 ### GCP Credentials File
 * Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `translate_text`
@@ -108,7 +108,7 @@ docker run --rm -ti -v "$(pwd)":/app translate_text
 * If you exit your container at this point, in order to get the latest environment from the pipenv file. Make sure to re-build your docker image again
 
 ### CLI to interact with your code
-* Add a python file `cli.py`
+* Use the given python file [`cli.py`](https://github.com/dlops-io/mega-pipeline/blob/main/translate_text/cli.py)
 * The CLI should have the following command line argument options
 ```
 python cli.py --help
@@ -123,95 +123,12 @@ optional arguments:
   -u, --upload     Upload translated text to GCS bucket
 ```
 
-* Use this as a starter template for your `cli.py`
-```
-"""
-Module that contains the command line app.
-"""
-import argparse
-
-def download():
-    print("download")
-
-def translate():
-    print("translate")
-
-def upload():
-    print("upload")
-
-def main(args=None):
-
-    print("Args:", args)
-
-    if args.download:
-        download()
-    if args.translate:
-        translate()
-    if args.upload:
-        upload()
-
-if __name__ == "__main__":
-    # Generate the inputs arguments parser
-    # if you type into the terminal 'python cli.py --help', it will provide the description
-    parser = argparse.ArgumentParser(
-        description='Translate English to Hindi')
-
-    parser.add_argument("-d", "--download", action='store_true',
-                        help="Download text paragraphs from GCS bucket")
-
-    parser.add_argument("-t", "--translate", action='store_true',
-                        help="Translate text")
-
-    parser.add_argument("-u", "--upload", action='store_true',
-                        help="Upload translated text to GCS bucket")
-
-    args = parser.parse_args()
-
-    main(args)
-```
-
-* Requirements for `cli.py`
-Use the following values:
-```
-gcp_project = "ac215-project"
-bucket_name = "mega-pipeline-bucket"
-text_paragraphs = "text_paragraphs"
-text_translated = "text_translated"
-```
-
-* `text_paragraphs` - Bucket where we store the generated text from GPT2
-* `text_translated` - Bucket where we store the translated text
-
-* -d, --download    Download text prompts from GCS bucket
-Write a function to download all text paragraphs from the bucket `text_paragraphs` and store them locally in a folder `text_paragraphs`
-
-* -t, --translate  Translate text
-Write a function to translate text from english to hindi and store in a local folder `text_translated`
-
-* Sample code to read/write to a GCS Bucket can be found [here](https://github.com/dlops-io/mega-pipeline#sample-code-to-readwrite-to-gcs-bucket)
-
-* Example code to translation:
-```
-from googletrans import Translator
-
-translator = Translator()
-
-input_text = "Welcome to AI5"
-
-results = translator.translate(input_text, src="en", dest="fr")
-
-print(results.text)
-```
-
-* -u, --upload      Upload paragraph text to GCS bucket
-Write a function to upload the files in `text_translated` to the bucket `text_translated` in GCS
-
 ### Testing your code locally
 * Inside your docker shell make sure you run the following commands:
 * `python cli.py -d` - Should download all the required data from GCS bucket
 * `python cli.py -t` - Should translate text from english to hindi and save it locally
 * `python cli.py -u` - Should upload the hindi text to the remote GCS bucket
-* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ai5-mega-pipeline.dlops.io/)
+* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/)
 
 ### OPTIONAL: Push Container to Docker Hub
 * Sign up in Docker Hub and create an [Access Token](https://hub.docker.com/settings/security)
