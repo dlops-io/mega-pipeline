@@ -2,7 +2,7 @@
 
 🎙️ &rightarrow; 📝 &rightarrow; 🗒️ &rightarrow;  [🔊🇫🇷] &rightarrow; 🔊
 
-In this tutorial app is to build a [Mega Pipeline App](https://ai5-mega-pipeline.dlops.io/) which does the following:
+In this tutorial app is to build a [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/) which does the following:
 
 * Allows a user to Record audio using a mic
 * The audio file is then transcribed using Google Cloud Speech to Text API
@@ -22,7 +22,7 @@ The pipeline flow is as shown:
 * 🔊Team E [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio):
 
 Each team will create a Docker container to build the required functionality. The details on what to build in each container are linked above for each team.
-The overall progress of this mega pipeline can be viewed [here](https://ai5-mega-pipeline.dlops.io/)
+The overall progress of this mega pipeline can be viewed [here](https://ac215-mega-pipeline.dlops.io/)
 
 ## GCP Credentials File:
 Download the json file and place inside <app_folder>/secrets:
