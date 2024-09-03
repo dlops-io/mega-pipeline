@@ -4,8 +4,8 @@
 
 In this container you will implement the following:
 * Read the text prompt from the GCS bucket `mega-pipeline-bucket` and folder `text_prompts`
-* Use GPT2 or OpenAI API to generate text (About 100 words)
-* Save the paragraph of text as a text file in bucket `mega-pipeline-bucket` and folder `text_paragraphs` (use the same file name)
+* Use Gemini or OpenAI API to generate text.
+* Save the paragraph of text as a text file in bucket `mega-pipeline-bucket` and folder `text_paragraphs` (use the same file name).
 
 
 ### Project Setup
