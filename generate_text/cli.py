@@ -6,7 +6,8 @@ import io
 import argparse
 import shutil
 from google.cloud import storage
-from transformers import GPT2Tokenizer, TFGPT2LMHeadModel, GPT2Config
+import vertexai
+from vertexai.generative_models import GenerativeModel, GenerationConfig
 
 # Generate the inputs arguments parser
 parser = argparse.ArgumentParser(description="Command description.")
@@ -16,6 +17,14 @@ bucket_name = "mega-pipeline-bucket"
 text_prompts = "text_prompts"
 text_paragraphs = "text_paragraphs"
 
+#############################################################################
+#                            Initialize the model                           #
+vertexai.init(project=gcp_project, location="us-central1")
+model = GenerativeModel(model_name="gemini-1.5-flash-001",)
+generation_config = GenerationConfig(
+    temperature=0.01
+)
+#############################################################################
 
 def makedirs():
     os.makedirs(text_paragraphs, exist_ok=True)
@@ -44,13 +53,6 @@ def generate():
     print("generate")
     makedirs()
 
-    # Tokenizer
-    tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-    # Model - Load pretrained GPT Language Model
-    model = TFGPT2LMHeadModel.from_pretrained(
-        "gpt2", pad_token_id=tokenizer.eos_token_id
-    )
-
     # Get the list of text file
     text_files = os.listdir(text_prompts)
 
@@ -65,24 +67,17 @@ def generate():
         with open(file_path) as f:
             input_text = f.read()
 
-        # Tokenize Input
-        input_ids = tokenizer.encode(input_text, return_tensors="tf")
-        print("input_ids", input_ids)
 
         # Generate output
-        # outputs = model.generate(
-        #     input_ids,
-        #     do_sample=True,
-        #     max_length=100,
-        #     top_k=50
-        # )
-        # paragraph = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        input_prompt = f"""
+            Create a transcript for the podcast about cheese with 1000 or more words.
+            Use the below text as a starting point for the cheese podcast.
+            {input_text}
+        """
+        print(input_prompt,"\n\n\n")
+        response = model.generate_content(input_prompt,generation_config=generation_config)
+        paragraph = response.text
 
-        # Generate output
-        outputs = model.generate(
-            input_ids, max_length=50, num_beams=3, early_stopping=False
-        )
-        paragraph = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
         print("Generated text:")
         print(paragraph)
