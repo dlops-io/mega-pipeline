@@ -1,0 +1,24 @@
+- name: Configure containers on app server
+  hosts: appserver
+  connection: ssh
+  become: true
+
+  tasks:
+    # Setup secrets so containers can have access to GCP resources 
+    - name: Create secrets directory
+      file:
+        path: "/srv/secrets"
+        state: "directory"
+        mode: 0755 # Change to 0700
+    - name: Copy service account key file
+      copy:
+        src: ../secrets/mega-pipeline-admin-ac215.json
+        dest: "/srv/secrets/mega-pipeline.json"
+        mode: 0644
+
+    # Create a folder on persistent disk
+    - name: Create data directory
+      file:
+        path: "/mnt/disk-1/persistent"
+        state: "directory"
+        mode: 0777

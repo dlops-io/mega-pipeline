@@ -1,0 +1,22 @@
+all:
+    vars:
+      ansible_user: sa_100110341521630214262
+      ansible_ssh_private_key_file: "../../secrets/ssh-key-ac215-project"
+      gcp_service_account_file: "../../secrets/deployment-ac215.json"
+      gcp_service_account_email: "deployment@ac215-project.iam.gserviceaccount.com"
+      gcp_auth_kind: "serviceaccount"
+      gcp_scopes: "https://www.googleapis.com/auth/compute"
+      gcp_project: "ac215-project"
+      gcp_region: "us-central1"
+      gcp_zone: "us-central1-a"
+      docker_network_name: "appnetwork"
+      persistent_disk_name: "ac215-disk"
+      persistent_disk_size: 100
+      machine_instance_name: "ac215-mega-pipeline"
+      machine_type: "n2d-standard-2"
+      machine_disk_size: 100
+
+    children:
+        appserver:
+            hosts:
+                34.44.139.33:
