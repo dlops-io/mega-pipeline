@@ -72,6 +72,7 @@ def generate():
         input_prompt = f"""
             Create a transcript for the podcast about cheese with 1000 or more words.
             Use the below text as a starting point for the cheese podcast.
+            Output the transcript as paragraphs and not with who is talking or any "Sound" or any other extra information.
             {input_text}
         """
         print(input_prompt,"\n\n\n")
