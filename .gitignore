@@ -6,8 +6,5 @@ scratch.txt
 _test
 outputs
 .vscode
-/api-service
-/deployment
-/frontend
 /synthesis_audio_pp
 /persistent-folder
