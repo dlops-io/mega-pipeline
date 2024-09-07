@@ -6,9 +6,9 @@ In this tutorial app is to build a [Mega Pipeline App](https://ac215-mega-pipeli
 
 * Allows a user to Record audio using a mic
 * The audio file is then transcribed using Google Cloud Speech to Text API
-* The text is used as a prompt to a pre-trained GPT2 model to Generate Text (100 words)
+* The text is used as a prompt to a pre-trained OpenAI model to Generate Text 
 * The generated text is synthesized to audio using Google Cloud Text-to-Speech API
-* The generated text is also translated to Hindi using googletrans
+* The generated text is also translated to Hindi (or any other language) using Google
 * The translated text is then synthesized to audio using Google Cloud Text-to-Speech API
 
 The pipeline flow is as shown:
