@@ -46,7 +46,7 @@ def synthesis():
     print("synthesis")
     makedirs()
 
-    language_code = "hi-IN"
+    language_code = "fr-FR"
 
     # Get the list of text file
     text_files = os.listdir(text_translated)
