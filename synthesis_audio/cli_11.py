@@ -24,8 +24,17 @@ CHUNK_SIZE = 1024
 
 
 VOICE_ID = "TG3keNw5JZvsEiTtWt7t"
-XI_API_KEY = os.environ['XI_API_KEY']  
+#Define the path to the secrets file
+secrets_file_path = 'secrets/11lab_api_key.txt'
 
+# Read the file and set the environment variable
+with open(secrets_file_path) as f:
+    for line in f:
+        if 'XI_API_KEY' in line:
+            key, value = line.strip().split('=')
+            os.environ[key] = value
+
+XI_API_KEY = os.environ['XI_API_KEY']  
 
 def makedirs():
     os.makedirs(text_paragraphs, exist_ok=True)
