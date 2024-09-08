@@ -125,9 +125,9 @@ optional arguments:
 ```
 
 ### Testing your code locally
-* Inside your docker shell make sure you run the following commands:
+* Inside your docker shell, make sure you run the following commands:
 * `python cli.py -d` - Should download all the required data from GCS bucket
-* `python cli.py -s` - Should synthesis audio from text and save it locally
+* `python cli.py -s` - Should synthesize audio from text and save it locally
 * `python cli.py -u` - Should upload the audio files to the remote GCS bucket
 * Verify that your uploaded data shows up in the [Mega Pipeline App](https://ai5-mega-pipeline.dlops.io/)
 
