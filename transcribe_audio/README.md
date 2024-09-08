@@ -66,7 +66,7 @@ ENV PYENV_SHELL=/bin/bash
 ENV GOOGLE_APPLICATION_CREDENTIALS=secrets/mega-pipeline.json
 ```
 
-* Ensure we have an up-to-date baseline, and install dependencies by running
+* Ensure we have an up-to-date baseline and install dependencies by running
 ```
 apt-get update
 apt-get upgrade -y
