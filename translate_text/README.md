@@ -1,10 +1,10 @@
 # Translate Text
 
-🗒️ &rightarrow; 🇮🇳
+🗒️ &rightarrow; 🇫🇷
 
-In this container you will implement the following:
-* Read the paragraph of text from the GCS bucket `mega-pipeline-bucket` and folder `text_paragraphs`
-* Use `googletrans` to translate the text from English to Hindi
+In this container, you will implement the following:
+* Read the text from the GCS bucket `mega-pipeline-bucket` and folder `text_paragraphs`
+* Use `googletrans` to translate the text from English to French (or any other language)
 * Save the translated text as a text file in bucket `mega-pipeline-bucket` and folder `text_translated` (use the same file name)
 
 
@@ -17,7 +17,7 @@ In this container you will implement the following:
 <a href="https://static.us.edusercontent.com/files/fo4cDM3adnwMlJVUXZXtzcH2" download>mega-pipeline.json</a>
 
 ### Create Pipfile & Pipfile.lock files
-* Add `Pipfile` with a the following contents:
+* Add `Pipfile` with the following contents:
 ```
 [[source]]
 name = "pypi"
@@ -32,7 +32,7 @@ verify_ssl = true
 python_version = "3.8"
 ```
 
-* Add `Pipfile.lock` with a the following contents:
+* Add `Pipfile.lock` with the following contents:
 ```
 {
     "_meta": {
@@ -64,7 +64,7 @@ ENV PYENV_SHELL=/bin/bash
 ENV GOOGLE_APPLICATION_CREDENTIALS=secrets/mega-pipeline.json
 ```
 
-* Ensure we have an up to date baseline, install dependencies by running
+* Ensure we have an up-to-date baseline and install dependencies by running
 ```
 apt-get update
 apt-get upgrade -y
@@ -97,7 +97,7 @@ pip install pipenv
 docker run --rm -ti -v "$(pwd)":/app translate_text
 ```
 
-* The `-v "(pwd)":/app` option is to mount your current working directory into the `/app` directory inside the container as a volume. This helps us during development of the app so when you change a source code file using VSCode from your host machine the files are automatically changed inside the container.
+* The `-v "(pwd)":/app` option mounts your current working directory into the `/app` directory inside the container as a volume. This helps us during app development, so when you change a source code file using VSCode from your host machine, the files are automatically changed inside the container.
 
 ### Python packages required
 * `pipenv install` the following:
@@ -105,10 +105,10 @@ docker run --rm -ti -v "$(pwd)":/app translate_text
   - `googletrans==4.0.0rc1`
 
 
-* If you exit your container at this point, in order to get the latest environment from the pipenv file. Make sure to re-build your docker image again
+* If you exit your container at this point, in order to get the latest environment from the pipenv file, make sure to re-build your docker image again
 
 ### CLI to interact with your code
-* Use the given python file [`cli.py`](https://github.com/dlops-io/mega-pipeline/blob/main/translate_text/cli.py)
+* Use the given Python file [`cli.py`](https://github.com/dlops-io/mega-pipeline/blob/main/translate_text/cli.py)
 * The CLI should have the following command line argument options
 ```
 python cli.py --help
@@ -124,10 +124,10 @@ optional arguments:
 ```
 
 ### Testing your code locally
-* Inside your docker shell make sure you run the following commands:
-* `python cli.py -d` - Should download all the required data from GCS bucket
-* `python cli.py -t` - Should translate text from english to hindi and save it locally
-* `python cli.py -u` - Should upload the hindi text to the remote GCS bucket
+* Inside your docker shell, make sure you run the following commands:
+* `python cli.py -d` - Should download all the required data from the GCS bucket
+* `python cli.py -t` - Should translate text from English to French and save it locally
+* `python cli.py -u` - Should upload the French text to the remote GCS bucket
 * Verify that your uploaded data shows up in the [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/)
 
 ### OPTIONAL: Push Container to Docker Hub

@@ -4,8 +4,8 @@
 
 In this container you will implement the following:
 * Read the translated text from the GCS bucket `mega-pipeline-bucket` and folder `text_translated`
-* Use Cloud Text-to-Speech API to generate an audio file in French
-* Save the audio mp3 file in bucket `mega-pipeline-bucket` and folder `output_audios` (use the same file name and change extension to .mp3)
+* Use Cloud Text-to-Speech API to generate an audio file in French or any other language 
+* Save the audio mp3 file in bucket `mega-pipeline-bucket` and folder `output_audios` (use the same file name and change the extension to .mp3)
 
 
 ### Project Setup
@@ -16,8 +16,9 @@ In this container you will implement the following:
 * Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `synthesis_audio`
 <a href="https://static.us.edusercontent.com/files/fo4cDM3adnwMlJVUXZXtzcH2" download>mega-pipeline.json</a>
 
+
 ### Create Pipfile & Pipfile.lock files
-* Add `Pipfile` with a the following contents:
+* Add `Pipfile` with the following contents:
 ```
 [[source]]
 name = "pypi"
@@ -32,7 +33,7 @@ verify_ssl = true
 python_version = "3.8"
 ```
 
-* Add `Pipfile.lock` with a the following contents:
+* Add `Pipfile.lock` with the following contents:
 ```
 {
     "_meta": {
@@ -64,7 +65,7 @@ ENV PYENV_SHELL=/bin/bash
 ENV GOOGLE_APPLICATION_CREDENTIALS=secrets/mega-pipeline.json
 ```
 
-* Ensure we have an up to date baseline, install dependencies by running
+* Ensure we have an up-to-date baseline, and install dependencies by running
 ```
 apt-get update
 apt-get upgrade -y
@@ -97,14 +98,14 @@ pip install pipenv
 docker run --rm -ti -v "$(pwd)":/app synthesis_audio
 ```
 
-* The `-v "(pwd)":/app` option is to mount your current working directory into the `/app` directory inside the container as a volume. This helps us during development of the app so when you change a source code file using VSCode from your host machine the files are automatically changed inside the container.
+* The `-v "(pwd)":/app` option mounts your current working directory into the `/app` directory inside the container as a volume. This helps us during app development, so when you change a source code file using VSCode from your host machine, the files are automatically changed inside the container.
 
 ### Python packages required
 * `pipenv install` the following:
   - `google-cloud-storage`
   - `google-cloud-texttospeech`
 
-* If you exit your container at this point, in order to get the latest environment from the pipenv file. Make sure to re-build your docker image again
+* If you exit your container at this point, in order to get the latest environment from the pipenv file, make sure to re-build your docker image again.
 
 ### CLI to interact with your code
 * Use the given python file [`cli.py`](https://github.com/dlops-io/mega-pipeline/blob/main/synthesis_audio/cli.py)
@@ -124,11 +125,20 @@ optional arguments:
 ```
 
 ### Testing your code locally
-* Inside your docker shell make sure you run the following commands:
+* Inside your docker shell, make sure you run the following commands:
 * `python cli.py -d` - Should download all the required data from GCS bucket
-* `python cli.py -s` - Should synthesis audio from text and save it locally
+* `python cli.py -s` - Should synthesize audio from text and save it locally
 * `python cli.py -u` - Should upload the audio files to the remote GCS bucket
 * Verify that your uploaded data shows up in the [Mega Pipeline App](https://ai5-mega-pipeline.dlops.io/)
+
+### OPTIONAL: You can use the cli_11.py script to synthesize audio with Eleven Labs. Eleven Labs allows you to train voice models.
+For the cheese app, we have a Pavlos voice model available, which you can use by creating an API key from Eleven Labs. 
+To do so, add a file named 11lab_api_key.txt to the secrets folder with the following content: 
+XI_API_KEY=<API_KEY>
+
+
+
+
 
 ### OPTIONAL: Push Container to Docker Hub
 * Sign up in Docker Hub and create an [Access Token](https://hub.docker.com/settings/security)

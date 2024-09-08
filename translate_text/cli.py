@@ -59,7 +59,7 @@ def translate():
         with open(file_path) as f:
             input_text = f.read()
 
-        results = translator.translate(input_text, src="en", dest="hi")
+        results = translator.translate(input_text, src="en", dest="fr")
 
         print(results.text)
 

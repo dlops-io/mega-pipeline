@@ -14,8 +14,8 @@ parser = argparse.ArgumentParser(description="Command description.")
 
 gcp_project = "ac215-project"
 bucket_name = "mega-pipeline-bucket"
-text_prompts = "text_prompts"
-text_paragraphs = "text_paragraphs"
+text_prompts = "text_prompts"  # THIS IS THE TRANSCRIBED TEXT 
+text_paragraphs = "text_paragraphs" # THIS IS THE LLM GENERATED TEXT
 
 #############################################################################
 #                            Initialize the model                           #
@@ -73,6 +73,7 @@ def generate():
             Create a transcript for the podcast about cheese with 1000 or more words.
             Use the below text as a starting point for the cheese podcast.
             Output the transcript as paragraphs and not with who is talking or any "Sound" or any other extra information.
+            The host's name is Pavlos Protopapas.
             {input_text}
         """
         print(input_prompt,"\n\n\n")
