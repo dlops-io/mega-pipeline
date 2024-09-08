@@ -14,7 +14,7 @@ In this container you will implement the following:
 
 ### GCP Credentials File
 * Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `synthesis_audio`
-<a href="https://static.us.edusercontent.com/files/fo4cDM3adnwMlJVUXZXtzcH2" download>mega-pipeline.json</a>
+<a href="https://static.us.edusercontent.com/files/mlca0YEYdvkWPNEowJ0o4hOd" download>mega-pipeline.json</a>
 
 
 ### Create Pipfile & Pipfile.lock files
