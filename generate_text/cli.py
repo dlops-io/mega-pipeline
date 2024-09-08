@@ -14,8 +14,8 @@ parser = argparse.ArgumentParser(description="Command description.")
 
 gcp_project = "ac215-project"
 bucket_name = "mega-pipeline-bucket"
-text_prompts = "text_prompts"
-text_paragraphs = "text_paragraphs"
+text_prompts = "text_prompts"  # THIS IS THE TRANSCRIBED TEXT 
+text_paragraphs = "text_paragraphs" # THIS IS THE LLM GENERATED TEXT
 
 #############################################################################
 #                            Initialize the model                           #
