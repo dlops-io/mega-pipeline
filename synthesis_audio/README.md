@@ -132,7 +132,11 @@ optional arguments:
 * Verify that your uploaded data shows up in the [Mega Pipeline App](https://ai5-mega-pipeline.dlops.io/)
 
 ### OPTIONAL: You can use the cli_11.py script to synthesize audio with Eleven Labs. Eleven Labs allows you to train voice models.
-For the cheese app, we have a Pavlos voice model available, which you can use by creating an API key from Eleven Labs.
+For the cheese app, we have a Pavlos voice model available, which you can use by creating an API key from Eleven Labs. 
+To do so, add a file named 11lab_api_key.txt to the secrets folder with the following content: 
+XI_API_KEY=<API_KEY>
+
+
 
 
 
