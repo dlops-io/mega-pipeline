@@ -2,10 +2,10 @@
 
 🎙️ &rightarrow; 📝 
 
-In this container you will implement the following:
+In this container, you will implement the following:
 * Read audio files from the GCS bucket `mega-pipeline-bucket` and folder `input_audios`
-* Use the Google Cloud Speech to Text API
-* Save the transcribed text as text file in bucket `mega-pipeline-bucket` and folder `text_prompts` (use the same file name and change extension to .txt)
+* Use the Google Cloud Speech-to-Text API
+* Save the transcribed text as a text file in bucket `mega-pipeline-bucket` and folder `text_prompts` (use the same file name and change extension to .txt)
 
 
 ### Project Setup
@@ -18,7 +18,7 @@ In this container you will implement the following:
 
 ### Create Pipfile & Pipfile.lock files
 * Inside the `transcribe_audio` folder create:
-* Add `Pipfile` with a the following contents:
+* Add `Pipfile` with the following contents:
 ```
 [[source]]
 name = "pypi"
@@ -33,7 +33,7 @@ verify_ssl = true
 python_version = "3.8"
 ```
 
-* Add `Pipfile.lock` with a the following contents:
+* Add `Pipfile.lock` with the following contents:
 ```
 {
     "_meta": {
@@ -66,7 +66,7 @@ ENV PYENV_SHELL=/bin/bash
 ENV GOOGLE_APPLICATION_CREDENTIALS=secrets/mega-pipeline.json
 ```
 
-* Ensure we have an up to date baseline, install dependencies by running
+* Ensure we have an up-to-date baseline, and install dependencies by running
 ```
 apt-get update
 apt-get upgrade -y
@@ -99,7 +99,7 @@ pip install pipenv
 docker run --rm -ti -v "$(pwd)":/app transcribe_audio
 ```
 
-* The `-v "(pwd)":/app` option is to mount your current working directory into the `/app` directory inside the container as a volume. This helps us during development of the app so when you change a source code file using VSCode from your host machine the files are automatically changed inside the container.
+* The `-v "(pwd)":/app` option mounts your current working directory into the `/app` directory inside the container as a volume. This helps us during app development, so when you change a source code file using VSCode from your host machine, the files are automatically changed inside the container.
 
 ### Python packages required
 * `pipenv install` the following:
@@ -107,7 +107,7 @@ docker run --rm -ti -v "$(pwd)":/app transcribe_audio
   - `google-cloud-speech`
   - `ffmpeg-python`
 
-* If you exit your container at this point, in order to get the latest environment from the pipenv file. Make sure to re-build your docker image again
+* If you exit your container at this point, in order to get the latest environment from the pipenv file, make sure to re-build your docker image again
 
 ### CLI to interact with your code
 * Use the given python file [`cli.py`](https://github.com/dlops-io/mega-pipeline/blob/main/transcribe_audio/cli.py)
@@ -126,7 +126,7 @@ optional arguments:
 ```
 
 ### Testing your code locally
-* Inside your docker shell make sure you run the following commands:
+* Inside your docker shell, make sure you run the following commands:
 * `python cli.py -d` - Should download all the required data from GCS bucket
 * `python cli.py -t` - Should transcribe audio to text and save it locally
 * `python cli.py -u` - Should upload the transcribed text to the remote GCS bucket
