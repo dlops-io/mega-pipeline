@@ -14,7 +14,7 @@ parser = argparse.ArgumentParser(description="Command description.")
 gcp_project = "ac215-project"
 bucket_name = "mega-pipeline-bucket"
 text_paragraphs = "text_translated"
-text_audios = "text_audios_pp"
+text_audios = "output_audios_pp"
 
 # Define constants
 
