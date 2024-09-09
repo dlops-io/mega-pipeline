@@ -24,6 +24,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ShowMoreText from "react-show-more-text";
 
 
 import DataService from "../../services/DataService";
@@ -53,6 +54,9 @@ const Home = (props) => {
                 setInputAudios(response.data);
             })
     }
+    const [expand1, setExpand1] = useState(false);
+    const [expand2, setExpand2] = useState(false);
+    const [expand3, setExpand3] = useState(false);
 
 
     // Setup Component
@@ -131,6 +135,15 @@ const Home = (props) => {
                 return () => clearInterval(id);
             }
         }, [callback, delay]);
+    }
+    function showMoreClick1() {
+        setExpand1(!expand1)
+    }
+    function showMoreClick2() {
+        setExpand2(!expand2)
+    }
+    function showMoreClick3() {
+        setExpand3(!expand3)
     }
 
     useInterval(async () => {
@@ -216,32 +229,86 @@ const Home = (props) => {
                                             <StepLabel><Typography variant="h4">🔊</Typography><Typography variant="caption">Synthesised Audio</Typography></StepLabel>
                                         </Step>
                                     </TableCell>
+                                    <TableCell align={'center'}>
+                                        <Step>
+                                            <StepLabel>
+                                                <img src='pavlos.png' className={classes.pavlos}></img>
+                                            </StepLabel>
+                                        </Step>
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {inputAudios && inputAudios.map((item, idx) =>
                                     <TableRow key={idx}>
                                         <TableCell>
-                                            <audio controls>
+                                            <audio controls className={classes.audioPlayer}>
                                                 <source src={BASE_API_URL + "/get_audio_data?path=" + item.input_audio} type="audio/mp3" />
                                                 Your browser does not support the audio element.
                                             </audio>
                                         </TableCell>
-                                        <TableCell>{item.text_prompt}</TableCell>
-                                        <TableCell>{item.text_paragraph}</TableCell>
+                                        <TableCell onClick={() => showMoreClick1()}>
+                                            <ShowMoreText
+                                                lines={5}
+                                                more="Show more"
+                                                less="Show less"
+                                                className="content-css"
+                                                anchorClass="show-more-less-clickable"
+                                                expanded={expand1}
+                                                width={500}
+                                                truncatedEndingComponent={"... "}
+                                            >
+                                                {item.text_prompt}
+                                            </ShowMoreText>
+                                        </TableCell>
+                                        <TableCell onClick={() => showMoreClick2()}>
+                                            <ShowMoreText
+                                                lines={5}
+                                                more="Show more"
+                                                less="Show less"
+                                                className="content-css"
+                                                anchorClass="show-more-less-clickable"
+                                                expanded={expand2}
+                                                width={500}
+                                                truncatedEndingComponent={"... "}
+                                            >
+                                                {item.text_paragraph}
+                                            </ShowMoreText>
+                                        </TableCell>
                                         <TableCell>
                                             {item.text_audio &&
-                                                <audio controls>
+                                                <audio controls className={classes.audioPlayer}>
                                                     <source src={BASE_API_URL + "/get_audio_data?path=" + item.text_audio} type="audio/mp3" />
                                                     Your browser does not support the audio element.
                                                 </audio>
                                             }
                                         </TableCell>
-                                        <TableCell>{item.text_translate}</TableCell>
+                                        <TableCell onClick={() => showMoreClick3()}>
+                                            <ShowMoreText
+                                                lines={5}
+                                                more="Show more"
+                                                less="Show less"
+                                                className="content-css"
+                                                anchorClass="show-more-less-clickable"
+                                                expanded={expand3}
+                                                width={500}
+                                                truncatedEndingComponent={"... "}
+                                            >
+                                                {item.text_translate}
+                                            </ShowMoreText>
+                                        </TableCell>
                                         <TableCell>
                                             {item.output_audio &&
-                                                <audio controls>
+                                                <audio controls className={classes.audioPlayer}>
                                                     <source src={BASE_API_URL + "/get_audio_data?path=" + item.output_audio} type="audio/mp3" />
+                                                    Your browser does not support the audio element.
+                                                </audio>
+                                            }
+                                        </TableCell>
+                                        <TableCell>
+                                            {item.output_audio_pp &&
+                                                <audio controls className={classes.audioPlayer}>
+                                                    <source src={BASE_API_URL + "/get_audio_data?path=" + item.output_audio_pp} type="audio/mp3" />
                                                     Your browser does not support the audio element.
                                                 </audio>
                                             }

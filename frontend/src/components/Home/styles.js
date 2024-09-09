@@ -46,6 +46,12 @@ const styles = theme => ({
     },
     textColumn: {
         width: "250px",
+    },
+    audioPlayer: {
+        width: "150px",
+    },
+    pavlos: {
+        width: "60px",
     }
 });
 
