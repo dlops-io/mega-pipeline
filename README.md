@@ -4,7 +4,7 @@
 
 In this tutorial app is to build a [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/) which does the following:
 
-* Allows a user to Record audio using a mic
+* Pavlos has recorded audio prompts that will be used as our input data.
 * The audio file is then transcribed using Google Cloud Speech to Text API
 * The text is used as a prompt to a pre-trained OpenAI model to Generate Text 
 * The generated text is synthesized to audio using Google Cloud Text-to-Speech API
