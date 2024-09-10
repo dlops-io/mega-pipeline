@@ -3,19 +3,20 @@ import glob
 from fastapi import APIRouter, File, Query
 from starlette.responses import FileResponse
 import uuid
+import glob
 import random
 from google.cloud import storage
-import openai
 from api.pipeline import sync_file_ondemand
 
 gcp_project = "ac215-project"
 bucket_name = "mega-pipeline-bucket"
 input_audios = "/persistent/input_audios"
-text_prompts = "/persistent/text_prompts"
-text_paragraphs = "/persistent/text_paragraphs"
-text_audios = "/persistent/text_audios"
-text_translated = "/persistent/text_translated"
-output_audios = "/persistent/output_audios"
+text_prompts_folder = "/persistent/text_prompts"
+text_paragraphs_folder = "/persistent/text_paragraphs"
+text_audios_folder = "/persistent/text_audios"
+text_translated_folder = "/persistent/text_translated"
+output_audios_folder = "/persistent/output_audios"
+output_audios_pp_folder = "/persistent/output_audios_pp"
 
 
 # Define Router
@@ -60,41 +61,68 @@ async def get_input_audios():
     results = []
     for file in files:
         uuid = os.path.basename(file).replace(".mp3", "")
-        text_prompt = ""
-        text_prompt_file = os.path.join(text_prompts, uuid + ".txt")
-        if os.path.exists(text_prompt_file):
-            with open(text_prompt_file) as f:
-                text_prompt = f.read()
+        # text_prompt = ""
+        # text_prompt_file = os.path.join(text_prompts, uuid + ".txt")
+        # if os.path.exists(text_prompt_file):
+        #     with open(text_prompt_file) as f:
+        #         text_prompt = f.read()
 
-        text_paragraph = ""
-        text_paragraph_file = os.path.join(text_paragraphs, uuid + ".txt")
-        if os.path.exists(text_paragraph_file):
-            with open(text_paragraph_file) as f:
+        text_prompts = []
+        text_prompt_files = glob.glob(os.path.join(text_prompts_folder, "*", uuid + ".txt"))
+        for file_path in text_prompt_files:
+            with open(file_path) as f:
+                text_prompt = f.read()
+            
+            text_prompts.append({
+                "group_name": file_path.split("/")[-2],
+                "text_prompt": text_prompt
+            })
+
+        text_paragraphs = []
+        text_paragraph_files = glob.glob(os.path.join(text_paragraphs_folder, "*", uuid + ".txt"))
+        for file_path in text_paragraph_files:
+            with open(file_path) as f:
                 text_paragraph = f.read()
+            
+            text_paragraphs.append({
+                "group_name": file_path.split("/")[-2],
+                "text_paragraph": text_paragraph
+            })
+
+        # text_paragraph = ""
+        # text_paragraph_file = os.path.join(text_paragraphs, uuid + ".txt")
+        # if os.path.exists(text_paragraph_file):
+        #     with open(text_paragraph_file) as f:
+        #         text_paragraph = f.read()
 
         text_translate = ""
-        text_translate_file = os.path.join(text_translated, uuid + ".txt")
+        text_translate_file = os.path.join(text_translated_folder, uuid + ".txt")
         if os.path.exists(text_translate_file):
             with open(text_translate_file) as f:
                 text_translate = f.read()
         output_audio = ""
-        output_audio_file = os.path.join(output_audios, uuid + ".mp3")
+        output_audio_file = os.path.join(output_audios_folder, uuid + ".mp3")
         if os.path.exists(output_audio_file):
             output_audio = output_audio_file
+        output_audio_pp = ""
+        output_audio_pp_file = os.path.join(output_audios_pp_folder, uuid + ".mp3")
+        if os.path.exists(output_audio_pp_file):
+            output_audio_pp = output_audio_pp_file
 
         text_audio = ""
-        text_audio_file = os.path.join(text_audios, uuid + ".mp3")
+        text_audio_file = os.path.join(text_audios_folder, uuid + ".mp3")
         if os.path.exists(text_audio_file):
             text_audio = text_audio_file
 
         op = {
             "uuid": uuid,
             "input_audio": file,
-            "text_prompt": text_prompt,
-            "text_paragraph": text_paragraph,
+            "text_prompts": text_prompts,
+            "text_paragraphs": text_paragraphs,
             "text_audio": text_audio,
             "text_translate": text_translate,
             "output_audio": output_audio,
+            "output_audio_pp": output_audio_pp,
         }
         results.append(op)
     # results = [{"audio_path": file, "text": os.path.basename(
