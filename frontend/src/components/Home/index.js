@@ -248,32 +248,45 @@ const Home = (props) => {
                                             </audio>
                                         </TableCell>
                                         <TableCell onClick={() => showMoreClick1()}>
-                                            <ShowMoreText
-                                                lines={5}
-                                                more="Show more"
-                                                less="Show less"
-                                                className="content-css"
-                                                anchorClass="show-more-less-clickable"
-                                                expanded={expand1}
-                                                width={500}
-                                                truncatedEndingComponent={"... "}
-                                            >
-                                                {item.text_prompt}
-                                            </ShowMoreText>
+                                            {item.text_prompts && item.text_prompts.map((sub_item, sub_idx) =>
+                                                <div className={classes.cellItem}>
+                                                    <span className={classes.group}>Group:{sub_item.group_name}</span>
+                                                    <ShowMoreText
+                                                        key={sub_idx}
+                                                        lines={3}
+                                                        more="Show more"
+                                                        less="Show less"
+                                                        className="content-css"
+                                                        anchorClass="show-more-less-clickable"
+                                                        expanded={expand1}
+                                                        width={300}
+                                                        truncatedEndingComponent={"... "}
+                                                    >
+                                                        {sub_item.text_prompt}
+                                                    </ShowMoreText>
+                                                </div>
+                                            )}
+
                                         </TableCell>
                                         <TableCell onClick={() => showMoreClick2()}>
-                                            <ShowMoreText
-                                                lines={5}
-                                                more="Show more"
-                                                less="Show less"
-                                                className="content-css"
-                                                anchorClass="show-more-less-clickable"
-                                                expanded={expand2}
-                                                width={500}
-                                                truncatedEndingComponent={"... "}
-                                            >
-                                                {item.text_paragraph}
-                                            </ShowMoreText>
+                                            {item.text_prompts && item.text_paragraphs.map((sub_item, sub_idx) =>
+                                                <div className={classes.cellItem}>
+                                                    <span className={classes.group}>Group:{sub_item.group_name}</span>
+                                                    <ShowMoreText
+                                                        key={sub_idx}
+                                                        lines={3}
+                                                        more="Show more"
+                                                        less="Show less"
+                                                        className="content-css"
+                                                        anchorClass="show-more-less-clickable"
+                                                        expanded={expand1}
+                                                        width={300}
+                                                        truncatedEndingComponent={"... "}
+                                                    >
+                                                        {sub_item.text_paragraph}
+                                                    </ShowMoreText>
+                                                </div>
+                                            )}
                                         </TableCell>
                                         <TableCell>
                                             {item.text_audio &&
@@ -285,7 +298,7 @@ const Home = (props) => {
                                         </TableCell>
                                         <TableCell onClick={() => showMoreClick3()}>
                                             <ShowMoreText
-                                                lines={5}
+                                                lines={3}
                                                 more="Show more"
                                                 less="Show less"
                                                 className="content-css"

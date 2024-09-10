@@ -52,6 +52,12 @@ const styles = theme => ({
     },
     pavlos: {
         width: "60px",
+    },
+    group: {
+        fontWeight: 800
+    },
+    cellItem: {
+        paddingBottom: "5px",
     }
 });
 
