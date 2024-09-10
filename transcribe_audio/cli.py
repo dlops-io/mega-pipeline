@@ -5,6 +5,7 @@ import os
 import io
 import argparse
 import shutil
+import glob
 from google.cloud import storage
 from google.cloud import speech
 import ffmpeg
@@ -22,7 +23,7 @@ group_name = "staff" # This needs to be your Group name e.g: group-01, group-02,
 
 def makedirs():
     os.makedirs(input_audios, exist_ok=True)
-    os.makedirs(text_prompts, exist_ok=True)
+    os.makedirs(os.path.join(text_prompts,group_name), exist_ok=True)
 
 
 def download():
@@ -55,7 +56,7 @@ def transcribe():
     for audio_path in audio_files:
         uuid = audio_path.replace(".mp3", "")
         audio_path = os.path.join(input_audios, audio_path)
-        text_file = os.path.join(text_prompts, uuid + ".txt")
+        text_file = os.path.join(text_prompts, group_name, uuid + ".txt")
 
         if os.path.exists(text_file):
             continue
@@ -95,14 +96,14 @@ def upload():
     bucket = storage_client.bucket(bucket_name)
 
     # Get the list of text file
-    text_files = os.listdir(text_prompts)
+    text_files = glob.glob(os.path.join(text_prompts, group_name, "input-*.txt"))
 
     for text_file in text_files:
-        file_path = os.path.join(text_prompts, text_file)
-        destination_blob_name = os.path.join(text_prompts, group_name, text_file)
+        filename = os.path.basename(text_file)
+        destination_blob_name = os.path.join(text_prompts, group_name, filename)
         blob = bucket.blob(destination_blob_name)
-        print("Uploading:",destination_blob_name, file_path)
-        blob.upload_from_filename(file_path)
+        print("Uploading:",destination_blob_name, text_file)
+        blob.upload_from_filename(text_file)
 
 
 def main(args=None):
