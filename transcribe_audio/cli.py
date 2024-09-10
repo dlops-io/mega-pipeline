@@ -17,6 +17,7 @@ gcp_project = "ac215-project"
 bucket_name = "mega-pipeline-bucket"
 input_audios = "input_audios"
 text_prompts = "text_prompts"
+group_name = "staff" # This needs to be your Group name e.g: group-01, group-02, group-03, group-04, group-05, ...
 
 
 def makedirs():
@@ -33,16 +34,12 @@ def download():
 
     client = storage.Client()
     bucket = client.get_bucket(bucket_name)
-    # bucket = client.bucket(bucket_name)
 
-    # storage_client = storage.Client(project=gcp_project)
-    # bucket = storage_client.bucket(bucket_name)
-
-    # blobs = bucket.list_blobs(prefix=input_audios+"/")
-    # for blob in blobs:
-    #     print(blob.name)
-    #     if not blob.name.endswith("/"):
-    #         blob.download_to_filename(blob.name)
+    blobs = bucket.list_blobs(prefix=input_audios+"/")
+    for blob in blobs:
+        print(blob.name)
+        if not blob.name.endswith("/"):
+            blob.download_to_filename(blob.name)
 
 
 def transcribe():
@@ -102,10 +99,9 @@ def upload():
 
     for text_file in text_files:
         file_path = os.path.join(text_prompts, text_file)
-
-        destination_blob_name = file_path
+        destination_blob_name = os.path.join(text_prompts, group_name, text_file)
         blob = bucket.blob(destination_blob_name)
-
+        print("Uploading:",destination_blob_name, file_path)
         blob.upload_from_filename(file_path)
 
 

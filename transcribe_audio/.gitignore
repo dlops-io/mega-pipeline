@@ -5,3 +5,5 @@ docker-shell.sh
 Dockerfile
 Pipfile
 Pipfile.lock
+/input_audios
+/text_prompts
