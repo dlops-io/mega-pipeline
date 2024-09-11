@@ -4,6 +4,7 @@ Module that contains the command line app.
 import os
 import argparse
 import shutil
+import glob
 import requests
 from google.cloud import storage
 
@@ -13,8 +14,9 @@ parser = argparse.ArgumentParser(description="Command description.")
 
 gcp_project = "ac215-project"
 bucket_name = "mega-pipeline-bucket"
-text_paragraphs = "text_translated"
-text_audios = "output_audios_pp"
+text_translated = "text_translated"
+output_audios = "output_audios_pp"
+group_name = "staff" # This needs to be your Group name e.g: group-01, group-02, group-03, group-04, group-05, ...
 
 # Define constants
 
@@ -37,26 +39,22 @@ with open(secrets_file_path) as f:
 XI_API_KEY = os.environ['XI_API_KEY']  
 
 def makedirs():
-    os.makedirs(text_paragraphs, exist_ok=True)
-    os.makedirs(text_audios, exist_ok=True)
+    os.makedirs(os.path.join(text_translated,group_name), exist_ok=True)
+    os.makedirs(os.path.join(output_audios,group_name), exist_ok=True)
 
 
 def download():
     print("download")
 
     # Clear
-    shutil.rmtree(text_paragraphs, ignore_errors=True, onerror=None)
+    shutil.rmtree(text_translated, ignore_errors=True, onerror=None)
     makedirs()
-    
+
     storage_client = storage.Client(project=gcp_project)
-    
     bucket = storage_client.bucket(bucket_name)
-    
-    blobs = bucket.list_blobs(prefix=text_paragraphs + "/")
+    blobs = bucket.list_blobs(match_glob=f"{text_translated}/{group_name}/input-*.txt")
     for blob in blobs:
-        print(blob.name)
-        if blob.name.endswith(".txt"):
-            blob.download_to_filename(blob.name)
+        blob.download_to_filename(blob.name)
 
 
 def synthesis():
@@ -64,17 +62,15 @@ def synthesis():
     makedirs()
 
     # Get the list of text file
-    text_files = os.listdir(text_paragraphs)
-    
+    text_files = glob.glob(os.path.join(text_translated, group_name, "input-*.txt"))
     for text_file in text_files:
-        uuid = text_file.replace(".txt", "")
-        file_path = os.path.join(text_paragraphs, text_file)
-        audio_file = os.path.join(text_audios, uuid + ".mp3")
+        uuid = os.path.basename(text_file).replace(".txt", "")
+        audio_file = os.path.join(output_audios, group_name, uuid + ".mp3")
     
         if os.path.exists(audio_file):
             continue
         
-        with open(file_path) as f:
+        with open(text_file) as f:
             TEXT_TO_SPEAK = f.read()
     
         OUTPUT_PATH = audio_file
@@ -125,17 +121,16 @@ def upload():
     # Upload to bucket
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
-    
-    # Get the list of files
-    audio_files = os.listdir(text_audios)
-    
+
+    # Get the list of text file
+    audio_files = glob.glob(os.path.join(output_audios, group_name, "input-*.mp3"))
+
     for audio_file in audio_files:
-        file_path = os.path.join(text_audios, audio_file)
-    
-        destination_blob_name = file_path
+        filename = os.path.basename(audio_file)
+        destination_blob_name = os.path.join(output_audios, group_name, filename)
         blob = bucket.blob(destination_blob_name)
-    
-        blob.upload_from_filename(file_path)
+        print("Uploading:",destination_blob_name, audio_file)
+        blob.upload_from_filename(audio_file)
 
 
 def main(args=None):
