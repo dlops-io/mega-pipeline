@@ -15,11 +15,11 @@ The pipeline flow is as shown:
 <img src="mega-pipeline-flow.png"  width="800">
 
 ## The class will work in teams:
-* 📝Team A [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/main/transcribe_audio):
-* 🗒️Team B [generate_text](https://github.com/dlops-io/mega-pipeline/tree/main/generate_text):
-* 🔊Team C [synthesis_audio_en](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio_en):
-* 🇮🇳Team D [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text):
-* 🔊Team E [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio):
+* 📝Task A [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/main/transcribe_audio):
+* 🗒️Task B [generate_text](https://github.com/dlops-io/mega-pipeline/tree/main/generate_text):
+* 🔊Task C [synthesis_audio_en](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio_en):
+* 🇮🇳Task D [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text):
+* 🔊Task E [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio):
 
 Each team will create a Docker container to build the required functionality. The details on what to build in each container are linked above for each team.
 The overall progress of this mega pipeline can be viewed [here](https://ac215-mega-pipeline.dlops.io/)
