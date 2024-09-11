@@ -65,6 +65,10 @@ const styles = theme => ({
         backgroundColor: "#f0f0f0",
         border: "1px solid #ccc",
         padding: "8px",
+    },
+    showMoreButton: {
+        fontWeight: 800,
+        fontSize: "small",
     }
 });
 

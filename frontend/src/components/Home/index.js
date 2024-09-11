@@ -150,6 +150,9 @@ const Home = (props) => {
         loadInputAudios();
     }, 10000)
 
+    const showMore = <span className={classes.showMoreButton}>&nbsp; show more</span>
+    const showLess = <span className={classes.showMoreButton}>&nbsp; show less</span>
+
 
     return (
         <div className={classes.root}>
@@ -253,8 +256,8 @@ const Home = (props) => {
                                                     <div className={classes.group}>Group: {sub_item.group_name}</div>
                                                     <ShowMoreText
                                                         lines={3}
-                                                        more="Show more"
-                                                        less="Show less"
+                                                        more={showMore}
+                                                        less={showLess}
                                                         anchorClass="show-more-less-clickable"
                                                         expanded={expand1}
                                                         width={300}
@@ -273,8 +276,8 @@ const Home = (props) => {
                                                     <div className={classes.group}>Group: {sub_item.group_name}</div>
                                                     <ShowMoreText
                                                         lines={3}
-                                                        more="Show more"
-                                                        less="Show less"
+                                                        more={showMore}
+                                                        less={showLess}
                                                         className={classes.showMoreBox}
                                                         anchorClass="show-more-less-clickable"
                                                         expanded={expand1}
@@ -303,8 +306,8 @@ const Home = (props) => {
                                                     <div className={classes.group}>Group: {sub_item.group_name}</div>
                                                     <ShowMoreText
                                                         lines={3}
-                                                        more="Show more"
-                                                        less="Show less"
+                                                        more={showMore}
+                                                        less={showLess}
                                                         className={classes.showMoreBox}
                                                         anchorClass="show-more-less-clickable"
                                                         expanded={expand1}
