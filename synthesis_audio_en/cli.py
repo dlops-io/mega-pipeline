@@ -4,6 +4,7 @@ Module that contains the command line app.
 import os
 import argparse
 import shutil
+import glob
 from google.cloud import storage
 from google.cloud import texttospeech
 
@@ -14,14 +15,16 @@ gcp_project = "ac215-project"
 bucket_name = "mega-pipeline-bucket"
 text_paragraphs = "text_paragraphs"
 text_audios = "text_audios"
+group_name = "staff" # This needs to be your Group name e.g: group-01, group-02, group-03, group-04, group-05, ...
 
 # Instantiates a client
-client = texttospeech.TextToSpeechClient()
+#client = texttospeech.TextToSpeechClient()
+client = texttospeech.TextToSpeechLongAudioSynthesizeClient()
 
 
 def makedirs():
-    os.makedirs(text_paragraphs, exist_ok=True)
-    os.makedirs(text_audios, exist_ok=True)
+    os.makedirs(os.path.join(text_paragraphs,group_name), exist_ok=True)
+    os.makedirs(os.path.join(text_audios,group_name), exist_ok=True)
 
 
 def download():
@@ -32,14 +35,10 @@ def download():
     makedirs()
 
     storage_client = storage.Client(project=gcp_project)
-
     bucket = storage_client.bucket(bucket_name)
-
-    blobs = bucket.list_blobs(prefix=text_paragraphs + "/")
+    blobs = bucket.list_blobs(match_glob=f"{text_paragraphs}/{group_name}/input-*.txt")
     for blob in blobs:
-        print(blob.name)
-        if blob.name.endswith(".txt"):
-            blob.download_to_filename(blob.name)
+        blob.download_to_filename(blob.name)
 
 
 def synthesis():
@@ -47,66 +46,50 @@ def synthesis():
     makedirs()
 
     language_code = "en-US"
+    language_name = "en-US-Standard-B"
 
     # Get the list of text file
-    text_files = os.listdir(text_paragraphs)
-
+    # Get the list of text file
+    text_files = glob.glob(os.path.join(text_paragraphs, group_name, "input-*.txt"))
     for text_file in text_files:
-        uuid = text_file.replace(".txt", "")
-        file_path = os.path.join(text_paragraphs, text_file)
-        audio_file = os.path.join(text_audios, uuid + ".mp3")
+        uuid = os.path.basename(text_file).replace(".txt", "")
+        audio_file = os.path.join(text_audios, group_name, uuid + ".mp3")
 
         if os.path.exists(audio_file):
             continue
 
-        with open(file_path) as f:
+        with open(text_file) as f:
             input_text = f.read()
+        
+        # Check if audio file already exists
+        storage_client = storage.Client()
+        bucket = storage_client.bucket(bucket_name)
+        audio_blob_name = f"{text_audios}/{group_name}/{uuid}.mp3"
+        blob = bucket.blob(audio_blob_name)
 
-        # Set the text input to be synthesized
-        synthesis_input = texttospeech.SynthesisInput(text=input_text)
+        if not blob.exists():
+            # Set the text input to be synthesized
+            input = texttospeech.SynthesisInput(text=input_text)
+            # Build audio config / Select the type of audio file you want returned
+            audio_config = texttospeech.AudioConfig(audio_encoding=texttospeech.AudioEncoding.LINEAR16)
+            # voice config
+            voice = texttospeech.VoiceSelectionParams(language_code=language_code, name=language_name)
 
-        # Build the voice request, select the language code ("en-US") and the ssml
-        # voice gender ("neutral")
-        voice = texttospeech.VoiceSelectionParams(
-            language_code=language_code,
-            ssml_gender=texttospeech.SsmlVoiceGender.NEUTRAL,
-        )
+            parent = f"projects/{gcp_project}/locations/us-central1"
+            output_gcs_uri = f"gs://{bucket_name}/{audio_blob_name}"
 
-        # Select the type of audio file you want returned
-        audio_config = texttospeech.AudioConfig(
-            audio_encoding=texttospeech.AudioEncoding.MP3
-        )
+            request = texttospeech.SynthesizeLongAudioRequest(
+                parent=parent,
+                input=input,
+                audio_config=audio_config,
+                voice=voice,
+                output_gcs_uri=output_gcs_uri,
+            )
 
-        # Perform the text-to-speech request on the text input with the selected
-        # voice parameters and audio file type
-        response = client.synthesize_speech(
-            input=synthesis_input, voice=voice, audio_config=audio_config
-        )
-
-        # Save the audio file
-        with open(audio_file, "wb") as out:
-            # Write the response to the output file.
-            out.write(response.audio_content)
-
-
-def upload():
-    print("upload")
-    makedirs()
-
-    # Upload to bucket
-    storage_client = storage.Client()
-    bucket = storage_client.bucket(bucket_name)
-
-    # Get the list of files
-    audio_files = os.listdir(text_audios)
-
-    for audio_file in audio_files:
-        file_path = os.path.join(text_audios, audio_file)
-
-        destination_blob_name = file_path
-        blob = bucket.blob(destination_blob_name)
-
-        blob.upload_from_filename(file_path)
+            operation = client.synthesize_long_audio(request=request)
+            # Set a deadline for your LRO to finish. 300 seconds is reasonable, but can be adjusted depending on the length of the input.
+            result = operation.result(timeout=300)
+            print("Audio file will be saved ot GCS bucket automatically.")
 
 
 def main(args=None):
@@ -116,9 +99,6 @@ def main(args=None):
         download()
     if args.synthesis:
         synthesis()
-    if args.upload:
-        upload()
-
 
 if __name__ == "__main__":
     # Generate the inputs arguments parser
@@ -134,10 +114,6 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "-s", "--synthesis", action="store_true", help="Synthesis audio"
-    )
-
-    parser.add_argument(
-        "-u", "--upload", action="store_true", help="Upload audio file to GCS bucket"
     )
 
     args = parser.parse_args()
