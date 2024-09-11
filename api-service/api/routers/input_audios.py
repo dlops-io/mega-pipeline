@@ -108,11 +108,23 @@ async def get_input_audios():
         # if os.path.exists(text_audio_file):
         #     text_audio = text_audio_file
 
-        text_translate = ""
-        text_translate_file = os.path.join(text_translated_folder, uuid + ".txt")
-        if os.path.exists(text_translate_file):
-            with open(text_translate_file) as f:
+        text_translates = []
+        text_translate_files = glob.glob(os.path.join(text_translated_folder, "*", uuid + ".txt"))
+        for file_path in text_translate_files:
+            with open(file_path) as f:
                 text_translate = f.read()
+            
+            text_translates.append({
+                "group_name": file_path.split("/")[-2],
+                "text_translate": text_translate
+            })
+
+        # text_translate = ""
+        # text_translate_file = os.path.join(text_translated_folder, uuid + ".txt")
+        # if os.path.exists(text_translate_file):
+        #     with open(text_translate_file) as f:
+        #         text_translate = f.read()
+
         output_audio = ""
         output_audio_file = os.path.join(output_audios_folder, uuid + ".mp3")
         if os.path.exists(output_audio_file):
@@ -130,7 +142,7 @@ async def get_input_audios():
             "text_prompts": text_prompts,
             "text_paragraphs": text_paragraphs,
             "text_audios": text_audios,
-            "text_translate": text_translate,
+            "text_translates": text_translates,
             "output_audio": output_audio,
             "output_audio_pp": output_audio_pp,
         }
