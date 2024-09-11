@@ -5,3 +5,4 @@ docker-shell.sh
 Dockerfile
 Pipfile
 Pipfile.lock
+/text_paragraphs
