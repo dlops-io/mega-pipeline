@@ -2,7 +2,7 @@
 
 🎙️ &rightarrow; 📝 &rightarrow; 🗒️ &rightarrow;  [🔊🇫🇷] &rightarrow; 🔊
 
-In this tutorial app is to build a [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/) which does the following:
+In this tutorial we will build a [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/) which does the following:
 
 * Pavlos has recorded audio prompts that will be used as our input data.
 * The audio file is first transcribed using Google Cloud Speech to Text API
@@ -15,14 +15,14 @@ In this tutorial app is to build a [Mega Pipeline App](https://ac215-mega-pipeli
 The pipeline flow is as shown:
 <img src="mega-pipeline-flow.png"  width="800">
 
-## The class will work in teams:
+## The class will work in groups to perform the following tasks:
 * 📝Task A [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/main/transcribe_audio):
 * 🗒️Task B [generate_text](https://github.com/dlops-io/mega-pipeline/tree/main/generate_text):
 * 🔊Task C [synthesis_audio_en](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio_en):
 * 🇮🇳Task D [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text):
 * 🔊Task E [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio):
 
-Each team will create a Docker container to build the required functionality. The details on what to build in each container are linked above for each team.
+Each team will create a Docker containers to build all the tasks. Each team will use a unique group-number to track the overall progress.
 The overall progress of this mega pipeline can be viewed [here](https://ac215-mega-pipeline.dlops.io/)
 
 ## GCP Credentials File:
@@ -36,7 +36,8 @@ Download the json file and place inside <app_folder>/secrets:
 * **text_paragraphs** - Bucket where we store the generated text from GPT2
 * **text_translated** - Bucket where we store the translated text
 * **text_audios** - Bucket where we store the audio of the paragraph of text
-* **output_audios** - Bucket where we store the final Hindi audio files
+* **output_audios** - Bucket where we store the final French audio files
+* **output_audios_pp** - Bucket where we store the French audio files (Pavlos voice)
 
 ![Mega pipeline bucket](mega-pipeline-bucket.png)
 
@@ -45,37 +46,35 @@ Download the json file and place inside <app_folder>/secrets:
 
 **Transcribe Audio**
 ```
-python cli.py -d
-python cli.py -t
-python cli.py -u
+python cli.py --download
+python cli.py --transcribe
+python cli.py --upload
 ```
 
 **Generate Text**
 ```
-python cli.py -d
-python cli.py -g
-python cli.py -u
+python cli.py --download
+python cli.py --generate
+python cli.py --upload
 ```
 
 **Synthesis Audio English**
 ```
-python cli.py -d
-python cli.py -s
-python cli.py -u
+python cli.py --download
+python cli.py --synthesis
 ```
 
 **Translate Text**
 ```
-python cli.py -d
-python cli.py -t
-python cli.py -u
+python cli.py --download
+python cli.py --translate
+python cli.py --upload
 ```
 
 **Synthesis Audio**
 ```
-python cli.py -d
-python cli.py -s
-python cli.py -u
+python cli.py --download
+python cli.py --synthesis
 ```
 
 
