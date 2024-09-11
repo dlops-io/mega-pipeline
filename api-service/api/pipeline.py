@@ -155,8 +155,8 @@ class PipelineManager:
             sync_files("text_paragraphs/*/input-*.txt")
             sync_files("text_audios/*/input-*.mp3")
             sync_files("text_translated/*/input-*.txt")
-            # sync_files("output_audios")
-            # sync_files("output_audios_pp")
+            sync_files("output_audios/*/input-*.mp3")
+            sync_files("output_audios_pp/*/input-*.mp3")
 
             # Wait
             await asyncio.sleep(15)

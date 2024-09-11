@@ -125,14 +125,31 @@ async def get_input_audios():
         #     with open(text_translate_file) as f:
         #         text_translate = f.read()
 
-        output_audio = ""
-        output_audio_file = os.path.join(output_audios_folder, uuid + ".mp3")
-        if os.path.exists(output_audio_file):
-            output_audio = output_audio_file
-        output_audio_pp = ""
-        output_audio_pp_file = os.path.join(output_audios_pp_folder, uuid + ".mp3")
-        if os.path.exists(output_audio_pp_file):
-            output_audio_pp = output_audio_pp_file
+        output_audios = []
+        text_audio_files = glob.glob(os.path.join(output_audios_folder, "*", uuid + ".mp3"))
+        for file_path in text_audio_files:            
+            output_audios.append({
+                "group_name": file_path.split("/")[-2],
+                "output_audio": file_path
+            })
+
+        # output_audio = ""
+        # output_audio_file = os.path.join(output_audios_folder, uuid + ".mp3")
+        # if os.path.exists(output_audio_file):
+        #     output_audio = output_audio_file
+        
+        output_audios_pp = []
+        text_audio_files = glob.glob(os.path.join(output_audios_pp_folder, "*", uuid + ".mp3"))
+        for file_path in text_audio_files:            
+            output_audios_pp.append({
+                "group_name": file_path.split("/")[-2],
+                "output_audio": file_path
+            })
+
+        # output_audio_pp = ""
+        # output_audio_pp_file = os.path.join(output_audios_pp_folder, uuid + ".mp3")
+        # if os.path.exists(output_audio_pp_file):
+        #     output_audio_pp = output_audio_pp_file
 
         
 
@@ -143,8 +160,8 @@ async def get_input_audios():
             "text_paragraphs": text_paragraphs,
             "text_audios": text_audios,
             "text_translates": text_translates,
-            "output_audio": output_audio,
-            "output_audio_pp": output_audio_pp,
+            "output_audios": output_audios,
+            "output_audios_pp": output_audios_pp,
         }
         results.append(op)
     # results = [{"audio_path": file, "text": os.path.basename(
