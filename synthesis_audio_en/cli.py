@@ -45,8 +45,8 @@ def synthesis():
     print("synthesis")
     makedirs()
 
-    language_code = "en-US"
-    language_name = "en-US-Standard-B"
+    language_code = "en-US" # https://cloud.google.com/text-to-speech/docs/voices
+    language_name = "en-US-Standard-B" # https://cloud.google.com/text-to-speech/docs/voices
 
     # Get the list of text file
     text_files = glob.glob(os.path.join(text_paragraphs, group_name, "input-*.txt"))
@@ -88,7 +88,7 @@ def synthesis():
             operation = client.synthesize_long_audio(request=request)
             # Set a deadline for your LRO to finish. 300 seconds is reasonable, but can be adjusted depending on the length of the input.
             result = operation.result(timeout=300)
-            print("Audio file will be saved ot GCS bucket automatically.")
+            print("Audio file will be saved to GCS bucket automatically.")
 
 
 def main(args=None):
