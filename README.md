@@ -5,11 +5,12 @@
 In this tutorial app is to build a [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/) which does the following:
 
 * Pavlos has recorded audio prompts that will be used as our input data.
-* The audio file is then transcribed using Google Cloud Speech to Text API
-* The text is used as a prompt to a pre-trained OpenAI model to Generate Text 
+* The audio file is first transcribed using Google Cloud Speech to Text API
+* The text is used as a prompt to an LLM to Generate Text (Full podcast)
 * The generated text is synthesized to audio using Google Cloud Text-to-Speech API
-* The generated text is also translated to Hindi (or any other language) using Google
+* The generated text is also translated to French (or any other language) using Google
 * The translated text is then synthesized to audio using Google Cloud Text-to-Speech API
+* BONUS: Use the translated text and synthesize audio using ElevenLabs to output in Palvos' voice
 
 The pipeline flow is as shown:
 <img src="mega-pipeline-flow.png"  width="800">
