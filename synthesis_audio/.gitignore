@@ -5,3 +5,6 @@ docker-shell.sh
 Dockerfile
 Pipfile
 Pipfile.lock
+/text_translated
+/output_audios
+/output_audios_pp
