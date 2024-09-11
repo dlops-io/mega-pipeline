@@ -249,10 +249,9 @@ const Home = (props) => {
                                         </TableCell>
                                         <TableCell onClick={() => showMoreClick1()}>
                                             {item.text_prompts && item.text_prompts.map((sub_item, sub_idx) =>
-                                                <div className={classes.cellItem}>
-                                                    <span className={classes.group}>Group:{sub_item.group_name}</span>
+                                                <div className={classes.cellItem} key={sub_idx}>
+                                                    <div className={classes.group}>Group: {sub_item.group_name}</div>
                                                     <ShowMoreText
-                                                        key={sub_idx}
                                                         lines={3}
                                                         more="Show more"
                                                         less="Show less"
@@ -271,7 +270,7 @@ const Home = (props) => {
                                         <TableCell onClick={() => showMoreClick2()}>
                                             {item.text_prompts && item.text_paragraphs.map((sub_item, sub_idx) =>
                                                 <div className={classes.cellItem} key={sub_idx}>
-                                                    <span className={classes.group}>Group:{sub_item.group_name}</span>
+                                                    <div className={classes.group}>Group: {sub_item.group_name}</div>
                                                     <ShowMoreText
                                                         lines={3}
                                                         more="Show more"
@@ -289,7 +288,7 @@ const Home = (props) => {
                                         </TableCell>
                                         <TableCell>
                                             {item.text_audios && item.text_audios.map((sub_item, sub_idx) =>
-                                                <div className={classes.cellItem}>
+                                                <div className={classes.cellItem} key={sub_idx}>
                                                     <div className={classes.group}>Group:{sub_item.group_name}</div>
                                                     <audio controls className={classes.audioPlayer}>
                                                         <source src={BASE_API_URL + "/get_audio_data?path=" + sub_item.text_audio} type="audio/mp3" />
@@ -299,18 +298,23 @@ const Home = (props) => {
                                             )}
                                         </TableCell>
                                         <TableCell onClick={() => showMoreClick3()}>
-                                            <ShowMoreText
-                                                lines={3}
-                                                more="Show more"
-                                                less="Show less"
-                                                className="content-css"
-                                                anchorClass="show-more-less-clickable"
-                                                expanded={expand3}
-                                                width={500}
-                                                truncatedEndingComponent={"... "}
-                                            >
-                                                {item.text_translate}
-                                            </ShowMoreText>
+                                            {item.text_translates && item.text_translates.map((sub_item, sub_idx) =>
+                                                <div className={classes.cellItem} key={sub_idx}>
+                                                    <div className={classes.group}>Group: {sub_item.group_name}</div>
+                                                    <ShowMoreText
+                                                        lines={3}
+                                                        more="Show more"
+                                                        less="Show less"
+                                                        className="content-css"
+                                                        anchorClass="show-more-less-clickable"
+                                                        expanded={expand1}
+                                                        width={300}
+                                                        truncatedEndingComponent={"... "}
+                                                    >
+                                                        {sub_item.text_translate}
+                                                    </ShowMoreText>
+                                                </div>
+                                            )}
                                         </TableCell>
                                         <TableCell>
                                             {item.output_audio &&
