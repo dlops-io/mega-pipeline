@@ -49,7 +49,6 @@ def synthesis():
     language_name = "en-US-Standard-B"
 
     # Get the list of text file
-    # Get the list of text file
     text_files = glob.glob(os.path.join(text_paragraphs, group_name, "input-*.txt"))
     for text_file in text_files:
         uuid = os.path.basename(text_file).replace(".txt", "")

@@ -4,6 +4,7 @@ Module that contains the command line app.
 import os
 import argparse
 import shutil
+import glob
 from google.cloud import storage
 from googletrans import Translator
 
@@ -14,13 +15,14 @@ gcp_project = "ac215-project"
 bucket_name = "mega-pipeline-bucket"
 text_paragraphs = "text_paragraphs"
 text_translated = "text_translated"
+group_name = "staff" # This needs to be your Group name e.g: group-01, group-02, group-03, group-04, group-05, ...
 
 translator = Translator()
 
 
 def makedirs():
-    os.makedirs(text_paragraphs, exist_ok=True)
-    os.makedirs(text_translated, exist_ok=True)
+    os.makedirs(os.path.join(text_paragraphs,group_name), exist_ok=True)
+    os.makedirs(os.path.join(text_translated,group_name), exist_ok=True)
 
 
 def download():
@@ -31,14 +33,10 @@ def download():
     makedirs()
 
     storage_client = storage.Client(project=gcp_project)
-
     bucket = storage_client.bucket(bucket_name)
-
-    blobs = bucket.list_blobs(prefix=text_paragraphs + "/")
+    blobs = bucket.list_blobs(match_glob=f"{text_paragraphs}/{group_name}/input-*.txt")
     for blob in blobs:
-        print(blob.name)
-        if blob.name.endswith(".txt"):
-            blob.download_to_filename(blob.name)
+        blob.download_to_filename(blob.name)
 
 
 def translate():
@@ -46,21 +44,18 @@ def translate():
     makedirs()
 
     # Get the list of text file
-    text_files = os.listdir(text_paragraphs)
-
+    text_files = glob.glob(os.path.join(text_paragraphs, group_name, "input-*.txt"))
     for text_file in text_files:
-        uuid = text_file.replace(".txt", "")
-        file_path = os.path.join(text_paragraphs, text_file)
-        translated_file = os.path.join(text_translated, uuid + ".txt")
+        uuid = os.path.basename(text_file).replace(".txt", "")
+        translated_file = os.path.join(text_translated, group_name, uuid + ".txt")
 
         if os.path.exists(translated_file):
             continue
 
-        with open(file_path) as f:
+        with open(text_file) as f:
             input_text = f.read()
 
         results = translator.translate(input_text, src="en", dest="fr")
-
         print(results.text)
 
         # Save the translation
@@ -77,15 +72,14 @@ def upload():
     bucket = storage_client.bucket(bucket_name)
 
     # Get the list of text file
-    text_files = os.listdir(text_translated)
+    text_files = glob.glob(os.path.join(text_translated, group_name, "input-*.txt"))
 
     for text_file in text_files:
-        file_path = os.path.join(text_translated, text_file)
-
-        destination_blob_name = file_path
+        filename = os.path.basename(text_file)
+        destination_blob_name = os.path.join(text_translated, group_name, filename)
         blob = bucket.blob(destination_blob_name)
-
-        blob.upload_from_filename(file_path)
+        print("Uploading:",destination_blob_name, text_file)
+        blob.upload_from_filename(text_file)
 
 
 def main(args=None):
