@@ -69,6 +69,7 @@ def generate():
             Create a transcript for the podcast about cheese with 1000 or more words.
             Use the below text as a starting point for the cheese podcast.
             Output the transcript as paragraphs and not with who is talking or any "Sound" or any other extra information.
+            Do not highlight or make words bold.
             The host's name is Pavlos Protopapas.
             {input_text}
         """
