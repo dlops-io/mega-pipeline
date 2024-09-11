@@ -111,6 +111,7 @@ docker run --rm -ti -v "$(pwd)":/app transcribe_audio
 
 ### CLI to interact with your code
 * Use the given python file [`cli.py`](https://github.com/dlops-io/mega-pipeline/blob/main/transcribe_audio/cli.py)
+* Assign your group-number to the `group_name` variable in `cli.py`
 * The CLI should have the following command line argument options
 ```
 python cli.py --help
@@ -130,7 +131,7 @@ optional arguments:
 * `python cli.py -d` - Should download all the required data from GCS bucket
 * `python cli.py -t` - Should transcribe audio to text and save it locally
 * `python cli.py -u` - Should upload the transcribed text to the remote GCS bucket
-* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ai5-mega-pipeline.dlops.io/)
+* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/)
 
 ### OPTIONAL: Push Container to Docker Hub
 * Sign up in Docker Hub and create an [Access Token](https://hub.docker.com/settings/security)

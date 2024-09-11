@@ -106,6 +106,7 @@ docker run --rm -ti -v "$(pwd)":/app generate_text
 
 ### CLI to interact with your code
 * Use the given Python file [`cli.py`](https://github.com/dlops-io/mega-pipeline/blob/main/generate_text/cli.py)
+* Assign your group-number to the `group_name` variable in `cli.py`
 * The CLI should have the following command line argument options
 ```
 python cli.py --help

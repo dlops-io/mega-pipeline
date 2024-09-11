@@ -109,6 +109,7 @@ docker run --rm -ti -v "$(pwd)":/app synthesis_audio_en
 
 ### CLI to interact with your code
 * Use the given Python file [`cli.py`](https://github.com/dlops-io/mega-pipeline/blob/main/synthesis_audio_en/cli.py)
+* Assign your group-number to the `group_name` variable in `cli.py`
 * The CLI should have the following command line argument options
 ```
 python cli.py --help
@@ -129,7 +130,7 @@ optional arguments:
 * `python cli.py -d` - Should download all the required data from GCS bucket
 * `python cli.py -s` - Should synthesize audio from text and save it locally
 * `python cli.py -u` - Should upload the audio files to the remote GCS bucket
-* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ai5-mega-pipeline.dlops.io/)
+* Verify that your uploaded data shows up in the [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/)
 
 ### OPTIONAL: You can use the cli_11.py script to synthesize audio with Eleven Labs. Eleven Labs allows you to train voice models.
 For the cheese app, we have a Pavlos voice model available, which you can use by creating an API key from Eleven Labs. 
