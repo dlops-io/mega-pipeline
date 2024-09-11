@@ -317,20 +317,26 @@ const Home = (props) => {
                                             )}
                                         </TableCell>
                                         <TableCell>
-                                            {item.output_audio &&
-                                                <audio controls className={classes.audioPlayer}>
-                                                    <source src={BASE_API_URL + "/get_audio_data?path=" + item.output_audio} type="audio/mp3" />
-                                                    Your browser does not support the audio element.
-                                                </audio>
-                                            }
+                                            {item.output_audios && item.output_audios.map((sub_item, sub_idx) =>
+                                                <div className={classes.cellItem} key={sub_idx}>
+                                                    <div className={classes.group}>Group:{sub_item.group_name}</div>
+                                                    <audio controls className={classes.audioPlayer}>
+                                                        <source src={BASE_API_URL + "/get_audio_data?path=" + sub_item.output_audio} type="audio/mp3" />
+                                                        Your browser does not support the audio element.
+                                                    </audio>
+                                                </div>
+                                            )}
                                         </TableCell>
                                         <TableCell>
-                                            {item.output_audio_pp &&
-                                                <audio controls className={classes.audioPlayer}>
-                                                    <source src={BASE_API_URL + "/get_audio_data?path=" + item.output_audio_pp} type="audio/mp3" />
-                                                    Your browser does not support the audio element.
-                                                </audio>
-                                            }
+                                            {item.output_audios_pp && item.output_audios_pp.map((sub_item, sub_idx) =>
+                                                <div className={classes.cellItem} key={sub_idx}>
+                                                    <div className={classes.group}>Group:{sub_item.group_name}</div>
+                                                    <audio controls className={classes.audioPlayer}>
+                                                        <source src={BASE_API_URL + "/get_audio_data?path=" + sub_item.output_audio} type="audio/mp3" />
+                                                        Your browser does not support the audio element.
+                                                    </audio>
+                                                </div>
+                                            )}
                                         </TableCell>
                                     </TableRow>
                                 )}

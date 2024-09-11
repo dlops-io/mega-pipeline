@@ -49,6 +49,7 @@ const styles = theme => ({
     },
     audioPlayer: {
         width: "150px",
+        margin: "5px",
     },
     pavlos: {
         width: "60px",
