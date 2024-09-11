@@ -255,11 +255,11 @@ const Home = (props) => {
                                                         lines={3}
                                                         more="Show more"
                                                         less="Show less"
-                                                        className="content-css"
                                                         anchorClass="show-more-less-clickable"
                                                         expanded={expand1}
                                                         width={300}
                                                         truncatedEndingComponent={"... "}
+                                                        className={classes.showMoreBox}
                                                     >
                                                         {sub_item.text_prompt}
                                                     </ShowMoreText>
@@ -275,7 +275,7 @@ const Home = (props) => {
                                                         lines={3}
                                                         more="Show more"
                                                         less="Show less"
-                                                        className="content-css"
+                                                        className={classes.showMoreBox}
                                                         anchorClass="show-more-less-clickable"
                                                         expanded={expand1}
                                                         width={300}
@@ -305,7 +305,7 @@ const Home = (props) => {
                                                         lines={3}
                                                         more="Show more"
                                                         less="Show less"
-                                                        className="content-css"
+                                                        className={classes.showMoreBox}
                                                         anchorClass="show-more-less-clickable"
                                                         expanded={expand1}
                                                         width={300}

@@ -59,6 +59,12 @@ const styles = theme => ({
     },
     cellItem: {
         paddingBottom: "5px",
+    },
+    showMoreBox: {
+        borderRadius: "3px",
+        backgroundColor: "#f0f0f0",
+        border: "1px solid #ccc",
+        padding: "8px",
     }
 });
 
