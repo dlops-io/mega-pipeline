@@ -153,7 +153,7 @@ class PipelineManager:
             sync_files("input_audios/input-*.mp3")
             sync_files("text_prompts/*/input-*.txt")
             sync_files("text_paragraphs/*/input-*.txt")
-            # sync_files("text_audios")
+            sync_files("text_audios/*/input-*.mp3")
             # sync_files("text_translated")
             # sync_files("output_audios")
             # sync_files("output_audios_pp")

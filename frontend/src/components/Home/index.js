@@ -270,10 +270,9 @@ const Home = (props) => {
                                         </TableCell>
                                         <TableCell onClick={() => showMoreClick2()}>
                                             {item.text_prompts && item.text_paragraphs.map((sub_item, sub_idx) =>
-                                                <div className={classes.cellItem}>
+                                                <div className={classes.cellItem} key={sub_idx}>
                                                     <span className={classes.group}>Group:{sub_item.group_name}</span>
                                                     <ShowMoreText
-                                                        key={sub_idx}
                                                         lines={3}
                                                         more="Show more"
                                                         less="Show less"
@@ -289,12 +288,15 @@ const Home = (props) => {
                                             )}
                                         </TableCell>
                                         <TableCell>
-                                            {item.text_audio &&
-                                                <audio controls className={classes.audioPlayer}>
-                                                    <source src={BASE_API_URL + "/get_audio_data?path=" + item.text_audio} type="audio/mp3" />
-                                                    Your browser does not support the audio element.
-                                                </audio>
-                                            }
+                                            {item.text_audios && item.text_audios.map((sub_item, sub_idx) =>
+                                                <div className={classes.cellItem}>
+                                                    <div className={classes.group}>Group:{sub_item.group_name}</div>
+                                                    <audio controls className={classes.audioPlayer}>
+                                                        <source src={BASE_API_URL + "/get_audio_data?path=" + sub_item.text_audio} type="audio/mp3" />
+                                                        Your browser does not support the audio element.
+                                                    </audio>
+                                                </div>
+                                            )}
                                         </TableCell>
                                         <TableCell onClick={() => showMoreClick3()}>
                                             <ShowMoreText
