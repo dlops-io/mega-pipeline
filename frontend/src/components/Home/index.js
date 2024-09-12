@@ -244,13 +244,13 @@ const Home = (props) => {
                             <TableBody>
                                 {inputAudios && inputAudios.map((item, idx) =>
                                     <TableRow key={idx}>
-                                        <TableCell>
+                                        <TableCell className={classes.tableCell}>
                                             <audio controls className={classes.audioPlayer}>
                                                 <source src={BASE_API_URL + "/get_audio_data?path=" + item.input_audio} type="audio/mp3" />
                                                 Your browser does not support the audio element.
                                             </audio>
                                         </TableCell>
-                                        <TableCell onClick={() => showMoreClick1()}>
+                                        <TableCell onClick={() => showMoreClick1()} className={classes.tableCell}>
                                             {item.text_prompts && item.text_prompts.map((sub_item, sub_idx) =>
                                                 <div className={classes.cellItem} key={sub_idx}>
                                                     <div className={classes.group}>Team: {sub_item.group_name}</div>
@@ -270,7 +270,7 @@ const Home = (props) => {
                                             )}
 
                                         </TableCell>
-                                        <TableCell onClick={() => showMoreClick2()}>
+                                        <TableCell onClick={() => showMoreClick2()} className={classes.tableCell}>
                                             {item.text_prompts && item.text_paragraphs.map((sub_item, sub_idx) =>
                                                 <div className={classes.cellItem} key={sub_idx}>
                                                     <div className={classes.group}>Team: {sub_item.group_name}</div>
@@ -289,7 +289,7 @@ const Home = (props) => {
                                                 </div>
                                             )}
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell className={classes.tableCell}>
                                             {item.text_audios && item.text_audios.map((sub_item, sub_idx) =>
                                                 <div className={classes.cellItem} key={sub_idx}>
                                                     <div className={classes.group}>Team:{sub_item.group_name}</div>
@@ -300,7 +300,7 @@ const Home = (props) => {
                                                 </div>
                                             )}
                                         </TableCell>
-                                        <TableCell onClick={() => showMoreClick3()}>
+                                        <TableCell onClick={() => showMoreClick3()} className={classes.tableCell}>
                                             {item.text_translates && item.text_translates.map((sub_item, sub_idx) =>
                                                 <div className={classes.cellItem} key={sub_idx}>
                                                     <div className={classes.group}>Team: {sub_item.group_name}</div>
@@ -319,7 +319,7 @@ const Home = (props) => {
                                                 </div>
                                             )}
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell className={classes.tableCell}>
                                             {item.output_audios && item.output_audios.map((sub_item, sub_idx) =>
                                                 <div className={classes.cellItem} key={sub_idx}>
                                                     <div className={classes.group}>Team:{sub_item.group_name}</div>
@@ -330,7 +330,7 @@ const Home = (props) => {
                                                 </div>
                                             )}
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell className={classes.tableCell}>
                                             {item.output_audios_pp && item.output_audios_pp.map((sub_item, sub_idx) =>
                                                 <div className={classes.cellItem} key={sub_idx}>
                                                     <div className={classes.group}>Team:{sub_item.group_name}</div>

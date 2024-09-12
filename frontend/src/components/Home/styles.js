@@ -69,6 +69,9 @@ const styles = theme => ({
     showMoreButton: {
         fontWeight: 800,
         fontSize: "small",
+    },
+    tableCell: {
+        verticalAlign: "top",
     }
 });
 
