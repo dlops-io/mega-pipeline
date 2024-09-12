@@ -253,7 +253,7 @@ const Home = (props) => {
                                         <TableCell onClick={() => showMoreClick1()}>
                                             {item.text_prompts && item.text_prompts.map((sub_item, sub_idx) =>
                                                 <div className={classes.cellItem} key={sub_idx}>
-                                                    <div className={classes.group}>Group: {sub_item.group_name}</div>
+                                                    <div className={classes.group}>Team: {sub_item.group_name}</div>
                                                     <ShowMoreText
                                                         lines={3}
                                                         more={showMore}
@@ -273,7 +273,7 @@ const Home = (props) => {
                                         <TableCell onClick={() => showMoreClick2()}>
                                             {item.text_prompts && item.text_paragraphs.map((sub_item, sub_idx) =>
                                                 <div className={classes.cellItem} key={sub_idx}>
-                                                    <div className={classes.group}>Group: {sub_item.group_name}</div>
+                                                    <div className={classes.group}>Team: {sub_item.group_name}</div>
                                                     <ShowMoreText
                                                         lines={3}
                                                         more={showMore}
@@ -292,7 +292,7 @@ const Home = (props) => {
                                         <TableCell>
                                             {item.text_audios && item.text_audios.map((sub_item, sub_idx) =>
                                                 <div className={classes.cellItem} key={sub_idx}>
-                                                    <div className={classes.group}>Group:{sub_item.group_name}</div>
+                                                    <div className={classes.group}>Team:{sub_item.group_name}</div>
                                                     <audio controls className={classes.audioPlayer}>
                                                         <source src={BASE_API_URL + "/get_audio_data?path=" + sub_item.text_audio} type="audio/mp3" />
                                                         Your browser does not support the audio element.
@@ -303,7 +303,7 @@ const Home = (props) => {
                                         <TableCell onClick={() => showMoreClick3()}>
                                             {item.text_translates && item.text_translates.map((sub_item, sub_idx) =>
                                                 <div className={classes.cellItem} key={sub_idx}>
-                                                    <div className={classes.group}>Group: {sub_item.group_name}</div>
+                                                    <div className={classes.group}>Team: {sub_item.group_name}</div>
                                                     <ShowMoreText
                                                         lines={3}
                                                         more={showMore}
@@ -322,7 +322,7 @@ const Home = (props) => {
                                         <TableCell>
                                             {item.output_audios && item.output_audios.map((sub_item, sub_idx) =>
                                                 <div className={classes.cellItem} key={sub_idx}>
-                                                    <div className={classes.group}>Group:{sub_item.group_name}</div>
+                                                    <div className={classes.group}>Team:{sub_item.group_name}</div>
                                                     <audio controls className={classes.audioPlayer}>
                                                         <source src={BASE_API_URL + "/get_audio_data?path=" + sub_item.output_audio} type="audio/mp3" />
                                                         Your browser does not support the audio element.
@@ -333,7 +333,7 @@ const Home = (props) => {
                                         <TableCell>
                                             {item.output_audios_pp && item.output_audios_pp.map((sub_item, sub_idx) =>
                                                 <div className={classes.cellItem} key={sub_idx}>
-                                                    <div className={classes.group}>Group:{sub_item.group_name}</div>
+                                                    <div className={classes.group}>Team:{sub_item.group_name}</div>
                                                     <audio controls className={classes.audioPlayer}>
                                                         <source src={BASE_API_URL + "/get_audio_data?path=" + sub_item.output_audio} type="audio/mp3" />
                                                         Your browser does not support the audio element.
