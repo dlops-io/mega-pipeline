@@ -8,3 +8,6 @@ outputs
 .vscode
 /synthesis_audio_pp
 /persistent-folder
+/api-service
+/deployment
+/frontend
