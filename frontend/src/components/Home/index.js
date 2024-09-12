@@ -64,23 +64,23 @@ const Home = (props) => {
         loadInputAudios();
     }, []);
     //Get permission from user to use mic
-    try {
-        navigator.mediaDevices.getUserMedia({ audio: true },
-            () => {
-                console.log('Permission Granted');
-                setIsBlocked(false);
-            },
-            () => {
-                console.log('Permission Denied');
-                setIsBlocked(true);
-            },
-        );
-    }
-    catch (err) {
-        //setIsBlocked(true);
-        console.log('Could not get navigator.mediaDevices.getUserMedia');
-        console.log(err.message);
-    }
+    // try {
+    //     navigator.mediaDevices.getUserMedia({ audio: true },
+    //         () => {
+    //             console.log('Permission Granted');
+    //             setIsBlocked(false);
+    //         },
+    //         () => {
+    //             console.log('Permission Denied');
+    //             setIsBlocked(true);
+    //         },
+    //     );
+    // }
+    // catch (err) {
+    //     //setIsBlocked(true);
+    //     console.log('Could not get navigator.mediaDevices.getUserMedia');
+    //     console.log(err.message);
+    // }
 
 
     // Handlers
@@ -158,15 +158,15 @@ const Home = (props) => {
         <div className={classes.root}>
             <main className={classes.main}>
                 <Container maxWidth={false} className={classes.container}>
-                    {!isBlocked &&
+                    {/* {!isBlocked &&
                         <Toolbar className={classes.toolBar}>
                             <Typography>
                                 Click mic to record a Prompt:
                             </Typography>
                             <div className={classes.recordingContainer}>
-                                {/* <span className={classes.audioContainer}>
+                                <span className={classes.audioContainer}>
                                 <audio src={blobURL} controls="controls" />
-                            </span> */}
+                            </span>
                                 <span className={classes.buttonsContainer}>
                                     {!isRecording &&
                                         <Icon className={classes.startRecording} onClick={() => handleOnStartRecording()}>mic</Icon>
@@ -178,7 +178,7 @@ const Home = (props) => {
                             </div>
                             <div className={classes.grow} />
                         </Toolbar>
-                    }
+                    } */}
 
                     {/* <Stepper activeStep={-1}>
                         <Step>
