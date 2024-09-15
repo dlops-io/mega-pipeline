@@ -1,10 +1,10 @@
 # misc
 .DS_Store
 /secrets
-docker-shell.sh
-Dockerfile
-Pipfile
-Pipfile.lock
+# docker-shell.sh
+# Dockerfile
+# Pipfile
+# Pipfile.lock
 /text_translated
 /output_audios
 /output_audios_pp
