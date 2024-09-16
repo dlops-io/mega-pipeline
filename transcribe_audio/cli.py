@@ -20,7 +20,8 @@ input_audios = "input_audios"
 text_prompts = "text_prompts"
 group_name = "" # This needs to be your Group name e.g: group-01, group-02, group-03, group-04, group-05, ...
 
-assert group_name!="" or group_name!="pavlos-advanced", "Update group name"
+assert group_name!="", "Update group name"
+assert group_name!="pavlos-advanced", "Update group name"
 
 def makedirs():
     os.makedirs(input_audios, exist_ok=True)
