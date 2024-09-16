@@ -3,9 +3,9 @@
 🎙️ &rightarrow; 📝 &rightarrow; 🗒️ &rightarrow;  [🔊🇫🇷] &rightarrow; 🔊
 
 In this tutorial we will build a [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/) but as opposed to what we did in T5 now we will follow a more proper workflow. 
-You will not be asked to create the Dockerfiles and Pipfiles but given to you
-You could build the images and run or just run them directly from the dockerhub 
-You will be asked to put the secrets not in each app directory but in a folder that is not part of the repo. 
+* You will not be asked to create the Dockerfiles and Pipfiles but given to you
+* You could build the images and run or just run them directly from the dockerhub 
+* You will be asked to put the secrets not in each app directory but in a folder that is not part of the repo. 
 
 
  Remember the goal of this pipeline is the following:
@@ -31,7 +31,20 @@ The pipeline flow is as shown:
 Each team will create a Docker containers to execute all the tasks. Each team will use a unique group-number to track the overall progress.
 The overall progress of this mega pipeline can be viewed [here](https://ac215-mega-pipeline.dlops.io/)
 
-## GCP Credentials File:
+
+## Create a local secrets folder and add the GCP Credentials File:
+
+It is important to note that we do not want any secure information in Git. So we will manage these files outside of the git folders. At the same level as the app folders create a folder called secrets
+
+Your folder structure should look like this:
+
+   |-transcribe_audio
+   |-generate_text
+   |-synthesis_audio_en
+   |-translate_text
+   |-synthesis_audio
+   |-secrets
+ 
 Download the json file and place inside the secrets folder:
 <a href="https://static.us.edusercontent.com/files/mlca0YEYdvkWPNEowJ0o4hOd" download>mega-pipeline.json</a>
 
