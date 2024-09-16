@@ -38,11 +38,11 @@ It is important to note that we do not want any secure information in Git. So we
 
 Your folder structure should look like this:
 
-|-transcribe_audio
-|-generate_text
-|-synthesis_audio_en
-|-translate_text
-|-synthesis_audio
+|-transcribe_audio<br>
+|-generate_text<br>
+|-synthesis_audio_en<br>
+|-translate_text<br>
+|-synthesis_audio<br>
 |-secrets
 
 Download the json file and place inside the secrets folder:
