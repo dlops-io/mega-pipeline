@@ -10,11 +10,7 @@ BUILD="False"
 export IMAGE_NAME="mega-pipeline-synthesis-audio-en"
 export BASE_DIR=$(pwd)
 export SECRETS_DIR=$(pwd)/../../secrets/
- 
-# export PERSISTENT_DIR=$(pwd)/../persistent-folder/
-
-
- 
+  
 if [ "$BUILD" == "True" ]; then 
     echo "Building image..."
     docker build -t $IMAGE_NAME -f Dockerfile .
