@@ -17,9 +17,9 @@ gcp_project = "ac215-project"
 bucket_name = "mega-pipeline-bucket"
 text_prompts = "text_prompts"  # THIS IS THE TRANSCRIBED TEXT 
 text_paragraphs = "text_paragraphs" # THIS IS THE LLM GENERATED TEXT
-group_name = "pavlos-advanced" # This needs to be your Group name e.g: group-01, group-02, group-03, group-04, group-05, ...
+group_name = "" # This needs to be your Group name e.g: group-01, group-02, group-03, group-04, group-05, ...
 
-assert group_name!="", "Update group name"
+assert group_name!="" or group_name!="pavlos-advanced", "Update group name"
 #############################################################################
 #                            Initialize the model                           #
 vertexai.init(project=gcp_project, location="us-central1")

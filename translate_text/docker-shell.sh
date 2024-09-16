@@ -6,14 +6,9 @@ set -e
 BUILD="False" 
 
 # Define some environment variables
-# Use this if you are planning to build the container
 export IMAGE_NAME="mega-pipeline-translate-text"
 export BASE_DIR=$(pwd)
 export SECRETS_DIR=$(pwd)/../../secrets/
- 
-# export PERSISTENT_DIR=$(pwd)/../persistent-folder/
-
-
  
 if [ "$BUILD" == "True" ]; then 
     echo "Building image..."

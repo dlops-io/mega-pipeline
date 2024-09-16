@@ -6,16 +6,9 @@ set -e
 BUILD="False" 
 
 # Define some environment variables
-# Use this if you are planning to build the container
 export IMAGE_NAME="mega-pipeline-transcribe-audio"
-#export IMAGE_NAME="dlops/mega-pipeline-transcribe-audio"
 export BASE_DIR=$(pwd)
 export SECRETS_DIR=$(pwd)/../../secrets/
- 
-# export PERSISTENT_DIR=$(pwd)/../persistent-folder/
-# export GOOGLE_APPLICATION_CREDENTIALS=/secrets/mega-pipeline.json
-
-# If you want to build the image based on the Dockerfile, uncomment this
  
 if [ "$BUILD" == "True" ]; then 
     echo "Building image..."
