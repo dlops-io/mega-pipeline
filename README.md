@@ -38,14 +38,13 @@ It is important to note that we do not want any secure information in Git. So we
 
 Your folder structure should look like this:
 
-   |-transcribe_audio
-   
-   |-generate_text
-   |-synthesis_audio_en
-   |-translate_text
-   |-synthesis_audio
-   |-secrets
- 
+|-transcribe_audio
+|-generate_text
+|-synthesis_audio_en
+|-translate_text
+|-synthesis_audio
+|-secrets
+
 Download the json file and place inside the secrets folder:
 <a href="https://static.us.edusercontent.com/files/mlca0YEYdvkWPNEowJ0o4hOd" download>mega-pipeline.json</a>
 
@@ -182,5 +181,3 @@ CMD ["-c", "pipenv shell"]
 * Needed to add pwd in quotes in order to escape the spaces that common in windows directory structures
 * Need to prefix docker run with `winpty` otherwise I get a "the input device is not a TTY." error
 * `winpty docker run --rm -ti --mount type=bind,source="$(pwd)",target=/app generate_text`
-
-
