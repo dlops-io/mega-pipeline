@@ -29,8 +29,8 @@ The pipeline flow is as shown:
 * 🇮🇳Task D [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text):
 * 🔊Task E [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio):
 
-Each team will create a Docker containers to execute all the tasks. Each team will use a unique group-number to track the overall progress.
-The overall progress of this mega pipeline can be viewed [here](https://ac215-mega-pipeline.dlops.io/)
+Same teams as in T5 will create a Docker containers to execute all the tasks. Each team will use a unique group-number to track the overall progress.
+The overall progress of this mega pipeline can be viewed [here](https://ac215-mega-pipeline.dlops.io/).
 
 
 ## Create a local secrets folder and add the GCP Credentials File:
@@ -100,81 +100,7 @@ python cli.py --synthesis
 ```
 
 
-### Sample Code to Read/Write to GCS Bucket
 
-* Download from bucket
-```
-from google.cloud import storage
-
-# Initiate Storage client
-storage_client = storage.Client(project=gcp_project)
-
-# Get reference to bucket
-bucket = storage_client.bucket(bucket_name)
-
-# Find all content in a bucket
-blobs = bucket.list_blobs(prefix="input_audios/")
-for blob in blobs:
-    print(blob.name)
-    if not blob.name.endswith("/"):
-        blob.download_to_filename(blob.name)
-
-```
-
-* Upload to bucket
-```
-from google.cloud import storage
-
-# Initiate Storage client
-storage_client = storage.Client(project=gcp_project)
-
-# Get reference to bucket
-bucket = storage_client.bucket(bucket_name)
-
-# Destination path in GCS 
-destination_blob_name = "input_audios/test.mp3"
-blob = bucket.blob(destination_blob_name)
-
-blob.upload_from_filename("Path to test.mp3 on local computer")
-
-```
-
-### Sample Dockerfile
-```
-# Use the official Debian-hosted Python image
-FROM python:3.8-slim-buster
-
-# Tell pipenv where the shell is. 
-# This allows us to use "pipenv shell" as a container entry point.
-ENV PYENV_SHELL=/bin/bash
-
-ENV GOOGLE_APPLICATION_CREDENTIALS=secrets/mega-pipeline.json
-
-# Ensure we have an up to date baseline, install dependencies 
-RUN set -ex; \
-    apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y --no-install-recommends build-essential git ffmpeg && \
-    pip install --no-cache-dir --upgrade pip && \
-    pip install pipenv && \
-    mkdir -p /app
-
-WORKDIR /app
-
-# Add Pipfile, Pipfile.lock
-ADD Pipfile Pipfile.lock /app/
-
-RUN pipenv sync
-
-# Source code
-ADD . /app
-
-# Entry point
-ENTRYPOINT ["/bin/bash"]
-
-# Get into the pipenv shell
-CMD ["-c", "pipenv shell"]
-```
 
 ### Some notes for running on Windows
 * Docker Win10 installation - needs WSL2 or Hyper-V enabled: https://docs.docker.com/desktop/windows/install/
