@@ -2,11 +2,12 @@
 
 🎙️ &rightarrow; 📝 &rightarrow; 🗒️ &rightarrow;  [🔊🇫🇷] &rightarrow; 🔊
 
-In this tutorial we will build a [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/) but as opposed to what we did in T5 now we will follow a more proper workflow. 
-* You will not be asked to create the Dockerfiles and Pipfiles but given to you
-* You could build the images and run or just run them directly from the dockerhub 
-* You will be asked to put the secrets not in each app directory but in a folder that is not part of the repo. 
+In this tutorial we will build a [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/). Unlike what we did in T5, this time we will follow a more structured workflow.
 
+	•	The Dockerfiles and Pipfiles will be provided; you won’t need to create them.
+	•	You can either build the images yourself or run them directly from DockerHub.
+	•	Secrets should be stored in a folder outside the app directories, which will not be part of the repository.
+	•	A docker-sh.sh script is provided to handle all Docker-related tasks, including building, setting environments, and running containers.
 
  Remember the goal of this pipeline is the following:
 
