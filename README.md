@@ -39,6 +39,7 @@ It is important to note that we do not want any secure information in Git. So we
 Your folder structure should look like this:
 
    |-transcribe_audio
+   
    |-generate_text
    |-synthesis_audio_en
    |-translate_text
