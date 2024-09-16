@@ -7,7 +7,7 @@ In this tutorial we will build a [Mega Pipeline App](https://ac215-mega-pipeline
 *	The Dockerfiles and Pipfiles will be provided; you won’t need to create them.
 *	You can either build the images yourself or run them directly from DockerHub.
 *	Secrets should be stored in a folder outside the app directories, which will not be part of the repository.
-*	A docker-sh.sh script is provided to handle all Docker-related tasks, including building, setting environments, and running containers.
+*	A docker-shell.sh script is provided to handle all Docker-related tasks, including building, setting environments, and running containers.
 
  Remember the goal of this pipeline is the following:
 
