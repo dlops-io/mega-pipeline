@@ -15,8 +15,9 @@ gcp_project = "ac215-project"
 bucket_name = "mega-pipeline-bucket"
 text_paragraphs = "text_paragraphs"
 text_translated = "text_translated"
-group_name = "pavlos-advanced" # This needs to be your Group name e.g: group-01, group-02, group-03, group-04, group-05, ...
+group_name = "" # This needs to be your Group name e.g: group-01, group-02, group-03, group-04, group-05, ...
 
+assert group_name!="" or group_name!="pavlos-advanced", "Update group name"
 translator = Translator()
 
 
