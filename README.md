@@ -1,8 +1,14 @@
-# Mega Pipeline App
+# Mega Pipeline App (Tutorial T5B)
 
 🎙️ &rightarrow; 📝 &rightarrow; 🗒️ &rightarrow;  [🔊🇫🇷] &rightarrow; 🔊
 
-In this tutorial we will build a [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/) which does the following:
+In this tutorial we will build a [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/) but as opposed to what we did in T5 now we will follow a more proper workflow. 
+You will not be asked to create the Dockerfiles and Pipfiles but given to you
+You could build the images and run or just run them directly from the dockerhub 
+You will be asked to put the secrets not in each app directory but in a folder that is not part of the repo. 
+
+
+ Remember the goal of this pipeline is the following:
 
 * Pavlos has recorded audio prompts that will be used as our input data.
 * The audio file is first transcribed using Google Cloud Speech to Text API
