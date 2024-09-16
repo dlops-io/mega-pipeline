@@ -131,5 +131,5 @@ optional arguments:
 ### OPTIONAL: Push Container to Docker Hub
 * Sign up in Docker Hub and create an [Access Token](https://hub.docker.com/settings/security)
 * Login to the Hub: `docker login -u <USER NAME> -p <ACCESS TOKEN>`
-* Tag the Docker Image: `docker tag generate_text <USER NAME>/generate_text`
-* Push to Docker Hub: `docker push <USER NAME>/generate_text`
+* Tag the Docker Image: `docker tag mega-pipeline-generate_tex <USER NAME>/mega-pipeline-generate_text`
+* Push to Docker Hub: `docker push <USER NAME>/mega-pipeline-generate_tex`

@@ -18,7 +18,7 @@ gcp_project = "ac215-project"
 bucket_name = "mega-pipeline-bucket"
 input_audios = "input_audios"
 text_prompts = "text_prompts"
-group_name = "pavlos" # This needs to be your Group name e.g: group-01, group-02, group-03, group-04, group-05, ...
+group_name = "pavlos-advanced" # This needs to be your Group name e.g: group-01, group-02, group-03, group-04, group-05, ...
 
 
 def makedirs():
