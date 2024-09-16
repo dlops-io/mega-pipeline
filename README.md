@@ -28,12 +28,14 @@ The pipeline flow is as shown:
 * 🇮🇳Task D [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text):
 * 🔊Task E [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio):
 
-Each team will create a Docker containers to build all the tasks. Each team will use a unique group-number to track the overall progress.
+Each team will create a Docker containers to execute all the tasks. Each team will use a unique group-number to track the overall progress.
 The overall progress of this mega pipeline can be viewed [here](https://ac215-mega-pipeline.dlops.io/)
 
 ## GCP Credentials File:
-Download the json file and place inside <app_folder>/secrets:
+Download the json file and place inside the secrets folder:
 <a href="https://static.us.edusercontent.com/files/mlca0YEYdvkWPNEowJ0o4hOd" download>mega-pipeline.json</a>
+
+
 
 
 ## GCS Bucket Details:
@@ -167,5 +169,4 @@ CMD ["-c", "pipenv shell"]
 * Need to prefix docker run with `winpty` otherwise I get a "the input device is not a TTY." error
 * `winpty docker run --rm -ti --mount type=bind,source="$(pwd)",target=/app generate_text`
 
-## Solutions
-Solutions to this tutorial can be found [here]()
+
