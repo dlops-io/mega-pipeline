@@ -23,11 +23,11 @@ The pipeline flow is as shown:
 <img src="mega-pipeline-flow.png"  width="800">
 
 ## The class will work in groups to perform the following tasks:
-* 📝Task A [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/main/transcribe_audio):
-* 🗒️Task B [generate_text](https://github.com/dlops-io/mega-pipeline/tree/main/generate_text):
-* 🔊Task C [synthesis_audio_en](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio_en):
-* 🇮🇳Task D [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text):
-* 🔊Task E [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio):
+* 📝Task A [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/flexible-workflow/transcribe_audio):
+* 🗒️Task B [generate_text](https://github.com/dlops-io/mega-pipeline/tree/flexible-workflow/generate_text):
+* 🔊Task C [synthesis_audio_en](https://github.com/dlops-io/mega-pipeline/tree/flexible-workflow/synthesis_audio_en):
+* 🇮🇳Task D [translate_text](https://github.com/dlops-io/mega-pipeline/tree/flexible-workflow/translate_text):
+* 🔊Task E [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/flexible-workflow/synthesis_audio):
 
 Same teams as in T5 will create a Docker containers to execute all the tasks. Each team will use a unique group-number to track the overall progress.
 The overall progress of this mega pipeline can be viewed [here](https://ac215-mega-pipeline.dlops.io/).
