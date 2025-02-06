@@ -2,7 +2,7 @@
 
 🎙️ &rightarrow; 📝 &rightarrow; 🗒️ &rightarrow;  [🔊🇫🇷] &rightarrow; 🔊
 
-In this tutorial we will build a [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/) which does the following:
+In this tutorial we will build a [Mega Pipeline App](http://ac215-mega-pipeline.dlops.io/) which does the following:
 
 * Pavlos has recorded audio prompts that will be used as our input data.
 * The audio file is first transcribed using Google Cloud Speech to Text API
@@ -23,7 +23,7 @@ The pipeline flow is as shown:
 * 🔊Task E [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio):
 
 Each team will create a Docker containers to build all the tasks. Each team will use a unique group-number to track the overall progress.
-The overall progress of this mega pipeline can be viewed [here](https://ac215-mega-pipeline.dlops.io/)
+The overall progress of this mega pipeline can be viewed [here](http://ac215-mega-pipeline.dlops.io/)
 
 ## GCP Credentials File:
 Download the json file and place inside <app_folder>/secrets:
