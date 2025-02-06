@@ -3,7 +3,7 @@
 # exit immediately if a command exits with a non-zero status
 set -e
 
-BUILD="False" 
+BUILD="True" 
 
 # Define some environment variables
 export IMAGE_NAME="mega-pipeline-translate-text"
@@ -12,7 +12,17 @@ export SECRETS_DIR=$(pwd)/../../secrets/
  
 if [ "$BUILD" == "True" ]; then 
     echo "Building image..."
-    docker build -t $IMAGE_NAME -f Dockerfile .
+    #docker build -t $IMAGE_NAME -f Dockerfile .
+    # docker buildx build --platform linux/amd64 -t dlops/$IMAGE_NAME:amd64 --push .
+    # docker buildx build --platform linux/arm64 -t dlops/$IMAGE_NAME:arm64 --push .
+    # docker manifest create dlops/$IMAGE_NAME:latest \
+    #     dlops/$IMAGE_NAME:amd64 \
+    #     dlops/$IMAGE_NAME:arm64
+
+    # docker manifest push dlops/$IMAGE_NAME:latest
+
+    # docker manifest push dlops/$IMAGE_NAME:latest
+    docker buildx build --platform linux/amd64 -t dlops/$IMAGE_NAME:latest --push .
 
     # Run the container
     docker run --rm --name $IMAGE_NAME -ti \
