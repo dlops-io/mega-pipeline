@@ -14,7 +14,7 @@ In this container, you will implement the following:
 
 ### GCP Credentials File
 * Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `transcribe_audio`
-<a href="https://static.us.edusercontent.com/files/mlca0YEYdvkWPNEowJ0o4hOd" download>mega-pipeline.json</a>
+<a href="https://canvas.harvard.edu/files/21857112/download?download_frd=1" download>mega-pipeline.json</a>
 
 ### Create Pipfile & Pipfile.lock files
 * Inside the `transcribe_audio` folder create:

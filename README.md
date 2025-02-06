@@ -27,7 +27,7 @@ The overall progress of this mega pipeline can be viewed [here](http://ac215-meg
 
 ## GCP Credentials File:
 Download the json file and place inside <app_folder>/secrets:
-<a href="https://static.us.edusercontent.com/files/mlca0YEYdvkWPNEowJ0o4hOd" download>mega-pipeline.json</a>
+<a href="https://canvas.harvard.edu/files/21857112/download?download_frd=1" download>mega-pipeline.json</a>
 
 
 ## GCS Bucket Details:
