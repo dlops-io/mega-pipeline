@@ -82,8 +82,10 @@ python cli.py --synthesis
 
 * Download from bucket
 ```
+import os 
 from google.cloud import storage
 
+os.environ['GOOGLE_APPLICATION_CREDENTIALS']='mega-pipeline.json'
 # Initiate Storage client
 storage_client = storage.Client(project=gcp_project)
 
