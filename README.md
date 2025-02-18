@@ -2,7 +2,7 @@
 
 🎙️ &rightarrow; 📝 &rightarrow; 🗒️ &rightarrow;  [🔊🇫🇷] &rightarrow; 🔊
 
-In this tutorial we will build a [Mega Pipeline App](https://ac215-mega-pipeline.dlops.io/). Unlike what we did in T5, this time we will follow a more structured workflow.
+In this tutorial we will build a [Mega Pipeline App](http://ac215-mega-pipeline.dlops.io/). Unlike what we did in T5, this time we will follow a more structured workflow.
 
 *	The Dockerfiles and Pipfiles will be provided; you won’t need to create them.
 *	You can either build the images yourself or run them directly from DockerHub.
@@ -30,7 +30,7 @@ The pipeline flow is as shown:
 * 🔊Task E [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/flexible-workflow/synthesis_audio):
 
 Same teams as in T5 will create a Docker containers to execute all the tasks. Each team will use a unique group-number to track the overall progress.
-The overall progress of this mega pipeline can be viewed [here](https://ac215-mega-pipeline.dlops.io/).
+The overall progress of this mega pipeline can be viewed [here](http://ac215-mega-pipeline.dlops.io/).
 
 
 ## Create a local secrets folder and add the GCP Credentials File:
