@@ -31,6 +31,13 @@ Download the json file and place inside the secrets folder:
 sh docker-shell.sh
 ```
 
+Various options to run docker-shell.sh are:
+* `sh docker-shell.sh`          - Default option is to perform a local build and run
+* `sh docker-shell.sh  prod`    - Build production docker image and push to registry
+* `sh docker-shell.sh  dev`     - Build development docker image locally
+* `sh docker-shell.sh  run`     - Run the container (uses registry image if local not found)
+
+
 ## Run CLI
 **Synthesis Audio English**
 ```
