@@ -3,7 +3,7 @@
 /secrets
 docker-shell.sh
 Dockerfile
-Pipfile
-Pipfile.lock
+pyproject.toml
+uv.lock
 /text_paragraphs
 /text_prompts

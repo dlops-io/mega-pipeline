@@ -3,8 +3,8 @@
 /secrets
 docker-shell.sh
 Dockerfile
-Pipfile
-Pipfile.lock
+pyproject.toml
+uv.lock
 /text_translated
 /output_audios
 /output_audios_pp
