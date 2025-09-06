@@ -19,7 +19,7 @@ The pipeline flow is as shown:
 * 📝Task A [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/main/transcribe_audio):
 * 🗒️Task B [generate_text](https://github.com/dlops-io/mega-pipeline/tree/main/generate_text):
 * 🔊Task C [synthesis_audio_en](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio_en):
-* 🇮🇳Task D [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text):
+* 🇫🇷Task D [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text):
 * 🔊Task E [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio):
 
 Each team will create a Docker containers to build all the tasks. Each team will use a unique group-number to track the overall progress.
