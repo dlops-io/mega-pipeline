@@ -122,7 +122,7 @@ blob.upload_from_filename("Path to test.mp3 on local computer")
 # Use the official Debian-hosted Python image
 FROM python:3.12-slim-bookworm
 
-ARG DEBIAN_PACKAGES="build-essential curl libpq5"
+ARG DEBIAN_PACKAGES="build-essential curl"
 
 # Prevent apt from showing prompts
 ENV DEBIAN_FRONTEND=noninteractive
@@ -136,6 +136,9 @@ ENV PYTHONUNBUFFERED=1
 # Tell uv to copy packages from the wheel into the site-packages
 ENV UV_LINK_MODE=copy
 ENV UV_PROJECT_ENVIRONMENT=/home/app/.venv
+
+# This is done for the tutorial only
+ENV GOOGLE_APPLICATION_CREDENTIALS=secrets/mega-pipeline.json
 
 # Ensure we have an up to date baseline, install dependencies and
 # create a user so we don't run the app as root
