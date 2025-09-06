@@ -7,8 +7,7 @@ import argparse
 import shutil
 import glob
 from google.cloud import storage
-import vertexai
-from vertexai.generative_models import GenerativeModel, GenerationConfig
+from google import genai
 
 # Generate the inputs arguments parser
 parser = argparse.ArgumentParser(description="Command description.")
@@ -20,11 +19,9 @@ text_paragraphs = "text_paragraphs" # THIS IS THE LLM GENERATED TEXT
 group_name = "pavlos" # This needs to be your Group name e.g: group-01, group-02, group-03, group-04, group-05, ...
 
 #############################################################################
-#                            Initialize the model                           #
-vertexai.init(project=gcp_project, location="us-central1")
-model = GenerativeModel(model_name="gemini-1.5-flash-001",)
-generation_config = GenerationConfig(
-    temperature=0.01
+#                       Initialize the LLM Client                           #
+client = genai.Client(
+    vertexai=True, project=gcp_project, location='us-central1'
 )
 #############################################################################
 
@@ -74,9 +71,10 @@ def generate():
             {input_text}
         """
         print(input_prompt,"\n\n\n")
-        response = model.generate_content(input_prompt,generation_config=generation_config)
+        response = client.models.generate_content(
+            model='gemini-2.0-flash-001', contents='Why is the sky blue?'
+        )
         paragraph = response.text
-
 
         print("Generated text:")
         print(paragraph)

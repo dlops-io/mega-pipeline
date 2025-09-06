@@ -77,8 +77,7 @@ docker run --rm -ti -v "$(pwd)":/app generate_text
 ### Python packages required
 * `uv add` the following:
   - `google-cloud-storage`
-  - `google-generativeai`
-  - `google-cloud-aiplatform`
+  - `google-genai`
 
 * If you exit your container at this point, in order to get the latest environment from the pyproject.toml file, make sure to re-build your docker image again
 
