@@ -14,80 +14,55 @@ In this container, you will implement the following:
 
 ### GCP Credentials File
 * Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `transcribe_audio`
-<a href="https://canvas.harvard.edu/files/21857112/download?download_frd=1" download>mega-pipeline.json</a>
+<a href="https://canvas.harvard.edu/files/23163432/download?download_frd=1" download>mega-pipeline.json</a>
 
-### Create Pipfile & Pipfile.lock files
+### Create pyproject.toml
 * Inside the `transcribe_audio` folder create:
-* Add `Pipfile` with the following contents:
+* Add `pyproject.toml` with the following contents:
 ```
-[[source]]
-name = "pypi"
-url = "https://pypi.org/simple"
-verify_ssl = true
-
-[dev-packages]
-
-[packages]
-
-[requires]
-python_version = "3.8"
-```
-
-* Add `Pipfile.lock` with the following contents:
-```
-{
-    "_meta": {
-        "hash": {
-            "sha256": "7f7606f08e0544d8d012ef4d097dabdd6df6843a28793eb6551245d4b2db4242"
-        },
-        "pipfile-spec": 6,
-        "requires": {
-            "python_version": "3.8"
-        },
-        "sources": [
-            {
-                "name": "pypi",
-                "url": "https://pypi.org/simple",
-                "verify_ssl": true
-            }
-        ]
-    },
-    "default": {},
-    "develop": {}
-}
+[project]
+name = "app"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+]
 ```
 
 ### Create Dockerfile
 * Inside the `transcribe_audio` folder
-* Create a `Dockerfile` and base it from `python:3.8-slim-buster` the official Debian-hosted Python 3.8 image
+* Create a `Dockerfile` and base it from `python:3.12-slim-bookworm` the official Debian-hosted Python 3.12 image
 * Set the following environment variables:
 ```
-ENV PYENV_SHELL=/bin/bash
+ENV UV_LINK_MODE=copy
+ENV UV_PROJECT_ENVIRONMENT=/home/app/.venv
 ENV GOOGLE_APPLICATION_CREDENTIALS=secrets/mega-pipeline.json
 ```
 
 * Ensure we have an up-to-date baseline and install dependencies by running
 ```
-apt-get update
-apt-get upgrade -y
-apt-get install -y --no-install-recommends build-essential ffmpeg
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends build-essential ffmpeg && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 ```
 
-* Install pipenv
+* Install uv
 ```
-pip install --no-cache-dir --upgrade pip
-pip install pipenv
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install uv
 ```
 
 * Create a `app` folder by running `mkdir -p /app`
-
 * Set the working directory as `/app`
-* Add `Pipfile`, `Pipfile.lock` to the `/app/` folder
-* Run `pipenv sync`
 
-* Add the rest of your files to the `/app` folder
+* Copy source files to the `/app` folder
+* Run `uv sync`
+
 * Add Entry point to `/bin/bash`
-* Add a command to get into the `pipenv shell`
+* Add a command to get into the virtual environment shell `source /home/app/.venv/bin/activate && exec bash`
 
 * Example dockerfile can be found [here](https://github.com/dlops-io/mega-pipeline#sample-dockerfile)
 
@@ -102,12 +77,12 @@ docker run --rm -ti -v "$(pwd)":/app transcribe_audio
 * The `-v "(pwd)":/app` option mounts your current working directory into the `/app` directory inside the container as a volume. This helps us during app development, so when you change a source code file using VSCode from your host machine, the files are automatically changed inside the container.
 
 ### Python packages required
-* `pipenv install` the following:
+* `uv add` the following:
   - `google-cloud-storage`
   - `google-cloud-speech`
   - `ffmpeg-python`
 
-* If you exit your container at this point, in order to get the latest environment from the pipenv file, make sure to re-build your docker image again
+* If you exit your container at this point, in order to get the latest environment from the pyproject.toml file, make sure to re-build your docker image again
 
 ### CLI to interact with your code
 * Use the given python file [`cli.py`](https://github.com/dlops-io/mega-pipeline/blob/main/transcribe_audio/cli.py)
