@@ -2,8 +2,6 @@
 .DS_Store
 /secrets
 docker-shell.sh
-Dockerfile
-pyproject.toml
-uv.lock
+
 /text_paragraphs
 /text_translated
