@@ -2,9 +2,7 @@
 .DS_Store
 /secrets
 docker-shell.sh
-Dockerfile
-pyproject.toml
-uv.lock
+
 /text_translated
 /output_audios
 /output_audios_pp
