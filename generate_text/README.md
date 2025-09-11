@@ -13,7 +13,7 @@ In this container, you will implement the following:
 
 ### GCP Credentials File
 * Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `generate_text`
-<a href="https://canvas.harvard.edu/files/21857112/download?download_frd=1" download>mega-pipeline.json</a>
+<a href="https://canvas.harvard.edu/files/23163432/download?download_frd=1" download>mega-pipeline.json</a>
 
 ### Create pyproject.toml
 * Inside the `generate_text` folder create:

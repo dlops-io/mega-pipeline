@@ -14,10 +14,10 @@ In this container, you will implement the following:
 
 ### GCP Credentials File
 * Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `synthesis_audio_en`
-<a href="https://canvas.harvard.edu/files/21857112/download?download_frd=1" download>mega-pipeline.json</a>
+<a href="https://canvas.harvard.edu/files/23163432/download?download_frd=1" download>mega-pipeline.json</a>
 
 ### Create pyproject.toml
-* Inside the `transcribe_audio` folder create:
+* Inside the `synthesis_audio_en` folder create:
 * Add `pyproject.toml` with the following contents:
 ```
 [project]
@@ -31,7 +31,7 @@ dependencies = [
 ```
 
 ### Create Dockerfile
-* Inside the `transcribe_audio` folder
+* Inside the `synthesis_audio_en` folder
 * Create a `Dockerfile` and base it from `python:3.12-slim-bookworm` the official Debian-hosted Python 3.12 image
 * Set the following environment variables:
 ```
