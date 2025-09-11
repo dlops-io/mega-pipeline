@@ -28,6 +28,7 @@ By completing this tutorial, you’ll gain experience with:
 ---
 
 ## Group Tasks for the Mega Pipeline
+Students will form teams for this project.
 Each team will build the **entire pipeline end to end**. You won’t just handle one piece—you’ll containerize and connect every component.
 
 All components and their step-by-step instructions are listed below so you can follow along:
