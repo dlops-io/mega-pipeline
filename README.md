@@ -1,85 +1,121 @@
 # Mega Pipeline App
 
-🎙️ &rightarrow; 📝 &rightarrow; 🗒️ &rightarrow;  [🔊🇫🇷] &rightarrow; 🔊
+🎙️ → 📝 → 🗒️ → [🔊🇫🇷] → 🔊  
 
-The goal of this tutorial is to build an AI-assisted podcast generator that works across multiple languages. Starting from a recorded draft, we transcribe it, expand it with an LLM, translate it, and synthesize the result into audio.
+The goal of this tutorial is to build an **AI-assisted podcast generator** that works across multiple languages. Starting from a recorded draft, we’ll transcribe it, enrich it with an LLM, translate it, and synthesize the result back into audio.
 
-The key idea is to simulate a microservice architecture, where each of these components runs as its own containerized service. The full pipeline is shown below.
+The key idea is to **simulate a microservice architecture**, where each component runs as its own containerized service. The full pipeline is shown below.
 
-* Pavlos recorded a draft podcast in English, which will serve as our starting point for the pipeline.
-* The audio file is transcribed using the Google Cloud Speech-to-Text API.
-* The resulting text is used as a prompt to an LLM to generate an expanded version of the podcast.
-* The generated text is synthesized into audio using the Google Cloud Text-to-Speech API.
-* The text is also translated into French (or another language) using Google Translation services.
-* The translated text is then converted back to audio using the Google Cloud Text-to-Speech API.
-* **Bonus step**: The translated text can be synthesized into audio using ElevenLabs, recreating the voice in Pavlos’ style.
+* Pavlos recorded a draft podcast in English, which serves as our starting point.  
+* The audio file is transcribed using the Google Cloud Speech-to-Text API.  
+* The resulting text is sent to an LLM to generate an expanded version of the podcast.  
+* The generated text is synthesized into audio with Google Cloud Text-to-Speech.  
+* The text is also translated into French (or another language) using Google Translation services.  
+* The translated text is synthesized into audio again with Google Cloud Text-to-Speech.  
+* **Bonus step**: The translated text can also be synthesized with ElevenLabs to recreate Pavlos’ voice.  
 
-The pipeline flow is illustrated below:
-<img src="mega-pipeline-flow.png"  width="800">
+The pipeline flow is illustrated below:  
+<img src="mega-pipeline-flow.png" width="800">
+
+---
+
+## What You’ll Learn
+By completing this tutorial, you’ll gain experience with:
+- **Containerizing AI/ML workflows** step by step.  
+- **Using shared cloud storage (GCS)** to connect independent services.  
+- **Securing applications** with service account authentication.  
+
+---
 
 ## Group Tasks for the Mega Pipeline
-Each team will be responsible for building all stages of the pipeline, end to end. This means you won’t just work on one piece—you’ll containerize and connect every component.
+Each team will build the **entire pipeline end to end**. You won’t just handle one piece—you’ll containerize and connect every component.
 
-All components and their step-by-step instructions are listed below, so you can follow along to build the full pipeline.
+All components and their step-by-step instructions are listed below so you can follow along:
 
-* 📝Task A [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/main/transcribe_audio)
-* 🗒️Task B [generate_text](https://github.com/dlops-io/mega-pipeline/tree/main/generate_text)
-* 🔊Task C [synthesis_audio_en](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio_en)
-* 🇫🇷Task D [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text)
-* 🔊Task E [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio)
+* 📝 Task A — [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/main/transcribe_audio)  
+* 🗒️ Task B — [generate_text](https://github.com/dlops-io/mega-pipeline/tree/main/generate_text)  
+* 🔊 Task C — [synthesis_audio_en](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio_en)  
+* 🇫🇷 Task D — [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text)  
+* 🔊 Task E — [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio)  
 
-By the end, every team will have built a complete pipeline that mirrors a real-world microservice architecture: multiple independent services, each containerized, working together to form a larger application.
+By the end, every team will have built a complete pipeline that mirrors a **real-world microservice architecture**: multiple independent services, each containerized, working together to form a larger application.
 
-The overall progress of this mega pipeline can be viewed [here](http://ac215-mega-pipeline.dlops.io/).
+The overall progress of the mega pipeline can be viewed [here](http://ac215-mega-pipeline.dlops.io/).
+
+---
+
+⚠️ **IMPORTANT NOTE**
+
+When building your containers, make sure you **update the group name** inside your configuration.  
+This is how we track your progress and display it correctly on the leaderboard.  
+
+If you don’t change the group name, your work may overwrite someone else’s, or it won’t be visible under your team.  
+So please double-check before you push or run your containerized tasks!
+
+---
 
 ## Connecting the Pipeline Components
+In a production pipeline, containerized services talk to each other through APIs, sending requests and responses directly between microservices.
 
-In a real-world production pipeline, containerized services communicate through APIs, passing requests and responses directly between microservices.
+Since we haven’t covered APIs yet, we’ll simplify. Instead of calling one another directly, components will **communicate indirectly by writing their outputs to storage**, which the next stage will then read as input.
 
-Since we haven’t covered APIs yet in this course, we’ll simplify things for now. Instead of calling each other, components will communicate indirectly by writing their outputs to disk, which the next stage will then read as input.
+In this tutorial, rather than just using your local disk, components will write to and read from a **Google Cloud Storage (GCS) bucket**. This shared bucket acts like a common drive for transcripts, generated text, and synthesized audio.
 
-Because this tutorial runs locally on your machine, file-based communication is the simplest way to connect the pieces. In production, however, each container would typically run on its own VM in the cloud and exchange data via APIs. To prepare for that, we adopt the same principle of a shared storage layer. For now, the components will still communicate by writing their outputs to a Google Cloud Storage (GCS) bucket, which serves as the shared drive for transcripts, generated text, and synthesized audio.
+This setup gives you practical hands-on experience now, while preparing you for the **API-driven systems** we’ll tackle later.
 
-This setup is a stepping stone: it gives you hands-on practice with the full pipeline now, while preparing you for the more advanced, API-driven systems we’ll tackle later in the course.
+---
 
-## GCS Bucket Details:
-Before diving into the bucket layout, let’s connect the dots.
-In Google Cloud, a bucket is like a shared online folder where we can store and retrieve files. Instead of saving outputs locally, our pipeline components will read from and write to this shared bucket, making it easy for all stages of the pipeline to communicate. You’ll access these buckets through the Google Cloud Storage (GCS) client, which lets you upload, download, and list files programmatically from inside your containers.
+### GCS Bucket Details
+In Google Cloud, a **bucket** is like a shared online folder where files can be stored and retrieved. Instead of saving outputs locally, our pipeline components will read and write to this shared bucket so all stages can communicate easily.
 
-* **input_audios** - Bucket where we store the input audio files.
-* **text_prompts** - Bucket where we store the text prompts that was synthesized by audio to text.
-* **text_paragraphs** - Bucket where we store the generated text from GPT2.
-* **text_translated** - Bucket where we store the translated text.
-* **text_audios** - Bucket where we store the audio of the paragraph of text.
-* **output_audios** - Bucket where we store the final French audio files.
-* **output_audios_pp** - Bucket where we store the French audio files (Pavlos voice).
+* `input_audios/` — raw audio files (starting point).  
+* `text_prompts/` — transcripts generated from speech-to-text.  
+* `text_paragraphs/` — expanded text generated by the LLM.  
+* `text_translated/` — translated versions of the text.  
+* `text_audios/` — synthesized audio clips for each paragraph.  
+* `output_audios/` — final audio outputs in French (or another language).  
+* `output_audios_pp/` — French audio outputs in Pavlos’ voice.  
 
 ![Mega pipeline bucket](mega-pipeline-bucket.png)
 
 
+
 ## GCP Credentials File:
-Download the json file and place inside <app_folder>/secrets:
+
+The last piece we need in order to access the GCP bucket is authentication.
+Buckets won’t let you read or write anything unless you are both authenticated (proving who you are) and authorized (having the right permissions).
+
+In this course, you don’t need to authenticate yourself as a person. Instead, you’ll authenticate your app so it can talk to GCP securely. The way we do this is by using a Service Account—part of IAM in GCP.
+
+To keep it simple, you’ll use a JSON credentials file that represents this Service Account.
+Just download the file and place it inside <app_folder>/secrets/:
+
 <a href="https://canvas.harvard.edu/files/21857112/download?download_frd=1" download>mega-pipeline.json</a>
 
+Later in the course, we’ll revisit authentication in more depth, but for now, this file is all you need to let your containerized apps talk to the GCP bucket.
 
+🔑 Important Note on Secrets
 
-### Resulting CLI options for each container
+We do not want to put this JSON file in GitHub — it is a secret, after all.
+Make sure the secrets/ folder containing the file is not part of your repo. For this tutorial, we’ve already added a .gitignore entry so the file won’t be pushed accidentally. The canonical (best) way to handle this is to keep your secrets folder outside the repo entirely. That’s what we’ll be moving toward later in the course.
+
+## Running the Pipeline Components
 
 **Transcribe Audio**
-```
+```bash
 python cli.py --download
 python cli.py --transcribe
 python cli.py --upload
 ```
-
-**Generate Text**
+ 
+**Generate Text** 
 ```
 python cli.py --download
 python cli.py --generate
 python cli.py --upload
 ```
 
-**Synthesis Audio English**
+**Synthesize Audio (English)**
 ```
 python cli.py --download
 python cli.py --synthesis
@@ -92,14 +128,14 @@ python cli.py --translate
 python cli.py --upload
 ```
 
-**Synthesis Audio**
+**Synthesize Audio (Trnslated)**
 ```
 python cli.py --download
 python cli.py --synthesis
 ```
 
 
-### Sample Code to Read/Write to GCS Bucket
+### Sample Code: Read/Write to GCS Bucket
 
 * Download from bucket
 ```
@@ -137,6 +173,8 @@ blob = bucket.blob(destination_blob_name)
 blob.upload_from_filename("Path to test.mp3 on local computer")
 
 ```
+
+
 
 ### Sample Dockerfile
 ```
