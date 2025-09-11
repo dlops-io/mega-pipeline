@@ -91,7 +91,7 @@ docker run --rm -ti -v "$(pwd)":/app synthesis_audio_en
 * The CLI should have the following command line argument options
 ```
 python cli.py --help
-usage: cli.py [-h] [-d] [-s] [-u]
+usage: cli.py [-h] [-d] [-s]
 
 Synthesis audio from text
 
@@ -99,15 +99,12 @@ optional arguments:
   -h, --help       show this help message and exit
   -d, --download   Download paragraph of text from GCS bucket
   -s, --synthesis  Synthesis audio
-  -u, --upload     Upload audio file to GCS bucket
-
 ```
 
 ### Testing your code locally
 * Inside your docker shell, make sure you run the following commands:
 * `python cli.py -d` - Should download all the required data from GCS bucket
 * `python cli.py -s` - Should synthesize audio from text and save it locally
-* `python cli.py -u` - Should upload the audio files to the remote GCS bucket
 * Verify that your uploaded data shows up in the [Mega Pipeline App](http://ac215-mega-pipeline.dlops.io/)
 
 ### OPTIONAL: You can use the cli_11.py script to synthesize audio with Eleven Labs. Eleven Labs allows you to train voice models.

@@ -98,7 +98,6 @@ optional arguments:
   -h, --help       show this help message and exit
   -d, --download   Download paragraph of text from GCS bucket
   -s, --synthesis  Synthesis audio
-
 ```
 
 ### Testing your code locally
