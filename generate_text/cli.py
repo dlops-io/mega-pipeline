@@ -72,7 +72,7 @@ def generate():
         """
         print(input_prompt,"\n\n\n")
         response = client.models.generate_content(
-            model='gemini-2.0-flash-001', contents='Why is the sky blue?'
+            model='gemini-2.0-flash-001', contents=input_prompt
         )
         paragraph = response.text
 
