@@ -19,19 +19,28 @@ The pipeline flow is illustrated below:
 
 ---
 
+## 👥 You'll work in teams — and there's a leaderboard 🏆
+
+This tutorial is done in **groups**: each team builds the entire pipeline end to end, containerizing and connecting every component (not just one piece).
+
+And to make things a little more interesting, every team's progress is published live on a public leaderboard at **[ac215-mega-pipeline.dlops.io](http://ac215-mega-pipeline.dlops.io/)**. The moment a component runs successfully under your group name, it lights up for the whole class to see — so you can watch your pipeline come together stage by stage, and see how your team is doing relative to everyone else.
+
+> ⚠️ Make sure to set your **group name** correctly in each component (see the note further down). Otherwise your work won't show up under your team — or worse, it might overwrite someone else's.
+
+---
+
 ## What You’ll Learn
 By completing this tutorial, you’ll gain experience with:
 - **Containerizing AI/ML workflows** step by step.  
 - **Using shared cloud storage (GCS)** to connect independent services.  
 - **Securing applications** with service account authentication.  
+- **Calling managed Google Cloud AI APIs** — Speech-to-Text for transcription, Translate for cross-language conversion, and Text-to-Speech for audio synthesis — from inside your containers.  
 
 ---
 
-## Group Tasks for the Mega Pipeline
-Students will form teams for this project.
-Each team will build the **entire pipeline end to end**. You won’t just handle one piece—you’ll containerize and connect every component.
+## The Five Components
 
-All components and their step-by-step instructions are listed below so you can follow along:
+Each component has its own folder, its own container, and its own step-by-step README. Click through to follow along:
 
 * 📝 Task A — [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/main/transcribe_audio)  
 * 🗒️ Task B — [generate_text](https://github.com/dlops-io/mega-pipeline/tree/main/generate_text)  
@@ -40,8 +49,6 @@ All components and their step-by-step instructions are listed below so you can f
 * 🔊 Task E — [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio)  
 
 By the end, every team will have built a complete pipeline that mirrors a **real-world microservice architecture**: multiple independent services, each containerized, working together to form a larger application.
-
-The overall progress of the mega pipeline can be viewed [here](http://ac215-mega-pipeline.dlops.io/).
 
 ---
 
@@ -88,10 +95,9 @@ Buckets won’t let you read or write anything unless you are both authenticated
 
 In this course, you don’t need to authenticate yourself as a person. Instead, you’ll authenticate your app so it can talk to GCP securely. The way we do this is by using a Service Account—part of IAM in GCP.
 
-To keep it simple, you’ll use a JSON credentials file that represents this Service Account.
-Just download the file and place it inside <app_folder>/secrets/:
+To keep it simple, you’ll use a JSON credentials file that represents this Service Account. **We’ve uploaded this file to the course Canvas site for you** — download it from the link below and place it inside `<app_folder>/secrets/` in each component folder you build:
 
-<a href="https://canvas.harvard.edu/files/23163432/download?download_frd=1" download>mega-pipeline.json</a>
+<a href="https://canvas.harvard.edu/files/23163432/download?download_frd=1" download>mega-pipeline.json</a> *(on Canvas — sign in with your Harvard Key if prompted)*
 
 Later in the course, we’ll revisit authentication in more depth, but for now, this file is all you need to let your containerized apps talk to the GCP bucket.
 
@@ -101,6 +107,8 @@ We do not want to put this JSON file in GitHub — it is a secret, after all.
 Make sure the secrets/ folder containing the file is not part of your repo. For this tutorial, we’ve already added a .gitignore entry so the file won’t be pushed accidentally. The canonical (best) way to handle this is to keep your secrets folder outside the repo entirely. That’s what we’ll be moving toward later in the course.
 
 ## Running the Pipeline Components
+
+Once you’re inside each component’s container, you’ll drive it through `cli.py`. The commands for each stage are listed below — the flag names (`--download`, `--transcribe`, `--generate`, `--translate`, `--synthesis`, `--upload`) should make the intent obvious: pull inputs from the bucket, run the component, push outputs back.
 
 **Transcribe Audio**
 ```bash
@@ -134,47 +142,6 @@ python cli.py --upload
 python cli.py --download
 python cli.py --synthesis
 ```
-
-
-### Sample Code: Read/Write to GCS Bucket
-
-* Download from bucket
-```
-from google.cloud import storage
-
-# Initiate Storage client
-storage_client = storage.Client(project=gcp_project)
-
-# Get reference to bucket
-bucket = storage_client.bucket(bucket_name)
-
-# Find all content in a bucket
-blobs = bucket.list_blobs(prefix="input_audios/")
-for blob in blobs:
-    print(blob.name)
-    if not blob.name.endswith("/"):
-        blob.download_to_filename(blob.name)
-
-```
-
-* Upload to bucket
-```
-from google.cloud import storage
-
-# Initiate Storage client
-storage_client = storage.Client(project=gcp_project)
-
-# Get reference to bucket
-bucket = storage_client.bucket(bucket_name)
-
-# Destination path in GCS 
-destination_blob_name = "input_audios/test.mp3"
-blob = bucket.blob(destination_blob_name)
-
-blob.upload_from_filename("Path to test.mp3 on local computer")
-
-```
-
 
 
 ### Sample Dockerfile
@@ -231,11 +198,15 @@ CMD ["-c", "source /home/app/.venv/bin/activate && exec bash"]
 ```
 
 ### Some notes for running on Windows
-* Docker Win10 installation - needs WSL2 or Hyper-V enabled: https://docs.docker.com/desktop/windows/install/
-* Use `Git` BASH to run (which is like a smaller `Cygwin`)
-* Needed to add pwd in quotes in order to escape the spaces that common in windows directory structures
-* Need to prefix docker run with `winpty` otherwise I get a "the input device is not a TTY." error
-* `winpty docker run --rm -ti --mount type=bind,source="$(pwd)",target=/app generate_text`
+> Docker Desktop install is covered in [Tutorial 0](https://github.com/dlops-io/ac215-setup). These are the gotchas that show up *after* install:
+
+* Run docker commands from **Git BASH** (Windows `cmd` and PowerShell quote arguments differently and will mangle the volume-mount syntax below).
+* **Always quote `$(pwd)`** — Windows paths often contain spaces (e.g. `C:\Users\First Last\...`), and without quotes the shell splits the path mid-argument.
+* If you see `the input device is not a TTY.`, prefix the command with `winpty`. Git BASH on Windows doesn't expose a real TTY to Docker, and `winpty` is the shim that fixes it.
+* Putting it all together, the run command from earlier becomes:
+  ```bash
+  winpty docker run --rm -ti -v "$(pwd)":/app generate_text
+  ```
 
 ## Solutions
 Solutions to this tutorial can be found [here]()

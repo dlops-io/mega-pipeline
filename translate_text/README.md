@@ -4,7 +4,7 @@
 
 In this container, you will implement the following:
 * Read the text from the GCS bucket `mega-pipeline-bucket` and folder `text_paragraphs`
-* Use `googletrans` to translate the text from English to French (or any other language)
+* Use the **Google Cloud Translate API** (via the `google-cloud-translate` client library) to translate the text from English to French (or any other language). This is a managed GCP service — it authenticates the same way as the Speech-to-Text and Text-to-Speech components, using the service-account JSON in `secrets/mega-pipeline.json`.
 * Save the translated text as a text file in bucket `mega-pipeline-bucket` and folder `text_translated` (use the same file name)
 
 
@@ -17,18 +17,11 @@ In this container, you will implement the following:
 <a href="https://canvas.harvard.edu/files/23163432/download?download_frd=1" download>mega-pipeline.json</a>
 
 ### Create pyproject.toml
-* Inside the `translate_text` folder create:
-* Add `pyproject.toml` with the following contents:
+Inside the `translate_text` folder, scaffold a minimal `pyproject.toml` with:
+```bash
+uv init --bare
 ```
-[project]
-name = "app"
-version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
-requires-python = ">=3.12,<3.13"
-dependencies = [
-]
-```
+The `--bare` flag gives you just the `pyproject.toml` (no sample `main.py`, no README, no git init) — exactly what we want, since the source code already lives here. You'll add the specific dependencies further down with `uv add`.
 
 ### Create Dockerfile
 * Inside the `translate_text` folder
@@ -80,7 +73,7 @@ docker run --rm -ti -v "$(pwd)":/app translate_text
 ### Python packages required
 * `uv add` the following:
   - `google-cloud-storage`
-  - `googletrans==4.0.0rc1`
+  - `google-cloud-translate`
 
 
 * If you exit your container at this point, in order to get the latest environment from the pyproject.toml file, make sure to re-build your docker image again

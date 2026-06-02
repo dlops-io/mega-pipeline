@@ -6,7 +6,7 @@ import argparse
 import shutil
 import glob
 from google.cloud import storage
-from googletrans import Translator
+from google.cloud import translate_v2 as translate
 
 # Generate the inputs arguments parser
 parser = argparse.ArgumentParser(description="Command description.")
@@ -17,7 +17,7 @@ text_paragraphs = "text_paragraphs"
 text_translated = "text_translated"
 group_name = "pavlos" # This needs to be your Group name e.g: group-01, group-02, group-03, group-04, group-05, ...
 
-translator = Translator()
+translate_client = translate.Client()
 
 
 def makedirs():
@@ -55,12 +55,18 @@ def translate():
         with open(text_file) as f:
             input_text = f.read()
 
-        results = translator.translate(input_text, src="en", dest="fr")
-        print(results.text)
+        result = translate_client.translate(
+            input_text,
+            source_language="en",
+            target_language="fr",
+            format_="text",
+        )
+        translated_text = result["translatedText"]
+        print(translated_text)
 
         # Save the translation
         with open(translated_file, "w") as f:
-            f.write(results.text)
+            f.write(translated_text)
 
 
 def upload():

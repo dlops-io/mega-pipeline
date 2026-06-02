@@ -16,18 +16,11 @@ In this container, you will implement the following:
 <a href="https://canvas.harvard.edu/files/23163432/download?download_frd=1" download>mega-pipeline.json</a>
 
 ### Create pyproject.toml
-* Inside the `generate_text` folder create:
-* Add `pyproject.toml` with the following contents:
+Inside the `generate_text` folder, scaffold a minimal `pyproject.toml` with:
+```bash
+uv init --bare
 ```
-[project]
-name = "app"
-version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
-requires-python = ">=3.12,<3.13"
-dependencies = [
-]
-```
+The `--bare` flag gives you just the `pyproject.toml` (no sample `main.py`, no README, no git init) — exactly what we want, since the source code already lives here. You'll add the specific dependencies further down with `uv add`.
 
 ### Create Dockerfile
 * Inside the `generate_text` folder
