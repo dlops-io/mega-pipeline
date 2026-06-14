@@ -2,17 +2,17 @@
 
 🎙️ → 📝 → 🗒️ → [🔊🇫🇷] → 🔊  
 
-The goal of this tutorial is to build an **AI-assisted podcast generator** that works across multiple languages. Starting from a recorded draft, we’ll transcribe it, enrich it with an LLM, translate it, and synthesize the result back into audio.
+The goal of this tutorial is to build an **AI-assisted podcast generator** that works across multiple languages. Starting from a **recorded** draft, we’ll **transcribe** it, enrich it with an LLM, **translate** it, and **synthesize** the result back into audio.
 
 The key idea is to **simulate a microservice architecture**, where each component runs as its own containerized service. The full pipeline is shown below.
 
-* Pavlos recorded a draft podcast in English, which serves as our starting point.  
-* The audio file is transcribed using the Google Cloud Speech-to-Text API.  
-* The resulting text is sent to an LLM to generate an expanded version of the podcast.  
-* The generated text is synthesized into audio with Google Cloud Text-to-Speech.  
-* The text is also translated into French (or another language) using Google Translation services.  
-* The translated text is synthesized into audio again with Google Cloud Text-to-Speech.  
-* **Bonus step**: The translated text can also be synthesized with ElevenLabs to recreate Pavlos’ voice.  
+1. Pavlos recorded a draft podcast in English, which serves as our starting point.  
+2. The audio file is transcribed using the **Google Cloud Speech-to-Text API**.  
+3. The resulting text is sent to an LLM to generate an expanded version of the podcast.  
+4. The generated text is synthesized into audio with **Google Cloud Text-to-Speech**.  
+5. The text is also translated into French (or another language) using **Google Translation** services.  
+6. The translated text is synthesized into audio again with Google Cloud Text-to-Speech.  
+7. **Bonus step**: The translated text can also be synthesized with ElevenLabs to recreate Pavlos’ voice.  
 
 The pipeline flow is illustrated below:  
 <img src="mega-pipeline-flow.png" width="800">
@@ -21,11 +21,11 @@ The pipeline flow is illustrated below:
 
 ## 👥 You'll work in teams — and there's a leaderboard 🏆
 
-This tutorial is done in **groups**: each team builds the entire pipeline end to end, containerizing and connecting every component (not just one piece).
+This tutorial is done in **groups**: each team will build the entire pipeline end to end, containerizing and connecting every component (not just one piece).
 
-And to make things a little more interesting, every team's progress is published live on a public leaderboard at **[ac215-mega-pipeline.dlops.io](http://ac215-mega-pipeline.dlops.io/)**. The moment a component runs successfully under your group name, it lights up for the whole class to see — so you can watch your pipeline come together stage by stage, and see how your team is doing relative to everyone else.
+And to make things a little more interesting, every team's progress is published live on a public leaderboard at **[ac215-mega-pipeline.dlops.io](http://ac215-mega-pipeline.dlops.io/)**. The moment a component runs successfully under your group name, it lights up for the whole class to see — so you can watch your pipeline come together stage by stage and see how your team is doing relative to the rest of the class.
 
-> ⚠️ Make sure to set your **group name** correctly in each component (see the note further down). Otherwise your work won't show up under your team — or worse, it might overwrite someone else's.
+> ⚠️ Make sure to **SET YOUR GROUP NAME** correctly in each component (see the note further down). Otherwise, your work won't show up under your team — or worse, it might overwrite someone else's. ⚠️
 
 ---
 
@@ -34,31 +34,29 @@ By completing this tutorial, you’ll gain experience with:
 - **Containerizing AI/ML workflows** step by step.  
 - **Using shared cloud storage (GCS)** to connect independent services.  
 - **Securing applications** with service account authentication.  
-- **Calling managed Google Cloud AI APIs** — Speech-to-Text for transcription, Translate for cross-language conversion, and Text-to-Speech for audio synthesis — from inside your containers.  
+- **Calling managed Google Cloud AI APIs** (Speech-to-Text for transcription, Translate for cross-language conversion, and Text-to-Speech for audio synthesis) from inside your containers.  
 
 ---
 
 ## The Five Components
 
-Each component has its own folder, its own container, and its own step-by-step README. Click through to follow along:
+Each component has its own folder, its own container, and its own step-by-step `README`. Click through to follow along:
 
-* 📝 Task A — [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/main/transcribe_audio)  
-* 🗒️ Task B — [generate_text](https://github.com/dlops-io/mega-pipeline/tree/main/generate_text)  
-* 🔊 Task C — [synthesis_audio_en](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio_en)  
-* 🇫🇷 Task D — [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text)  
-* 🔊 Task E — [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio)  
+- 📝 Task A — [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/main/transcribe_audio)  
+- 🗒️ Task B — [generate_text](https://github.com/dlops-io/mega-pipeline/tree/main/generate_text)  
+- 🔊 Task C — [synthesis_audio_en](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio_en)  
+- 🇫🇷 Task D — [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text)  
+- 🔊 Task E — [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio)  
 
-By the end, every team will have built a complete pipeline that mirrors a **real-world microservice architecture**: multiple independent services, each containerized, working together to form a larger application.
+By the end, every team will have built a complete pipeline that mirrors a **real-world microservice architecture**: multiple independent services (each containerized), working together to form a larger application.
 
 ---
 
-⚠️ **IMPORTANT NOTE**
+⚠️ **IMPORTANT NOTE** ⚠️
 
-When building your containers, make sure you **update the group name** inside your configuration.  
-This is how we track your progress and display it correctly on the leaderboard.  
+When building your containers, make sure you `update the group name` inside your configuration. This is how we track your progress and display it correctly on the leaderboard.  
 
-If you don’t change the group name, your work may overwrite someone else’s, or it won’t be visible under your team.  
-So please double-check before you push or run your containerized tasks!
+If you don’t change the group name, your work may overwrite someone else’s, or it won’t be visible under your team. So please double-check before you push or run your containerized tasks!
 
 ---
 
@@ -67,28 +65,30 @@ In a production pipeline, containerized services talk to each other through APIs
 
 Since we haven’t covered APIs yet, we’ll simplify. Instead of calling one another directly, components will **communicate indirectly by writing their outputs to storage**, which the next stage will then read as input.
 
-In this tutorial, rather than just using your local disk, components will write to and read from a **Google Cloud Storage (GCS) bucket**. This shared bucket acts like a common drive for transcripts, generated text, and synthesized audio.
+In this tutorial, rather than just using your local disk, components will write to and read from a **Google Cloud Storage (GCS)** bucket. This shared bucket acts like a common drive for transcripts, generated text, and synthesized audio.
 
-This setup gives you practical hands-on experience now, while preparing you for the **API-driven systems** we’ll tackle later.
+This setup gives you a practical hands-on experience now, while preparing you for the **API-driven systems** we’ll tackle later.
 
 ---
 
 ### GCS Bucket Details
-In Google Cloud, a **bucket** is like a shared online folder where files can be stored and retrieved. Instead of saving outputs locally, our pipeline components will read and write to this shared bucket so all stages can communicate easily.
+In Google Cloud, a **bucket** is like a shared online folder where files can be stored and retrieved. Instead of saving outputs locally, our pipeline components will write and read to this shared bucket so all stages can communicate easily.
 
-* `input_audios/` — raw audio files (starting point).  
-* `text_prompts/` — transcripts generated from speech-to-text.  
-* `text_paragraphs/` — expanded text generated by the LLM.  
-* `text_translated/` — translated versions of the text.  
-* `text_audios/` — synthesized audio clips for each paragraph.  
-* `output_audios/` — final audio outputs in French (or another language).  
-* `output_audios_pp/` — French audio outputs in Pavlos’ voice.  
+- `input_audios/` — raw audio files (starting point).  
+- `text_prompts/` — transcripts generated from speech-to-text.  
+- `text_paragraphs/` — expanded text generated by the LLM.  
+- `text_translated/` — translated versions of the text.  
+- `text_audios/` — synthesized English audio clips for each paragraph.  
+- `output_audios/` — final synthesized audio outputs in the target language.  
+- `output_audios_pp/` — bonus: audio outputs synthesized with ElevenLabs in Pavlos’ voice.  
 
 ![Mega pipeline bucket](mega-pipeline-bucket.png)
 
+Want to learn more about GCS?
+- [Google Cloud Storage](https://www.youtube.com/watch?v=VDBhvexAj8I)
+- [Google Cloud Storage Overview](https://cloud.google.com/storage) 
 
-
-## GCP Credentials File:
+## GCP Credentials File
 
 The last piece we need in order to access the GCP bucket is authentication.
 Buckets won’t let you read or write anything unless you are both authenticated (proving who you are) and authorized (having the right permissions).
@@ -101,7 +101,7 @@ To keep it simple, you’ll use a JSON credentials file that represents this Ser
 
 Later in the course, we’ll revisit authentication in more depth, but for now, this file is all you need to let your containerized apps talk to the GCP bucket.
 
-🔑 Important Note on Secrets
+### 🔑 Important Note on Secrets
 
 We do not want to put this JSON file in GitHub — it is a secret, after all.
 Make sure the secrets/ folder containing the file is not part of your repo. For this tutorial, we’ve already added a .gitignore entry so the file won’t be pushed accidentally. The canonical (best) way to handle this is to keep your secrets folder outside the repo entirely. That’s what we’ll be moving toward later in the course.
@@ -118,34 +118,36 @@ python cli.py --upload
 ```
  
 **Generate Text** 
-```
+```bash
 python cli.py --download
 python cli.py --generate
 python cli.py --upload
 ```
 
 **Synthesize Audio (English)**
-```
+```bash
 python cli.py --download
 python cli.py --synthesis
 ```
+> Note: synthesis writes audio directly to GCS — no separate `--upload` step needed.
 
 **Translate Text**
-```
+```bash
 python cli.py --download
 python cli.py --translate
 python cli.py --upload
 ```
 
-**Synthesize Audio (Trnslated)**
-```
+**Synthesize Audio (Translated)**
+```bash
 python cli.py --download
 python cli.py --synthesis
 ```
+> Note: synthesis writes audio directly to GCS — no separate `--upload` step needed.
 
 
 ### Sample Dockerfile
-```
+```dockerfile
 # Use the official Debian-hosted Python image
 FROM python:3.12-slim-bookworm
 
@@ -198,7 +200,7 @@ CMD ["-c", "source /home/app/.venv/bin/activate && exec bash"]
 ```
 
 ### Some notes for running on Windows
-> Docker Desktop install is covered in [Tutorial 0](https://github.com/dlops-io/ac215-setup). These are the gotchas that show up *after* install:
+> Docker Desktop installation is covered in [Tutorial 0](https://github.com/dlops-io/ac215-setup). These are the gotchas that show up *after* install:
 
 * Run docker commands from **Git BASH** (Windows `cmd` and PowerShell quote arguments differently and will mangle the volume-mount syntax below).
 * **Always quote `$(pwd)`** — Windows paths often contain spaces (e.g. `C:\Users\First Last\...`), and without quotes the shell splits the path mid-argument.
@@ -209,4 +211,4 @@ CMD ["-c", "source /home/app/.venv/bin/activate && exec bash"]
   ```
 
 ## Solutions
-Solutions to this tutorial can be found [here]()
+Solutions to this tutorial will be posted here after the assignment deadline.
