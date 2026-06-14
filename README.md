@@ -90,21 +90,21 @@ Want to learn more about GCS?
 
 ## GCP Credentials File
 
-The last piece we need in order to access the GCP bucket is authentication.
+The last piece we need to access the GCP bucket is authentication.
 Buckets won’t let you read or write anything unless you are both authenticated (proving who you are) and authorized (having the right permissions).
 
-In this course, you don’t need to authenticate yourself as a person. Instead, you’ll authenticate your app so it can talk to GCP securely. The way we do this is by using a Service Account—part of IAM in GCP.
+In this course, you don’t need to authenticate yourself as a person. Instead, you’ll authenticate your app so it can talk to GCP securely. The way we do this is by using a **Service Account** — part of IAM in GCP.
 
-To keep it simple, you’ll use a JSON credentials file that represents this Service Account. **We’ve uploaded this file to the course Canvas site for you** — download it from the link below and place it inside `<app_folder>/secrets/` in each component folder you build:
+To keep it simple, you’ll use a JSON credentials file that represents this Service Account. **We’ve uploaded this file to the course Canvas site for you** — download it from the link below and place it inside each component folder `<app_folder>/secrets/` you build:
 
 <a href="https://canvas.harvard.edu/files/23163432/download?download_frd=1" download>mega-pipeline.json</a> *(on Canvas — sign in with your Harvard Key if prompted)*
 
-Later in the course, we’ll revisit authentication in more depth, but for now, this file is all you need to let your containerized apps talk to the GCP bucket.
+**Note:** Later in the course, we’ll revisit authentication in more depth, but for now, this file is all you need to let your containerized apps talk to the GCP bucket.
 
 ### 🔑 Important Note on Secrets
 
 We do not want to put this JSON file in GitHub — it is a secret, after all.
-Make sure the secrets/ folder containing the file is not part of your repo. For this tutorial, we’ve already added a .gitignore entry so the file won’t be pushed accidentally. The canonical (best) way to handle this is to keep your secrets folder outside the repo entirely. That’s what we’ll be moving toward later in the course.
+Make sure the secrets/ folder containing the file is not part of your repo. For this tutorial, we’ve already added a `.gitignore` entry so the file won’t be pushed accidentally. The canonical (best) way to handle this is to keep your secrets folder outside the repo entirely. That’s what we’ll be moving toward later in the course.
 
 ## Running the Pipeline Components
 
@@ -204,7 +204,7 @@ CMD ["-c", "source /home/app/.venv/bin/activate && exec bash"]
 
 * Run docker commands from **Git BASH** (Windows `cmd` and PowerShell quote arguments differently and will mangle the volume-mount syntax below).
 * **Always quote `$(pwd)`** — Windows paths often contain spaces (e.g. `C:\Users\First Last\...`), and without quotes the shell splits the path mid-argument.
-* If you see `the input device is not a TTY.`, prefix the command with `winpty`. Git BASH on Windows doesn't expose a real TTY to Docker, and `winpty` is the shim that fixes it.
+* If you see `the input device is not a TTY`, prefix the command with `winpty`. Git BASH on Windows doesn't expose a real TTY to Docker, and `winpty` is the shim that fixes it.
 * Putting it all together, the run command from earlier becomes:
   ```bash
   winpty docker run --rm -ti -v "$(pwd)":/app generate_text
