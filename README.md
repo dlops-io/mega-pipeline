@@ -1,4 +1,4 @@
-# Mega Pipeline App (Tutorial T5B)
+# Mega Pipeline App
 
 🎙️ → 📝 → 🗒️ → [🔊🇫🇷] → 🔊  
 
@@ -19,47 +19,72 @@ The pipeline flow is illustrated below:
 
 ---
 
-## What You’ll Learn
-By completing this tutorial, you’ll gain experience with:
-- **Containerizing AI/ML workflows** step by step.  
-- **Using shared cloud storage (GCS)** to connect independent services.  
-- **Securing applications** with service account authentication.  
+## Where We Are, Where We're Going
+
+You've already built this pipeline once, with most of the scaffolding handed to you — a shared bucket, a shared service account, a ready-made Docker setup. That was enough to see the pieces fit together.
+
+This branch is the **same pipeline, built the way a real team would build it**. Concretely, that means:
+
+* 🪣 **Your own GCS bucket.** Each team provisions and owns its storage.
+* 🔐 **Your own service account.** You create a Service Account in GCP, grant it the right IAM roles, download its JSON key, and manage it as a secret.
+* 🐳 **Your own Dockerfile per component.** You write (or adapt) the Dockerfile that defines how each component runs.
+* 🛠️ **A `docker-shell.sh` script per component.** The `docker build` and `docker run` commands now have to juggle multiple architectures, mounted volumes, environment variables, and secrets. Wrapping that logic in a script keeps the workflow sane and consistent across Mac/Linux/Windows.
+
+### Two ways to work — and we support both
+Once a Docker image exists for a component, a team can either **build it locally** or **pull a prebuilt copy** from a registry. There is no single "right" workflow:
+
+* **Early in development** — devs pull the `Dockerfile` and `uv.lock` from GitHub and build images locally. Anyone can edit the Dockerfile or add dependencies and submit a PR.
+* **Later in development** — a senior dev publishes prebuilt images to DockerHub. Most devs just pull and run; rebuilding is rare.
+
+Each component's `docker-shell.sh` supports both modes: pass `dev` to build locally, `prod` to build multi-arch and push to a registry, `run` to pull and run from the registry, or no argument to build-and-run locally. That's the **flexible workflow** in the branch name.
+
+> ℹ️ The `docker-shell.sh` files default to pushing under the `dlops` DockerHub org. If your team publishes its own images, update `DOCKER_USERNAME` inside each component's script.
 
 ---
 
-## Group Tasks for the Mega Pipeline
-Students will form teams for this project.
-Each team will build the **entire pipeline end to end**. You won’t just handle one piece—you’ll containerize and connect every component.
+## What You'll Learn
+By completing this tutorial, you'll gain hands-on experience with:
+- **Owning your own cloud resources** — bucket, service account, IAM roles.
+- **Managing secrets safely** — keep them out of Git, mount them into containers at runtime.
+- **Authoring Dockerfiles** for AI/ML workflows.
+- **Encapsulating build/run logic in a script** so the workflow is repeatable across machines.
+- **Working across two delivery modes** — build it yourself vs. pull a prebuilt image.
 
-All components and their step-by-step instructions are listed below so you can follow along:
+---
 
-* 📝 Task A — [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/main/transcribe_audio)  
-* 🗒️ Task B — [generate_text](https://github.com/dlops-io/mega-pipeline/tree/main/generate_text)  
-* 🔊 Task C — [synthesis_audio_en](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio_en)  
-* 🇫🇷 Task D — [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text)  
-* 🔊 Task E — [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio)  
+## The Five Components
+
+Each component has its own folder, its own container, and its own README. Click through to follow along:
+
+* 📝 [transcribe_audio](./transcribe_audio)
+* 🗒️ [generate_text](./generate_text)
+* 🔊 [synthesis_audio_en](./synthesis_audio_en)
+* 🇫🇷 [translate_text](./translate_text)
+* 🔊 [synthesis_audio](./synthesis_audio)
 
 By the end, every team will have built a complete pipeline that mirrors a **real-world microservice architecture**: multiple independent services, each containerized, working together to form a larger application.
 
-The overall progress of the mega pipeline can be viewed [here](http://ac215-mega-pipeline.dlops.io/).
-=======
-|-mega-pipeline<br>
-   &nbsp; &nbsp;   &nbsp; &nbsp;  |-transcribe_audio<br>
-    &nbsp; &nbsp;   &nbsp; &nbsp; |-generate_text<br>
-    &nbsp; &nbsp;   &nbsp; &nbsp; |-synthesis_audio_en<br>
-    &nbsp; &nbsp;   &nbsp; &nbsp; |-translate_text<br>
-    &nbsp; &nbsp;  &nbsp; &nbsp;  |-synthesis_audio<br>
-|-secrets
+### Recommended folder layout
+
+```
+<your-workspace>/
+├── mega-pipeline/          ← this repo
+│   ├── transcribe_audio/
+│   ├── generate_text/
+│   ├── synthesis_audio_en/
+│   ├── translate_text/
+│   └── synthesis_audio/
+└── secrets/                ← lives OUTSIDE the repo, mounted into containers at runtime
+    └── mega-pipeline.json  ← your Service Account JSON key
+```
+
+The `docker-shell.sh` in each component mounts `../../secrets/` into the container at `/secrets`, so secrets stay one level above the repo and never get committed.
 
 ---
 
-⚠️ **IMPORTANT NOTE**
+⚠️ **Set your group name**
 
-When building your containers, make sure you **update the group name** inside your configuration.  
-This is how we track your progress and display it correctly on the leaderboard.  
-
-If you don’t change the group name, your work may overwrite someone else’s, or it won’t be visible under your team.  
-So please double-check before you push or run your containerized tasks!
+Each `cli.py` writes its outputs to `…/<group_name>/…` inside your bucket. **Set the group name** at the top of each component's `cli.py` before you run it. The CLIs `assert` that the name has been changed from the default — if you forget, the script stops before doing anything.
 
 ---
 
@@ -68,14 +93,14 @@ In a production pipeline, containerized services talk to each other through APIs
 
 Since we haven’t covered APIs yet, we’ll simplify. Instead of calling one another directly, components will **communicate indirectly by writing their outputs to storage**, which the next stage will then read as input.
 
-In this tutorial, rather than just using your local disk, components will write to and read from a **Google Cloud Storage (GCS) bucket**. This shared bucket acts like a common drive for transcripts, generated text, and synthesized audio.
+In this tutorial, rather than using your local disk, components will write to and read from **your team's own Google Cloud Storage (GCS) bucket**. The bucket acts like a common drive for transcripts, generated text, and synthesized audio — but each team owns its own, and each team's outputs are scoped under its `group_name` prefix.
 
-This setup gives you practical hands-on experience now, while preparing you for the **API-driven systems** we’ll tackle later.
+This setup gives you practical hands-on experience now, while preparing you for the **API-driven systems** we'll tackle later.
 
 ---
 
 ### GCS Bucket Details
-In Google Cloud, a **bucket** is like a shared online folder where files can be stored and retrieved. Instead of saving outputs locally, our pipeline components will read and write to this shared bucket so all stages can communicate easily.
+In Google Cloud, a **bucket** is an online folder where files can be stored and retrieved. Each team creates its own bucket inside the team's GCP project. The components read and write to it using the prefixes below:
 
 * `input_audios/` — raw audio files (starting point).  
 * `text_prompts/` — transcripts generated from speech-to-text.  
@@ -89,26 +114,50 @@ In Google Cloud, a **bucket** is like a shared online folder where files can be 
 
 
 
-## GCP Credentials File:
+## Service Account & Secrets
 
-The last piece we need in order to access the GCP bucket is authentication.
-Buckets won’t let you read or write anything unless you are both authenticated (proving who you are) and authorized (having the right permissions).
+Buckets won't let you read or write anything unless you are both **authenticated** (proving who you are) and **authorized** (having the right permissions). For server-to-server work like this, the standard pattern is a **Service Account** — an identity for your *code*, not for you.
 
-In this course, you don’t need to authenticate yourself as a person. Instead, you’ll authenticate your app so it can talk to GCP securely. The way we do this is by using a Service Account—part of IAM in GCP.
+In the earlier version of this tutorial we handed you a shared JSON key. In this branch **each team creates and owns its own Service Account**, following the steps covered in lecture:
 
-To keep it simple, you’ll use a JSON credentials file that represents this Service Account.
-Just download the file and place it inside <app_folder>/secrets/:
+1. In the GCP console, go to **IAM & Admin → Service accounts**.
+2. Create a new service account (e.g. `mega-pipeline-sa`).
+3. Grant it **Cloud Storage → Storage Admin** on your project (so it can read/write your bucket).
+4. Under **Keys → Add Key → Create new key**, download a **JSON** key.
+5. Save it as `mega-pipeline.json` in a `secrets/` folder that sits **one level above this repo** (see folder layout above).
 
-<a href="https://canvas.harvard.edu/files/23163432/download?download_frd=1" download>mega-pipeline.json</a>
+The provided `docker-shell.sh` mounts that `secrets/` folder into the container at `/secrets` and sets `GOOGLE_APPLICATION_CREDENTIALS=/secrets/mega-pipeline.json`, so the calls to `google.cloud.storage` inside `cli.py` authenticate transparently.
 
-Later in the course, we’ll revisit authentication in more depth, but for now, this file is all you need to let your containerized apps talk to the GCP bucket.
+🔑 **Never commit `secrets/` to Git.** Keeping the folder outside the repo (as this branch does) is the canonical way to make that mistake impossible.
 
-🔑 Important Note on Secrets
+---
 
-We do not want to put this JSON file in GitHub — it is a secret, after all.
-Make sure the secrets/ folder containing the file is not part of your repo. For this tutorial, we’ve already added a .gitignore entry so the file won’t be pushed accidentally. The canonical (best) way to handle this is to keep your secrets folder outside the repo entirely. That’s what we’ll be moving toward later in the course.
+## How to Run a Component
+
+Every component is driven through its `docker-shell.sh`. From inside a component folder (e.g. `transcribe_audio/`):
+
+```bash
+./docker-shell.sh          # build the image locally and run it (default)
+./docker-shell.sh dev      # only build the local image
+./docker-shell.sh run      # run from a prebuilt image (falls back to DockerHub)
+./docker-shell.sh prod     # build multi-arch (amd64 + arm64) and push to DockerHub
+```
+
+The default mode drops you into a shell **inside** the container with the `uv` virtual environment already activated and `/secrets` mounted. From there you run the CLI commands listed below.
+
+If `docker-shell.sh` isn't executable yet:
+
+```bash
+chmod +x docker-shell.sh
+```
+
+> 🪟 **On Windows**, run from Git BASH and prefix with `winpty` if you see "the input device is not a TTY." (see notes at the bottom of this file).
+
+---
 
 ## Running the Pipeline Components
+
+Inside each component's container, drive it through `cli.py`. The flags (`--download`, `--transcribe`, `--generate`, `--translate`, `--synthesis`, `--upload`) follow the same pattern: pull inputs from your bucket, run the step, push outputs back.
 
 **Transcribe Audio**
 ```bash
@@ -137,7 +186,7 @@ python cli.py --translate
 python cli.py --upload
 ```
 
-**Synthesize Audio (Trnslated)**
+**Synthesize Audio (Translated)**
 ```
 python cli.py --download
 python cli.py --synthesis
@@ -186,57 +235,7 @@ blob.upload_from_filename("Path to test.mp3 on local computer")
 
 
 ### Sample Dockerfile
-```
-# Use the official Debian-hosted Python image
-FROM python:3.12-slim-bookworm
-
-ARG DEBIAN_PACKAGES="build-essential curl"
-
-# Prevent apt from showing prompts
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Python wants UTF-8 locale
-ENV LANG=C.UTF-8
-
-# Tell Python to disable buffering so we don't lose any logs.
-ENV PYTHONUNBUFFERED=1
-
-# Tell uv to copy packages from the wheel into the site-packages
-ENV UV_LINK_MODE=copy
-ENV UV_PROJECT_ENVIRONMENT=/home/app/.venv
-
-# This is done for the tutorial only
-ENV GOOGLE_APPLICATION_CREDENTIALS=secrets/mega-pipeline.json
-
-# Ensure we have an up to date baseline, install dependencies and
-# create a user so we don't run the app as root
-RUN set -ex; \
-    for i in $(seq 1 8); do mkdir -p "/usr/share/man/man${i}"; done && \
-    apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y --no-install-recommends $DEBIAN_PACKAGES && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    pip install --no-cache-dir --upgrade pip && \
-    pip install uv && \
-    useradd -ms /bin/bash app -d /home/app -u 1000 && \
-    mkdir -p /app && \
-    chown app:app /app
-
-# Switch to the new user
-USER app
-WORKDIR /app
-
-# Copy the source code
-COPY --chown=app:app . ./
-
-RUN uv sync
-
-# Entry point
-ENTRYPOINT ["/bin/bash"]
-# Get into the uv virtual environment shell
-CMD ["-c", "source /home/app/.venv/bin/activate && exec bash"]
-```
+Each component ships with its own Dockerfile — see [`transcribe_audio/Dockerfile`](./transcribe_audio/Dockerfile) for the canonical example. The other components follow the same shape; the differences are just the extra OS packages they need (e.g. `ffmpeg` for audio).
 
 ### Some notes for running on Windows
 * Docker Win10 installation - needs WSL2 or Hyper-V enabled: https://docs.docker.com/desktop/windows/install/
