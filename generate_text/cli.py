@@ -70,7 +70,7 @@ def generate():
             The host's name is Pavlos Protopapas.
             {input_text}
         """
-        model_name = os.environ.get("GEMINI_MODEL", "gemini-2.0-flash-001")
+        model_name = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash-lite")
         print(input_prompt,"\n\n\n")
         response = client.models.generate_content(
             model=model_name, contents=input_prompt
