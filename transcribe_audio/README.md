@@ -13,43 +13,42 @@ In this container, you will implement the following:
 * Create a folder `transcribe_audio` or clone this repo
 
 ### GCP Credentials File
-* Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `transcribe_audio`
-<a href="https://canvas.harvard.edu/files/23163432/download?download_frd=1" download>mega-pipeline.json</a>
-=======
-|-mega-pipeline<br>
-   &nbsp; &nbsp;   &nbsp; &nbsp;  |-transcribe_audio<br>
-    &nbsp; &nbsp;   &nbsp; &nbsp; |-generate_text<br>
-    &nbsp; &nbsp;   &nbsp; &nbsp; |-synthesis_audio_en<br>
-    &nbsp; &nbsp;   &nbsp; &nbsp; |-translate_text<br>
-    &nbsp; &nbsp;  &nbsp; &nbsp;  |-synthesis_audio<br>
-|-secrets
+
+* Download the [mega-pipeline.json](https://canvas.harvard.edu/files/23163432/download?download_frd=1) and save it inside a folder called `secrets` inside `transcribe_audio`
+  - mega-pipeline
+    - transcribe_audio
+      - secrets
 
 ### Create pyproject.toml
+
 * Inside the `transcribe_audio` folder create:
 * Add `pyproject.toml` with the following contents:
-```
+
+```bash
 [project]
 name = "app"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
-dependencies = [
-]
+dependencies = []
 ```
 
 ### Create Dockerfile
+
 * Inside the `transcribe_audio` folder
 * Create a `Dockerfile` and base it from `python:3.12-slim-bookworm` the official Debian-hosted Python 3.12 image
 * Set the following environment variables:
-```
+
+```dockerfile
 ENV UV_LINK_MODE=copy
 ENV UV_PROJECT_ENVIRONMENT=/home/app/.venv
 ENV GOOGLE_APPLICATION_CREDENTIALS=secrets/mega-pipeline.json
 ```
 
 * Ensure we have an up-to-date baseline and install dependencies by running
-```
+
+```dockerfile
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends build-essential ffmpeg && \
@@ -58,7 +57,7 @@ RUN apt-get update && \
 ```
 
 * Install uv
-```
+```dockerfile
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install uv
 ```
@@ -78,7 +77,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 * Build your docker image and give your image the name `transcribe_audio`
 
 * You should be able to run your docker image by using:
-```
+```dockerfile
 docker run --rm -ti -v "$(pwd)":/app transcribe_audio
 ```
 
@@ -90,13 +89,14 @@ docker run --rm -ti -v "$(pwd)":/app transcribe_audio
   - `google-cloud-speech`
   - `ffmpeg-python`
 
-* If you exit your container at this point, in order to get the latest environment from the pyproject.toml file, make sure to re-build your docker image again
+* If you exit your container at this point, to get the latest environment from the pyproject.toml file, make sure to re-build your docker image again
 
 ### CLI to interact with your code
 * Use the given python file [`cli.py`](https://github.com/dlops-io/mega-pipeline/blob/main/transcribe_audio/cli.py)
 * Assign your group-number to the `group_name` variable in `cli.py`
 * The CLI should have the following command line argument options
-```
+
+```bash
 python cli.py --help
 usage: cli.py [-h] [-d] [-t] [-u]
 

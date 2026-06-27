@@ -12,21 +12,16 @@ In this container, you will implement the following:
 * Create a folder `generate_text` or clone this repo
 
 ### GCP Credentials File
-* Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `generate_text`
-<a href="https://canvas.harvard.edu/files/23163432/download?download_frd=1" download>mega-pipeline.json</a>
-=======
-|-mega-pipeline<br>
-   &nbsp; &nbsp;   &nbsp; &nbsp;  |-transcribe_audio<br>
-    &nbsp; &nbsp;   &nbsp; &nbsp; |-generate_text<br>
-    &nbsp; &nbsp;   &nbsp; &nbsp; |-synthesis_audio_en<br>
-    &nbsp; &nbsp;   &nbsp; &nbsp; |-translate_text<br>
-    &nbsp; &nbsp;  &nbsp; &nbsp;  |-synthesis_audio<br>
-|-secrets
+* Download the [mega-pipeline.json](href="https://canvas.harvard.edu/files/23163432/download?download_frd=1) and save it inside a folder called `secrets` inside `generate_text`
+
+- mega-pipeline
+    - generate_text
+      - secrets
 
 ### Create pyproject.toml
 * Inside the `generate_text` folder create:
 * Add `pyproject.toml` with the following contents:
-```
+```bash
 [project]
 name = "app"
 version = "0.1.0"
@@ -41,14 +36,14 @@ dependencies = [
 * Inside the `generate_text` folder
 * Create a `Dockerfile` and base it from `python:3.12-slim-bookworm` the official Debian-hosted Python 3.12 image
 * Set the following environment variables:
-```
+```dockerfile
 ENV UV_LINK_MODE=copy
 ENV UV_PROJECT_ENVIRONMENT=/home/app/.venv
 ENV GOOGLE_APPLICATION_CREDENTIALS=secrets/mega-pipeline.json
 ```
 
 * Ensure we have an up-to-date baseline and install dependencies by running
-```
+```dockerfile
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends build-essential ffmpeg && \
@@ -57,7 +52,7 @@ RUN apt-get update && \
 ```
 
 * Install uv
-```
+```dockerfile
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install uv
 ```
@@ -93,7 +88,7 @@ docker run --rm -ti -v "$(pwd)":/app generate_text
 * Use the given Python file [`cli.py`](https://github.com/dlops-io/mega-pipeline/blob/main/generate_text/cli.py)
 * Assign your group-number to the `group_name` variable in `cli.py`
 * The CLI should have the following command line argument options
-```
+```bash
 python cli.py --help
 usage: cli.py [-h] [-d] [-g] [-u]
 
