@@ -10,7 +10,7 @@ In this container, you will implement the following:
 
 ## Project Setup
 
-* Create a folder `generate_text` or clone this repo
+* `cd` into the `generate_text` folder (you already have it from cloning the [mega-pipeline](https://github.com/dlops-io/mega-pipeline) repo)
 
 ## GCP Credentials File
 * Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `generate_text`
@@ -34,6 +34,9 @@ The `--bare` flag gives you just the `pyproject.toml` (no sample `main.py`, no R
 > Then restart your terminal and re-run `uv init --bare`. Alternatively, you can install via pip: `pip install uv`.
 
 ## Create Dockerfile
+
+> Same pattern as `transcribe_audio` — there's no `Dockerfile` here either, and you build it the same way. The only real differences: no `ffmpeg` (this component doesn't touch audio), and the Python packages it needs (below) are different.
+
 * Inside the `generate_text` folder
 * Create a `Dockerfile` and base it from `python:3.12-slim-bookworm` — the official Debian-hosted Python 3.12 image
 

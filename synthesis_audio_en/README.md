@@ -10,7 +10,7 @@ In this container, you will implement the following:
 
 ## Project Setup
 
-* Create a folder `synthesis_audio_en` or clone this repo
+* `cd` into the `synthesis_audio_en` folder (you already have it from cloning the [mega-pipeline](https://github.com/dlops-io/mega-pipeline) repo)
 
 ## GCP Credentials File
 * Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `synthesis_audio_en`
@@ -34,6 +34,9 @@ The `--bare` flag gives you just the `pyproject.toml` (no sample `main.py`, no R
 > Then restart your terminal and re-run `uv init --bare`. Alternatively, you can install via pip: `pip install uv`.
 
 ## Create Dockerfile
+
+> Same pattern as `transcribe_audio` — no `Dockerfile` here either, built the same way. This component touches audio again, so keep `ffmpeg` in the system packages; the Python packages (below) differ.
+
 * Inside the `synthesis_audio_en` folder
 * Create a `Dockerfile` and base it from `python:3.12-slim-bookworm` — the official Debian-hosted Python 3.12 image
 

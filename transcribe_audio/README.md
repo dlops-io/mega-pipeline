@@ -10,7 +10,7 @@ In this container, you will implement the following:
 
 ## Project Setup
 
-* Create a folder `transcribe_audio` or clone this repo
+* `cd` into the `transcribe_audio` folder (you already have it from cloning the [mega-pipeline](https://github.com/dlops-io/mega-pipeline) repo)
 
 ## GCP Credentials File
 * Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `transcribe_audio`
@@ -34,6 +34,9 @@ The `--bare` flag gives you just the `pyproject.toml` (no sample `main.py`, no R
 > Then restart your terminal and re-run `uv init --bare`. Alternatively, you can install via pip: `pip install uv`.
 
 ## Create Dockerfile
+
+> **Notice: there's no `Dockerfile` in this folder.** You write it yourself, from scratch, piece by piece — that's the point. This is the first of the five components, so we go slow here; every line below earns its place, and nothing gets added that the code doesn't actually need. The other four components follow this exact same pattern, so once you've built this one, the rest go fast.
+
 * Inside the `transcribe_audio` folder
 * Create a `Dockerfile` and base it from `python:3.12-slim-bookworm` — the official Debian-hosted Python 3.12 image
 

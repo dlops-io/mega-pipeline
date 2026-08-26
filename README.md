@@ -19,13 +19,22 @@ The pipeline flow is illustrated below:
 
 ---
 
-## 👥 You'll work in teams — and there's a leaderboard 🏆
+## Prerequisites
 
-This tutorial is done in **groups**: each team will build the entire pipeline end to end, containerizing and connecting every component (not just one piece).
+Complete **[Tutorial 0 - Setup & Installs](https://github.com/dlops-io/ac215-setup)** first. It covers everything this tutorial assumes: a GCP account + project, VS Code, Git, Docker Desktop, and `uv`.
 
-And to make things a little more interesting, every team's progress is published live on a public leaderboard at **[ac215-mega-pipeline.dlops.io](http://ac215-mega-pipeline.dlops.io/)**. The moment a component runs successfully under your group name, it lights up for the whole class to see — so you can watch your pipeline come together stage by stage and see how your team is doing relative to the rest of the class.
+> Unlike Tutorial 0, you **will** need GCP credentials (a service account key) for this tutorial — every component reads from and writes to a shared GCS bucket, and most also call a Google Cloud AI API. We'll walk through downloading that key in the **GCP Credentials File** section below.
 
-> ⚠️ Make sure to **SET YOUR GROUP NAME** correctly in each component (see the note further down). Otherwise, your work won't show up under your team — or worse, it might overwrite someone else's. ⚠️
+---
+
+## Clone this Repository
+
+```bash
+git clone https://github.com/dlops-io/mega-pipeline.git
+cd mega-pipeline
+```
+
+Each of the five components lives in its own subfolder here (`transcribe_audio/`, `generate_text/`, ...) — you'll `cd` into each one as you build and run it.
 
 ---
 
@@ -38,25 +47,13 @@ By completing this tutorial, you’ll gain experience with:
 
 ---
 
-## The Five Components
+## 👥 You'll work in teams — and there's a leaderboard 🏆
 
-Each component has its own folder, its own container, and its own step-by-step `README`. Click through to follow along:
+This tutorial is done in **groups**: each team will build the entire pipeline end to end, containerizing and connecting every component (not just one piece).
 
-- 📝 Task A — [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/main/transcribe_audio)  
-- 🗒️ Task B — [generate_text](https://github.com/dlops-io/mega-pipeline/tree/main/generate_text)  
-- 🔊 Task C — [synthesis_audio_en](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio_en)  
-- 🇫🇷 Task D — [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text)  
-- 🔊 Task E — [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio)  
+And to make things a little more interesting, every team's progress is published live on a public leaderboard at **[ac215-mega-pipeline.dlops.io](http://ac215-mega-pipeline.dlops.io/)**. The moment a component runs successfully under your group name, it lights up for the whole class to see — so you can watch your pipeline come together stage by stage and see how your team is doing relative to the rest of the class.
 
-By the end, every team will have built a complete pipeline that mirrors a **real-world microservice architecture**: multiple independent services (each containerized), working together to form a larger application.
-
----
-
-⚠️ **IMPORTANT NOTE** ⚠️
-
-When building your containers, make sure you `update the group name` inside your configuration. This is how we track your progress and display it correctly on the leaderboard.  
-
-If you don’t change the group name, your work may overwrite someone else’s, or it won’t be visible under your team. So please double-check before you push or run your containerized tasks!
+> ⚠️ You'll set a group name in each component's `cli.py` before running it — more on exactly where and why in the **Time to Build** section below.
 
 ---
 
@@ -88,6 +85,8 @@ Want to learn more about GCS?
 - [Google Cloud Storage](https://www.youtube.com/watch?v=VDBhvexAj8I)
 - [Google Cloud Storage Overview](https://cloud.google.com/storage) 
 
+---
+
 ## GCP Credentials File
 
 The last piece we need to access the GCP bucket is authentication.
@@ -106,7 +105,27 @@ To keep it simple, you’ll use a JSON credentials file that represents this Ser
 We do not want to put this JSON file in GitHub — it is a secret, after all.
 Make sure the secrets/ folder containing the file is not part of your repo. For this tutorial, we’ve already added a `.gitignore` entry so the file won’t be pushed accidentally. The canonical (best) way to handle this is to keep your secrets folder outside the repo entirely. That’s what we’ll be moving toward later in the course.
 
-## Running the Pipeline Components
+---
+
+## 🚀 Time to Build — The Five Components
+
+That's the whole story: you've cloned the repo, you know how the bucket hand-off works, and your credentials are ready. **Now go build.**
+
+Each component below has its own folder, its own container, and its own step-by-step `README` — and none of them come with a `Dockerfile` already written. You build each one from scratch, following that folder's README. Work through them **in this order**; each one reads from the bucket what the previous one wrote:
+
+- 📝 Task A — [transcribe_audio](https://github.com/dlops-io/mega-pipeline/tree/main/transcribe_audio)  
+- 🗒️ Task B — [generate_text](https://github.com/dlops-io/mega-pipeline/tree/main/generate_text)  
+- 🔊 Task C — [synthesis_audio_en](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio_en)  
+- 🇫🇷 Task D — [translate_text](https://github.com/dlops-io/mega-pipeline/tree/main/translate_text)  
+- 🔊 Task E — [synthesis_audio](https://github.com/dlops-io/mega-pipeline/tree/main/synthesis_audio)  
+
+By the end, every team will have built a complete pipeline that mirrors a **real-world microservice architecture**: multiple independent services (each containerized), working together to form a larger application.
+
+> ⚠️ **Set your group name inside `cli.py` before you run each component.** This is how your progress is tracked and shown on the leaderboard — get it wrong and your work lands under the wrong team, or overwrites someone else's. Double-check before every run.
+
+---
+
+## Quick Reference — Running Each Component
 
 Once you’re inside each component’s container, you’ll drive it through `cli.py`. The commands for each stage are listed below — the flag names (`--download`, `--transcribe`, `--generate`, `--translate`, `--synthesis`, `--upload`) should make the intent obvious: pull inputs from the bucket, run the component, push outputs back.
 
@@ -145,8 +164,14 @@ python cli.py --synthesis
 ```
 > Note: synthesis writes audio directly to GCS — no separate `--upload` step needed.
 
+---
+
+## Appendix
 
 ### Sample Dockerfile
+
+If you get stuck writing your own, compare against this one — but try it yourself first (each component's README walks you through building it piece by piece).
+
 ```dockerfile
 # Use the official Debian-hosted Python image
 FROM python:3.12-slim-bookworm
@@ -199,7 +224,7 @@ ENTRYPOINT ["/bin/bash"]
 CMD ["-c", "source /home/app/.venv/bin/activate && exec bash"]
 ```
 
-### Some notes for running on Windows
+### Notes for running on Windows
 > Docker Desktop installation is covered in [Tutorial 0](https://github.com/dlops-io/ac215-setup). These are the gotchas that show up *after* install:
 
 * Run docker commands from **Git BASH** (Windows `cmd` and PowerShell quote arguments differently and will mangle the volume-mount syntax below).
