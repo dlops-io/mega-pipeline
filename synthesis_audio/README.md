@@ -109,7 +109,7 @@ docker run --rm -ti -v "$(pwd):/app" synthesis_audio
 
 ## CLI to interact with your code
 * Use the given Python file [`cli.py`](https://github.com/dlops-io/mega-pipeline/blob/main/synthesis_audio/cli.py)
-* Assign your group-number to the `group_name` variable in `cli.py`
+* **Change the group name in `cli.py` before you run anything.** Near the top of the file you'll see `group_name = "pavlos"` — replace `"pavlos"` with your team's group name (e.g. `group-01`, `group-02`, ...). This is how your progress is tracked on the [leaderboard](http://ac215-mega-pipeline.dlops.io/); leave it as `pavlos` and your outputs won't show under your team. (Do the same in `cli_11.py` if you use the ElevenLabs bonus step.)
 * The CLI should have the following command line argument options
 ```
 python cli.py --help

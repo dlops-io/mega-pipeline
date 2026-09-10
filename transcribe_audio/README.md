@@ -21,7 +21,7 @@ Inside the `transcribe_audio` folder, scaffold a minimal `pyproject.toml` with:
 ```bash
 uv init --bare
 ```
-The `--bare` flag gives you just the `pyproject.toml` (no sample `main.py`, no README, no git init) — exactly what we want, since the source code already lives here. You'll add the specific dependencies further down with `uv add`.
+The `--bare` flag gives you just the `pyproject.toml`. You'll add the specific dependencies further down with `uv add`.
 
 > **Don't have `uv` installed?** Run the following to install it first:
 > ```bash
@@ -111,7 +111,7 @@ docker run --rm -ti -v "$(pwd):/app" transcribe_audio
 
 ## CLI to interact with your code
 * Use the given python file [`cli.py`](https://github.com/dlops-io/mega-pipeline/blob/main/transcribe_audio/cli.py)
-* Assign your group-number to the `group_name` variable in `cli.py`
+* **Change the group name in `cli.py` before you run anything.** Near the top of the file you'll see `group_name = "pavlos"` — replace `"pavlos"` with your team's group name (e.g. `group-01`, `group-02`, ...). This is how your progress is tracked on the [leaderboard](http://ac215-mega-pipeline.dlops.io/); leave it as `pavlos` and your outputs won't show under your team.
 * The CLI should have the following command line argument options
 ```
 python cli.py --help
