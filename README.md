@@ -96,7 +96,7 @@ In this course, you don’t need to authenticate yourself as a person. Instead, 
 
 To keep it simple, you’ll use a JSON credentials file that represents this Service Account. **We’ve uploaded this file to the course Canvas site for you** — download it from the link below and place it inside each component folder `<app_folder>/secrets/` you build:
 
-<a href="https://canvas.harvard.edu/files/23163432/download?download_frd=1" download>mega-pipeline.json</a> *(on Canvas — sign in with your Harvard Key if prompted)*
+<a href="https://canvas.harvard.edu/files/25687801/download?download_frd=1" download>mega-pipeline.json</a> *(on Canvas — sign in with your Harvard Key if prompted)*
 
 **Note:** Later in the course, we’ll revisit authentication in more depth, but for now, this file is all you need to let your containerized apps talk to the GCP bucket.
 
