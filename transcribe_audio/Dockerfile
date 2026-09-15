@@ -1,5 +1,5 @@
 # Use the official Debian-hosted Python image
-FROM python:3.12-slim-bookworm
+FROM python:3.14-slim-bookworm
 
 ARG DEBIAN_PACKAGES="build-essential ffmpeg"
 

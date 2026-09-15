@@ -103,7 +103,7 @@ def main(args=None):
 if __name__ == "__main__":
     # Generate the inputs arguments parser
     # if you type into the terminal 'python cli.py --help', it will provide the description
-    parser = argparse.ArgumentParser(description="Transcribe audio file to text")
+    parser = argparse.ArgumentParser(description="Synthesis audio from translated text")
 
     parser.add_argument(
         "-d",
