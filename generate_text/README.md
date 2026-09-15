@@ -1,121 +1,148 @@
 # Generate Text
 
-📝 &rightarrow; 🗒️ 
+📝 → 🗒️
 
 In this container, you will implement the following:
-* Read the text prompt from the GCS bucket `mega-pipeline-bucket` and folder `text_prompts`
-* Use the Gemini (or OpenAI) API to correct the transcribed text and enhance the script with additional facts that we will use later for audio synthesis.
-* Save the text as a text file in bucket `mega-pipeline-bucket` and folder `text_paragraphs` (use the same file name).
 
-### Project Setup
+* Read the text prompt from your GCS bucket, folder `text_prompts`
+* Use the **Gemini API** via Vertex AI to correct the transcribed text and enhance the script with additional facts that we will use later for audio synthesis
+* Save the generated text as a text file in your bucket, folder `text_paragraphs` (use the same file name)
 
-* Create a folder `generate_text` or clone this repo
+---
 
-### GCP Credentials File
-* Download the `mega-pipeline.json` and save it inside a folder called `secrets` inside `generate_text`
-<a href="https://canvas.harvard.edu/files/23163432/download?download_frd=1" download>mega-pipeline.json</a>
-=======
-|-mega-pipeline<br>
-   &nbsp; &nbsp;   &nbsp; &nbsp;  |-transcribe_audio<br>
-    &nbsp; &nbsp;   &nbsp; &nbsp; |-generate_text<br>
-    &nbsp; &nbsp;   &nbsp; &nbsp; |-synthesis_audio_en<br>
-    &nbsp; &nbsp;   &nbsp; &nbsp; |-translate_text<br>
-    &nbsp; &nbsp;  &nbsp; &nbsp;  |-synthesis_audio<br>
-|-secrets
+## Project Setup
 
-### Create pyproject.toml
-* Inside the `generate_text` folder create:
-* Add `pyproject.toml` with the following contents:
-```
-[project]
-name = "app"
-version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
-requires-python = ">=3.12,<3.13"
-dependencies = [
-]
-```
+`cd` into the `generate_text` folder (you already have it from cloning the [mega-pipeline](https://github.com/dlops-io/mega-pipeline/tree/flexible-workflow) repo).
 
-### Create Dockerfile
-* Inside the `generate_text` folder
-* Create a `Dockerfile` and base it from `python:3.12-slim-bookworm` the official Debian-hosted Python 3.12 image
-* Set the following environment variables:
-```
-ENV UV_LINK_MODE=copy
-ENV UV_PROJECT_ENVIRONMENT=/home/app/.venv
-ENV GOOGLE_APPLICATION_CREDENTIALS=secrets/mega-pipeline.json
+Unlike the earlier version of this tutorial, **you do not write the container tooling here** — it ships with the repo:
+
+| File | What it is |
+| --- | --- |
+| `Dockerfile` | Python 3.14 image, installs deps with `uv sync`, runs as a non-root `app` user |
+| `docker-shell.sh` | Wraps `docker build` / `docker run`; mounts your code and your secrets |
+| `pyproject.toml` | Declares this component's Python dependencies |
+| `uv.lock` | Pins the exact resolved versions so every teammate gets the same environment |
+
+Read all four before you run anything — you'll be modifying them later in the course.
+
+---
+
+## Before You Run: Credentials and Configuration
+
+### 1. Service Account key
+
+This component needs a GCP service account key at `secrets/mega-pipeline.json`, **one level above the repo**. If you haven't created one yet, follow [Service Account & Secrets](https://github.com/dlops-io/mega-pipeline/tree/flexible-workflow#service-account--secrets) in the root README.
+
+```text
+<your-workspace>/
+├── mega-pipeline/
+│   └── generate_text/   ← you are here
+└── secrets/
+    └── mega-pipeline.json
 ```
 
-* Ensure we have an up-to-date baseline and install dependencies by running
+`docker-shell.sh` mounts that folder into the container at `/secrets` and sets `GOOGLE_APPLICATION_CREDENTIALS` for you.
+
+> This component calls Gemini through **Vertex AI**, so your service account also needs the **Vertex AI User** role, and the Vertex AI API must be enabled in your project.
+
+### 2. Edit `cli.py`
+
+Near the top of `cli.py`:
+
+```python
+gcp_project = "ac215-project"          # ← your team's GCP project id
+bucket_name = "mega-pipeline-bucket"   # ← your team's own bucket
+group_name = ""                        # ← your group, e.g. "group-01"
 ```
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y --no-install-recommends build-essential ffmpeg && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+
+Set all three for your team. `cli.py` `assert`s that `group_name` has been changed — leave it empty and the script stops immediately with `AssertionError: Update group name`.
+
+---
+
+## Build & Run
+
+You don't write the Dockerfile — you run it, through `docker-shell.sh`:
+
+```bash
+./docker-shell.sh          # build the image locally and run it (default)
+./docker-shell.sh dev      # only build the local image
+./docker-shell.sh run      # run from a prebuilt image (falls back to DockerHub)
+./docker-shell.sh prod     # build multi-arch (amd64 + arm64) and push to DockerHub
 ```
 
-* Install uv
+The default mode drops you into a shell **inside** the container, with the `uv` virtual environment already activated, your source folder mounted at `/app`, and your secrets at `/secrets`. Because `/app` is a bind mount, edits you make in VS Code on your host show up instantly inside the container.
+
+If the script isn't executable yet: `chmod +x docker-shell.sh`
+
+> The image is named `mega-pipeline-generate-text`. To publish under your own DockerHub org rather than `dlops`, change `DOCKER_USERNAME` at the top of `docker-shell.sh`.
+
+---
+
+## Choosing the Gemini model
+
+`cli.py` reads the model name from an environment variable and falls back to a sensible default:
+
+```python
+model_name = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash-lite")
 ```
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install uv
+
+To try a different model without editing code, set `GEMINI_MODEL` inside the container before running:
+
+```bash
+export GEMINI_MODEL=gemini-2.5-flash
+python cli.py --generate
 ```
 
-* Create a `app` folder by running `mkdir -p /app`
-* Set the working directory as `/app`
+---
 
-* Copy source files to the `/app` folder
-* Run `uv sync`
+## Python packages
 
-* Add Entry point to `/bin/bash`
-* Add a command to get into the virtual environment shell `source /home/app/.venv/bin/activate && exec bash`
+Already declared in `pyproject.toml` and pinned in `uv.lock`:
 
-* Example dockerfile can be found [here](https://github.com/dlops-io/mega-pipeline#sample-dockerfile).
+- `google-cloud-storage`
+- `google-genai`
 
-### Docker Build & Run
-* Build your docker image and give your image the name `generate_text`
+To add a dependency, run `uv add <package>` **inside the container**. It updates `pyproject.toml` and `uv.lock` on your host through the volume mount — commit both, then rebuild (`./docker-shell.sh dev`) so the dependency is baked into the image.
 
-* You should be able to run your docker image by using:
-```
-docker run --rm -ti -v "$(pwd)":/app generate_text
-```
-* The `-v "(pwd)":/app` option mounts your current working directory into the `/app` directory inside the container as a volume. This helps us during app development, so when you change a source code file using VSCode from your host machine, the files are automatically changed inside the container.
+---
 
-### Python packages required
-* `uv add` the following:
-  - `google-cloud-storage`
-  - `google-genai`
+## CLI to interact with your code
 
-* If you exit your container at this point, in order to get the latest environment from the pyproject.toml file, make sure to re-build your docker image again
+The CLI has the following command line argument options:
 
-### CLI to interact with your code
-* Use the given Python file [`cli.py`](https://github.com/dlops-io/mega-pipeline/blob/main/generate_text/cli.py)
-* Assign your group-number to the `group_name` variable in `cli.py`
-* The CLI should have the following command line argument options
-```
-python cli.py --help
+```console
+$ python cli.py --help
 usage: cli.py [-h] [-d] [-g] [-u]
 
 Generate text from prompt
 
-optional arguments:
+options:
   -h, --help      show this help message and exit
   -d, --download  Download text prompts from GCS bucket
   -g, --generate  Generate a text paragraph
   -u, --upload    Upload paragraph text to GCS bucket
 ```
 
-### Testing your code locally
-* Inside your docker shell, make sure you run the following commands:
-* `python cli.py -d` - Should download all the required data from GCS bucket
-* `python cli.py -g` - Should generate text using GPT2 or OpenAI API and save it locally
-* `python cli.py -u` - Should upload the generated text to the remote GCS bucket
-* Verify that your uploaded data shows up in the [Mega Pipeline App](http://ac215-mega-pipeline.dlops.io/)
+## Testing your code
 
-### OPTIONAL: Push Container to Docker Hub
-* Sign up in Docker Hub and create an [Access Token](https://hub.docker.com/settings/security)
-* Login to the Hub: `docker login -u <USER NAME> -p <ACCESS TOKEN>`
-* Tag the Docker Image: `docker tag generate_text <USER NAME>/generate_text`
-* Push to Docker Hub: `docker push <USER NAME>/generate_text`
+Inside your docker shell, run the steps in order:
 
+```bash
+python cli.py -d   # download the transcribed prompts from your GCS bucket
+python cli.py -g   # generate the expanded podcast text, saved locally
+python cli.py -u   # upload the generated text back to your bucket
+```
+
+Then verify in the GCP console that `text_paragraphs/<group_name>/` in your bucket contains the new `.txt` files. Both `synthesis_audio_en` and `translate_text` read from there next.
+
+---
+
+## OPTIONAL: Publish the container
+
+`./docker-shell.sh prod` builds for `linux/amd64` + `linux/arm64` and pushes in one step. It expects you to be logged in first:
+
+```bash
+docker login -u <USER NAME> -p <ACCESS TOKEN>
+```
+
+Create an access token under [DockerHub → Security](https://hub.docker.com/settings/security).

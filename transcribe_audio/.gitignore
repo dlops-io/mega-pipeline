@@ -1,7 +1,6 @@
 # misc
 .DS_Store
 /secrets
-docker-shell.sh
 
 /input_audios
 /text_prompts

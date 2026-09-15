@@ -1,7 +1,6 @@
 # misc
 .DS_Store
 /secrets
-docker-shell.sh
 
 /text_translated
 /output_audios
