@@ -11,13 +11,13 @@ from google.cloud import texttospeech
 # Generate the inputs arguments parser
 parser = argparse.ArgumentParser(description="Command description.")
 
-gcp_project = "ac215-project"
-bucket_name = "mega-pipeline-bucket"
+gcp_project = "" #"ac215-project"
+bucket_name = ""  #"mega-pipeline-bucket"
 text_paragraphs = "text_paragraphs"
 text_audios = "text_audios"
-group_name = "" # This needs to be your Group name e.g: group-01, group-02, group-03, group-04, group-05, ...
+group_name = "" #"pavlos-advanced"
 assert group_name!="", "Update group name"
-assert group_name!="pavlos-advanced", "Update group name"
+#assert group_name!="pavlos-advanced", "Update group name"
 # Instantiates a client
 #client = texttospeech.TextToSpeechClient()
 client = texttospeech.TextToSpeechLongAudioSynthesizeClient()

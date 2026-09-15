@@ -27,12 +27,27 @@ Complete **[Tutorial 0 - Setup & Installs](https://github.com/dlops-io/ac215-set
 
 ---
 
-## Clone this Repository
+## Get the Code
+
+**Starting fresh?** Clone the branch directly:
 
 ```bash
 git clone --branch flexible-workflow https://github.com/dlops-io/mega-pipeline.git
 cd mega-pipeline
 ```
+
+**Already have the repo from the last tutorial?** You're on `main` — switch branches instead of re-cloning:
+
+```bash
+cd mega-pipeline
+git fetch origin                      # get the branches you don't have yet
+git checkout flexible-workflow        # switch to this tutorial's branch
+git branch                            # confirm: * flexible-workflow
+```
+
+> If `git checkout` refuses with *"Your local changes would be overwritten"*, that's your edits to `cli.py` from last time. Either stash them (`git stash`) or throw them away (`git checkout -- .`) — you don't need them here, since this branch has its own `cli.py`.
+
+Your `secrets/` folder and any downloaded audio stay put — they're ignored by Git, so switching branches doesn't touch them.
 
 Each of the five components lives in its own subfolder here (`transcribe_audio/`, `generate_text/`, ...) — you'll `cd` into each one as you build and run it.
 
@@ -110,8 +125,8 @@ The `docker-shell.sh` in each component mounts `../../secrets/` into the contain
 Near the top of every component's `cli.py` there are three values you need to set for your team:
 
 ```python
-gcp_project = "ac215-project"          # ← your team's GCP project id
-bucket_name = "mega-pipeline-bucket"   # ← your team's own bucket
+gcp_project = ""          # ← your team's GCP project id
+bucket_name = ""   # ← your team's own bucket
 group_name = ""                        # ← your group, e.g. "group-01"
 ```
 
@@ -159,13 +174,29 @@ In the earlier version of this tutorial we handed you a shared JSON key. In this
 
 1. In the GCP console, go to **IAM & Admin → Service accounts**.
 2. Create a new service account (e.g. `mega-pipeline-sa`).
-3. Grant it the roles the pipeline needs on your project:
-   - **Storage Admin** — read/write your bucket.
-   - **Cloud Speech-to-Text**, **Cloud Translation**, and **Cloud Text-to-Speech** user roles for the components that call those APIs.
+3. Grant it these roles on your project:
+   - **Storage Admin** (`roles/storage.admin`) — read/write your bucket. All five components need this.
+   - **Agent Platform User** (`roles/aiplatform.user`) — `generate_text` calls Gemini through **Vertex AI**. ⚠️ Search the role picker for **"Agent Platform User"** — Google renamed these titles, so searching "Vertex AI User" finds nothing.
+   - **Cloud Speech Client** (`roles/speech.client`) — `transcribe_audio`.
+   - **Cloud Translation API User** (`roles/cloudtranslate.user`) — `translate_text`.
 4. Under **Keys → Add Key → Create new key**, download a **JSON** key.
 5. Save it as `mega-pipeline.json` in a `secrets/` folder that sits **one level above this repo** (see folder layout above).
 
-> Make sure the corresponding APIs are **enabled** in your GCP project: Cloud Storage, Speech-to-Text, Cloud Translation, and Text-to-Speech.
+> **Text-to-Speech needs no role** — it defines no service-specific role at all, so enabling the API is enough. Don't go hunting for a "Cloud Text-to-Speech User"; it doesn't exist. The two synthesis components write their audio straight into your bucket, which **Storage Admin** already covers.
+
+> Make sure the corresponding APIs are **enabled** in your GCP project: Cloud Storage, **Vertex AI**, Speech-to-Text, Cloud Translation, and Text-to-Speech. Enabling the API and granting the role are two separate steps.
+
+**To enable them** — in the console, go to **APIs & Services → Library**, search each name, and click **Enable**. Or do all five at once:
+
+```bash
+gcloud config set project <your-project-id>
+gcloud services enable \
+  storage.googleapis.com \
+  aiplatform.googleapis.com \
+  speech.googleapis.com \
+  texttospeech.googleapis.com \
+  translate.googleapis.com
+```
 
 The provided `docker-shell.sh` mounts that `secrets/` folder into the container at `/secrets` and sets `GOOGLE_APPLICATION_CREDENTIALS=/secrets/mega-pipeline.json`, so the calls to `google.cloud.storage` inside `cli.py` authenticate transparently.
 
