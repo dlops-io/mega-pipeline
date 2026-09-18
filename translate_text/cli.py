@@ -11,11 +11,11 @@ from google.cloud import translate_v2 as translate
 # Generate the inputs arguments parser
 parser = argparse.ArgumentParser(description="Command description.")
 
-gcp_project = "" #"ac215-project"
-bucket_name = ""  #"mega-pipeline-bucket"
+gcp_project = "ac215-project" #"ac215-project"
+bucket_name = "mega-pipeline-bucket"  #"mega-pipeline-bucket"
 text_paragraphs = "text_paragraphs"
 text_translated = "text_translated"
-group_name = "" #"pavlos-advanced"
+group_name = "pavlos-advanced" #"pavlos-advanced"
 assert group_name!="", "Update group name"
 #assert group_name!="pavlos-advanced", "Update group name"
 
@@ -52,6 +52,7 @@ def translate():
         translated_file = os.path.join(text_translated, group_name, uuid + ".txt")
 
         if os.path.exists(translated_file):
+            print("Translated file already exists.")
             continue
 
         with open(text_file) as f:
@@ -60,7 +61,7 @@ def translate():
         result = translate_client.translate(
             input_text,
             source_language="en",
-            target_language="fr",
+            target_language="es",
             format_="text",
         )
         translated_text = result["translatedText"]
